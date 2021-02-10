@@ -216,6 +216,7 @@ class ProductController extends Controller
         if (isset($sub_car_type_level1_id) && $sub_car_type_level1_id != 0) {
             $products->where('sub_one_car_type_id' , $sub_car_type_level1_id);
         }
+        
 
         if($sub_car_type_level2_id && $sub_car_type_level2_id != 0 ){
             $products->where('sub_two_car_type_id', $request->sub_car_type_level2_id);
@@ -231,6 +232,14 @@ class ProductController extends Controller
         
         if (isset($request->type) && $request->type != 0) {
             $products->where('type', $request->type);
+        }
+
+        if (isset($request->sub_car_type_level3_id) && $request->sub_car_type_level3_id != 0) {
+            $products->where('category_id', $request->sub_car_type_level3_id);
+        }
+
+        if (isset($request->sub_car_type_level4_id) && $request->sub_car_type_level4_id != 0) {
+            $products->where('sub_category_id', $request->sub_car_type_level4_id);
         }
 
         if (isset($request->sub_category_id) && $request->sub_category_id != 0) {
