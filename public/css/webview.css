@@ -1,0 +1,28 @@
+.image-container{
+    text-align: center;
+    padding-top: 30px;
+}
+.image-container img{
+    margin: 0 auto;
+    width: 50%;
+}
+
+.text-container{
+    padding: 0 10px;
+}
+
+.text-container .title{
+    color: #00284B;
+    font-family: 'zahra-bold';
+    margin-bottom: 6px;
+    font-size: 25px;
+    color: #006ED1;
+}
+
+.text-container .text{
+    color: #00284B;
+    font-family: 'zahra-bold';
+    margin-top: 0px;
+    font-size: 22px;
+    line-height: 1.3;
+}
