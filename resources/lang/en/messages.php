@@ -466,6 +466,7 @@
         "edit_governorate" => "Edit Governorate",
         "governorate_details" => "Governorate Details",
         "governorate_areas" => "Governorate Areas",
-        "show_governorate_areas" => "Show Governorate Areas"
+        "show_governorate_areas" => "Show Governorate Areas",
+        "country_has_governorates" => "Country Has Governorates"
     ];
 ?>

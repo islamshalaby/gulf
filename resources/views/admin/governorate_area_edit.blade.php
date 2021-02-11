@@ -1,6 +1,6 @@
 @extends('admin.ad_app')
 
-@section('title' , __('messages.add_new_area'))
+@section('title' , __('messages.area_edit'))
 
 @push('scripts')
 <script>
@@ -35,7 +35,7 @@
             <div class="widget-header">
                 <div class="row">
                     <div class="col-xl-12 col-md-12 col-sm-12 col-12">
-                        <h4>{{ __('messages.add_new_area') }}</h4>
+                        <h4>{{ __('messages.area_edit') }}</h4>
                  </div>
         </div>
         <form action="" method="post" enctype="multipart/form-data" >
@@ -43,25 +43,29 @@
                        
             <div class="form-group mb-4">
                 <label for="title_en">{{ __('messages.title_en') }}</label>
-                <input required type="text" name="name_en" class="form-control" id="title_en" placeholder="{{ __('messages.title_en') }}" value="" >
+                <input required type="text" name="name_en" class="form-control" id="title_en" placeholder="{{ __('messages.title_en') }}" value="{{ $data['area']['name_en'] }}" >
             </div>
             <div class="form-group mb-4">
                 <label for="title_ar">{{ __('messages.title_ar') }}</label>
-                <input required type="text" name="name_ar" class="form-control" id="title_ar" placeholder="{{ __('messages.title_ar') }}" value="" >
+                <input required type="text" name="name_ar" class="form-control" id="title_ar" placeholder="{{ __('messages.title_ar') }}" value="{{ $data['area']['name_ar'] }}" >
             </div>
             <div class="form-group">
                 <label for="country">{{ __('messages.country') }}</label>
                 <select id="country" name="country_id" class="form-control">
-                    <option selected>{{ __('messages.select') }}</option>
+                    <option disabled>{{ __('messages.select') }}</option>
                     @foreach ( $data['countries'] as $country )
-                    <option value="{{ $country->id }}">{{ App::isLocale('en') ? $country->name_en : $country->name_ar }}</option>
+                    <option {{ $data['area']->governorate->country->id == $country->id ? 'selected' : '' }} value="{{ $country->id }}">{{ App::isLocale('en') ? $country->name_en : $country->name_ar }}</option>
                     @endforeach
                 </select>
             </div>
 
-            <div style="display: none" class="form-group">
+            <div style="" class="form-group">
                 <label for="governorate">{{ __('messages.governorate') }}</label>
                 <select id="governorate" name="governorate_id" class="form-control">
+                    <option disabled>{{ __('messages.select') }}</option>
+                    @foreach ( $data['governorates'] as $governorate )
+                    <option {{ $data['area']->governorate_id == $governorate->id ? 'selected' : '' }} value="{{ $governorate->id }}">{{ App::isLocale('en') ? $governorate->name_en : $governorate->name_ar }}</option>
+                    @endforeach
                 </select>
             </div>
 

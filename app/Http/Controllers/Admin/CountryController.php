@@ -67,4 +67,10 @@ class CountryController extends AdminController{
 
         return view('admin.country_details', ['data' => $data]);
     }
+
+    public function delete(Country $country) {
+        $country->update(['deleted' => 0]);
+
+        return redirect()->back();
+    }
 }

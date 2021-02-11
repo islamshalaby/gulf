@@ -46,12 +46,12 @@
                                         {{ App::isLocale('en') ? $area->governorate->name_en : $area->governorate->name_ar }}
                                     </a>
                                 </td>
-                                <td class="text-center blue-color"><a href="{{ route('areas.details', $area->id) }}" ><i class="far fa-eye"></i></a></td>
+                                <td class="text-center blue-color"><a href="{{ route('governorates.areas.details', $area->id) }}" ><i class="far fa-eye"></i></a></td>
                                 @if(Auth::user()->update_data) 
-                                    <td class="text-center blue-color" ><a href="{{ route('areas.edit', $area->id) }}" ><i class="far fa-edit"></i></a></td>
+                                    <td class="text-center blue-color" ><a href="{{ route('governorates.areas.edit', $area->id) }}" ><i class="far fa-edit"></i></a></td>
                                 @endif
                                 @if(Auth::user()->delete_data) 
-                                    <td class="text-center blue-color" ><a onclick='return confirm("{{ __('messages.are_you_sure') }}");' href="{{ route('areas.delete', $area->id) }}" ><i class="far fa-trash-alt"></i></a></td>
+                                    <td class="text-center blue-color" ><a onclick='return confirm("{{ __('messages.are_you_sure') }}");' href="{{ route('governorates.areas.delete', $area->id) }}" ><i class="far fa-trash-alt"></i></a></td>
                                 @endif                                
                                 <?php $i++; ?>
                             </tr>

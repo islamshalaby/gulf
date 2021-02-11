@@ -40,10 +40,11 @@
                                 @endif
                                 @if(Auth::user()->delete_data) 
                                     <td class="text-center blue-color" >
-                                        
-                                        <a onclick='return confirm("{{ __('messages.are_you_sure') }}");' href="/admin-panel/categories/delete/{{ $country
-                                            ->id }}" ><i class="far fa-trash-alt"></i></a>
-                                        
+                                        @if(count($country->governorates) > 0)
+                                        {{ __('messages.country_has_governorates') }}
+                                        @else
+                                        <a onclick='return confirm("{{ __('messages.are_you_sure') }}");' href="{{ route('countries.delete', $country->id) }}" ><i class="far fa-trash-alt"></i></a>
+                                        @endif
                                     </td>
                                 @endif                                
                                 <?php $i++; ?>

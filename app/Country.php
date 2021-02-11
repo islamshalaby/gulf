@@ -13,6 +13,6 @@ class Country extends Model
     }
 
     public function governorates() {
-        return $this->hasMany('App\Governorate', 'country_id');
+        return $this->hasMany('App\Governorate', 'country_id')->where('deleted', 0);
     }
 }

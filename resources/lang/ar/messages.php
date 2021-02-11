@@ -464,6 +464,7 @@
             "edit_governorate" => "تعديل محافظة",
             "governorate_details" => "تفاصيل محافظة",
             "governorate_areas" => "مناطق المحافظات",
-            "show_governorate_areas" => "عرض مناطق المحافظات"
+            "show_governorate_areas" => "عرض مناطق المحافظات",
+            "country_has_governorates" => "عذراً .. هذه الدولة مضاف لها محافظات"
         ];
 ?>

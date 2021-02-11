@@ -2,6 +2,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Country;
+use App\Governorate;
 use App\Http\Controllers\Admin\AdminController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -19,7 +20,7 @@ class GovernorateAreaController extends AdminController{
     public function addGet() {
         $data['countries'] = Country::where('deleted', 0)->orderBy('id' , 'desc')->get();
 
-        return view('admin.governorate_area_form', $data);
+        return view('admin.governorate_area_form', compact('data'));
     }
 
     // fetch governorates by country
@@ -32,34 +33,38 @@ class GovernorateAreaController extends AdminController{
 
     // add post
     public function AddPost(Request $request){
-        Area::create($request->all());
-        return redirect()->route('areas.index');
+        GovernorateAreas::create($request->all());
+
+        return redirect()->route('governorates.areas.index');
     }
 
     // get edit page
-    public function EditGet(Area $area){
+    public function EditGet(GovernorateAreas $area){
         $data['area'] = $area;
-        return view('admin.area_edit' , ['data' => $data ]);
+        $data['countries'] = Country::where('deleted', 0)->orderBy('id' , 'desc')->get();
+        $data['governorates'] = Governorate::where('deleted', 0)->orderBy('id' , 'desc')->get();
+
+        return view('admin.governorate_area_edit' , ['data' => $data ]);
     }
 
     // edit area
-    public function EditPost(Request $request, Area $area){
+    public function EditPost(Request $request, GovernorateAreas $area){
         $area->update($request->all());
 
-        return redirect()->route('areas.index');
+        return redirect()->route('governorates.areas.index');
     }
 
     // delete
-    public function delete(Area $area) {
+    public function delete(GovernorateAreas $area) {
         $area->update(['deleted' => 1]);
 
         return redirect()->back();
     }
 
     // details
-    public function details(Area $area) {
+    public function details(GovernorateAreas $area) {
         $data['area'] = $area;
 
-        return view('admin.area_details', ['data' => $data]);
+        return view('admin.governorate_area_details', ['data' => $data]);
     }
 }

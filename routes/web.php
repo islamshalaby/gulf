@@ -129,7 +129,7 @@ Route::group([
         Route::get('edit/{country}' , 'CountryController@EditGet')->name('countries.edit');
         Route::post('edit/{country}' , 'CountryController@postEdit');
         Route::get('details/{country}' , 'CountryController@details')->name('countries.details');
-        // Route::get('delete/{id}' , 'CountryController@delete');
+        Route::get('delete/{country}' , 'CountryController@delete')->name('countries.delete');
 
     });
 
@@ -156,10 +156,10 @@ Route::group([
         Route::get('add' , 'GovernorateAreaController@AddGet')->name('governorates.areas.add');
         Route::post('add' , 'GovernorateAreaController@AddPost');
         Route::get('show' , 'GovernorateAreaController@show')->name('governorates.areas.index');
-        // Route::get('edit/{governorate}' , 'GovernorateController@EditGet')->name('governorates.edit');
-        // Route::post('edit/{governorate}' , 'GovernorateController@postEdit');
-        // Route::get('details/{governorate}' , 'GovernorateController@details')->name('governorates.details');
-        // Route::get('delete/{id}' , 'CountryController@delete');
+        Route::get('edit/{area}' , 'GovernorateAreaController@EditGet')->name('governorates.areas.edit');
+        Route::post('edit/{area}' , 'GovernorateAreaController@EditPost');
+        Route::get('details/{area}' , 'GovernorateAreaController@details')->name('governorates.areas.details');
+        Route::get('delete/{area}' , 'GovernorateAreaController@delete')->name('governorates.areas.delete');
 
     });
 
