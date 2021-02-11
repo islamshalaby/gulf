@@ -11,4 +11,8 @@ class Country extends Model
     public function currency() {
         return $this->hasOne('App\Currency', 'country_id');
     }
+
+    public function governorates() {
+        return $this->hasMany('App\Governorate', 'country_id');
+    }
 }

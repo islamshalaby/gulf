@@ -26,9 +26,9 @@
                             <th>{{ __('messages.user') }}</th>
                             <th>{{ __('messages.archived_or_not') }}</th>
                             <th class="text-center">{{ __('messages.details') }}</th>
-                            @if(Auth::user()->update_data) 
+                            {{-- @if(Auth::user()->update_data) 
                                 <th class="text-center">{{ __('messages.edit') }}</th>
-                            @endif   
+                            @endif    --}}
                             @if(Auth::user()->delete_data) 
                                 <th class="text-center" >{{ __('messages.delete') }}</th>
                             @endif 
@@ -48,9 +48,9 @@
                                 </td>
                                 <td>{{ $product->status == 1 ? __('messages.published') : __('messages.archived') }}</td>
                                 <td class="text-center blue-color"><a href="/admin-panel/ad_products/details/{{ $product->id }}" ><i class="far fa-eye"></i></a></td>
-                                @if(Auth::user()->update_data) 
+                                {{-- @if(Auth::user()->update_data) 
                                     <td class="text-center blue-color" ><a href="/admin-panel/ad_products/edit/{{ $product->id }}" ><i class="far fa-edit"></i></a></td>
-                                @endif
+                                @endif --}}
                                 @if(Auth::user()->delete_data) 
                                     <td class="text-center blue-color" ><a onclick="return confirm('{{ __('messages.are_you_sure') }}');" href="/admin-panel/ad_products/delete/{{ $product->id }}" ><i class="far fa-trash-alt"></i></a></td>                                
                                 @endif

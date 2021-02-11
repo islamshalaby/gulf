@@ -128,6 +128,37 @@ Route::group([
         Route::get('show' , 'CountryController@show')->name('countries.index');
         Route::get('edit/{country}' , 'CountryController@EditGet')->name('countries.edit');
         Route::post('edit/{country}' , 'CountryController@postEdit');
+        Route::get('details/{country}' , 'CountryController@details')->name('countries.details');
+        // Route::get('delete/{id}' , 'CountryController@delete');
+
+    });
+
+    // governorates
+    Route::group([
+        "prefix" => "governorates"
+    ], function($router){
+
+        Route::get('add' , 'GovernorateController@AddGet')->name('governorates.add');
+        Route::post('add' , 'GovernorateController@AddPost');
+        Route::get('show' , 'GovernorateController@show')->name('governorates.index');
+        Route::get('edit/{governorate}' , 'GovernorateController@EditGet')->name('governorates.edit');
+        Route::post('edit/{governorate}' , 'GovernorateController@postEdit');
+        Route::get('details/{governorate}' , 'GovernorateController@details')->name('governorates.details');
+        // Route::get('delete/{id}' , 'CountryController@delete');
+
+    });
+
+    // governorates areas
+    Route::group([
+        "prefix" => "governorate-areas"
+    ], function($router){
+
+        Route::get('add' , 'GovernorateAreaController@AddGet')->name('governorates.areas.add');
+        Route::post('add' , 'GovernorateAreaController@AddPost');
+        Route::get('show' , 'GovernorateAreaController@show')->name('governorates.areas.index');
+        // Route::get('edit/{governorate}' , 'GovernorateController@EditGet')->name('governorates.edit');
+        // Route::post('edit/{governorate}' , 'GovernorateController@postEdit');
+        // Route::get('details/{governorate}' , 'GovernorateController@details')->name('governorates.details');
         // Route::get('delete/{id}' , 'CountryController@delete');
 
     });
@@ -145,7 +176,9 @@ Route::group([
     });
 
     Route::get('getadpartproducts' , 'ProductController@getadpartproducts');
+    Route::get('getadpartproducts/{country}' , 'ProductController@getadpartproductsByCountry');
     Route::get('getecommercepartproducts' , 'ProductController@getecommercepartproducts');
+    Route::get('fetchgovernoratescountry/{country}' , 'GovernorateAreaController@fetchGovernoratesByCountry');
 
     Route::group([
         "prefix" => "ad_products"
@@ -271,6 +304,18 @@ Route::group([
          Route::get('edit/{method}' , 'DeliveryMethodController@EditGet')->name('deliveryMethod.edit');
          Route::post('edit/{method}' , 'DeliveryMethodController@EditPost');
          Route::get('delete/{method}' , 'DeliveryMethodController@delete')->name('deliveryMethod.delete');
+    });
+
+    // Delivery methods
+    Route::group([
+        "prefix" => "ad-slider"
+    ], function($router){
+         Route::get('show' , 'AdSliderController@show')->name('adSlider.index');
+         Route::get('add' , 'AdSliderController@AddGet')->name('adSlider.add');
+         Route::post('add' , 'AdSliderController@AddPost');
+         Route::get('edit/{id}' , 'AdSliderController@EditGet')->name('adSlider.edit');
+         Route::post('edit/{id}' , 'AdSliderController@EditPost');
+         Route::get('delete/{id}' , 'AdSliderController@delete')->name('adSlider.delete');
     });
 
     // Home Options Route

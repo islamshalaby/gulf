@@ -1,4 +1,4 @@
-@extends('admin.app')
+@extends('admin.ad_app')
 
 @section('title' , __('messages.show_countries'))
 
@@ -19,7 +19,7 @@
                         <tr>
                             <th>Id</th>
                             <th>{{ __('messages.country') }}</th>
-                            {{-- <th class="text-center">{{ __('messages.details') }}</th> --}}
+                            <th class="text-center">{{ __('messages.details') }}</th>
                             @if(Auth::user()->update_data) 
                                 <th class="text-center">{{ __('messages.edit') }}</th>                          
                             @endif
@@ -34,7 +34,7 @@
                             <tr>
                                 <td><?=$i;?></td>
                                 <td>{{ App::isLocale('en') ? $country->name_en : $country->name_ar }}</td>
-                                {{-- <td class="text-center blue-color"><a href="#" ><i class="far fa-eye"></i></a></td> --}}
+                                <td class="text-center blue-color"><a href="{{ route('countries.details', $country->id) }}" ><i class="far fa-eye"></i></a></td>
                                 @if(Auth::user()->update_data) 
                                     <td class="text-center blue-color" ><a href="{{ route('countries.edit', $country->id) }}" ><i class="far fa-edit"></i></a></td>
                                 @endif

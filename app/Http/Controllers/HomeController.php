@@ -56,7 +56,7 @@ class HomeController extends Controller
         }
         
 
-        $data['slider'] = AdSlider::select('id', 'image', 'content', 'type', 'link_type')->get();
+        $data['slider'] = AdSlider::select('id', 'image', 'content', 'type', 'link_type')->where('country_id', $country['id'])->get();
 
         if ($request->lang == 'en') {
             $data['categories'] = Category::where('type', 2)->select('id', 'title_en as title', 'image')->get();

@@ -452,6 +452,18 @@
             "delivery_method" => "طريقة التوصيل",
             "method_price" => "السعر",
             "add_new_delivery_method" => "إضافة طريقة توصيل جديدة",
-            "edit_delivery_method" => "تعديل طريقة توصيل"
+            "edit_delivery_method" => "تعديل طريقة توصيل",
+            "ad_slider" => "سلايدر الإعلانات",
+            "show_slider" => "عرض إعلانات السلايدر",
+            "governorates" => "المحافظات",
+            "show_governorates" => "عرض المحافظات",
+            "governorate" => "المحافظة",
+            "country_details" => "تفاصيل الدولة",
+            "flag" => "علم الدولة",
+            "add_new_governorate" => "إضافة محافظة جديدة",
+            "edit_governorate" => "تعديل محافظة",
+            "governorate_details" => "تفاصيل محافظة",
+            "governorate_areas" => "مناطق المحافظات",
+            "show_governorate_areas" => "عرض مناطق المحافظات"
         ];
 ?>

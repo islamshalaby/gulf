@@ -454,6 +454,18 @@
         "delivery_method" => "Delivery Method",
         "method_price" => "Price",
         "add_new_delivery_method" => "Add New Delivery Method",
-        "edit_delivery_method" => "Edit Delivery Method"
+        "edit_delivery_method" => "Edit Delivery Method",
+        "ad_slider" => "Slider",
+        "show_slider" => "Show Slider",
+        "governorates" => "Governorates",
+        "show_governorates" => "Show Governorates",
+        "governorate" => "Governorate",
+        "country_details" => "Country Details",
+        "flag" => "Flag",
+        "add_new_governorate" => "Add New Governorate",
+        "edit_governorate" => "Edit Governorate",
+        "governorate_details" => "Governorate Details",
+        "governorate_areas" => "Governorate Areas",
+        "show_governorate_areas" => "Show Governorate Areas"
     ];
 ?>

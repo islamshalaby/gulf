@@ -61,4 +61,10 @@ class CountryController extends AdminController{
 
         return redirect()->route('countries.index');
     }
+
+    public function details(Country $country) {
+        $data['country'] = $country;
+
+        return view('admin.country_details', ['data' => $data]);
+    }
 }

@@ -19,6 +19,7 @@ use App\ProductProperty;
 use App\ProductMultiOption;
 use App\CarType;
 use App\Company;
+use App\Country;
 use App\SubOneCarType;
 use App\SubTwoCarType;
 
@@ -69,6 +70,13 @@ class ProductController extends AdminController{
 
     public function getadpartproducts(){
         $products = AdProduct::where('status' , 1)->get();
+        $data = json_decode(($products));
+
+        return response($data, 200);
+    }
+
+    public function getadpartproductsByCountry(Country $country){
+        $products = AdProduct::where('status' , 1)->where('country_id', $country->id)->get();
         $data = json_decode(($products));
 
         return response($data, 200);

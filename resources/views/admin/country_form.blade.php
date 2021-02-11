@@ -1,4 +1,4 @@
-@extends('admin.app')
+@extends('admin.ad_app')
 
 @section('title' , __('messages.add_new_country'))
 

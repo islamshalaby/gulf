@@ -1,6 +1,6 @@
-@extends('admin.ecommerce_app')
+@extends('admin.ad_app')
 
-@section('title' , __('messages.show_areas'))
+@section('title' , __('messages.show_governorate_areas'))
 
 @section('content')
     <div id="tableSimple" class="col-lg-12 col-12 layout-spacing">
@@ -8,7 +8,7 @@
             <div class="widget-header">
             <div class="row">
                 <div class="col-xl-12 col-md-12 col-sm-12 col-12">
-                    <h4>{{ __('messages.show_areas') }}</h4>
+                    <h4>{{ __('messages.show_governorate_areas') }}</h4>
                 </div>
             </div>
         </div>
@@ -19,6 +19,8 @@
                         <tr>
                             <th>Id</th>
                             <th>{{ __('messages.area_title') }}</th>
+                            <th>{{ __('messages.country') }}</th>
+                            <th>{{ __('messages.governorate') }}</th>
                             <th class="text-center">{{ __('messages.details') }}</th>
                             @if(Auth::user()->update_data) 
                                 <th class="text-center">{{ __('messages.edit') }}</th>                          
@@ -33,7 +35,17 @@
                         @foreach ($data['areas'] as $area)
                             <tr>
                                 <td><?=$i;?></td>
-                                <td>{{ App::isLocale('en') ? $area->title_en : $area->title_ar }}</td>
+                                <td>{{ App::isLocale('en') ? $area->name_en : $area->name_ar }}</td>
+                                <td>
+                                    <a href="{{ route('countries.details', $area->governorate->country->id) }}" target="_blank">
+                                        {{ App::isLocale('en') ? $area->governorate->country->name_en : $area->governorate->country->name_ar }}
+                                    </a>
+                                </td>
+                                <td>
+                                    <a href="{{ route('governorates.details', $area->governorate_id) }}" target="_blank">
+                                        {{ App::isLocale('en') ? $area->governorate->name_en : $area->governorate->name_ar }}
+                                    </a>
+                                </td>
                                 <td class="text-center blue-color"><a href="{{ route('areas.details', $area->id) }}" ><i class="far fa-eye"></i></a></td>
                                 @if(Auth::user()->update_data) 
                                     <td class="text-center blue-color" ><a href="{{ route('areas.edit', $area->id) }}" ><i class="far fa-edit"></i></a></td>

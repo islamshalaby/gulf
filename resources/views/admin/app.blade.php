@@ -274,58 +274,6 @@
                         </ul>
                     </li>
                     @endif
-
-                    @if(in_array(22 , Auth::user()->custom['admin_permission']))
-                    <li class="menu countries">
-                        <a href="#countries" data-active="true" data-toggle="collapse" aria-expanded="true" class="dropdown-toggle first-link">
-                            <div class="">
-                                <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="css-i6dzq1"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
-                                <span>{{ __('messages.countries') }}</span>
-                            </div>
-                            <div>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg>
-                            </div>
-                        </a>
-                        <ul class="collapse submenu list-unstyled show" id="countries" data-parent="#accordionExample">
-                            @if(Auth::user()->add_data) 
-                                <li class="active add">
-                                    <a href="{{ route('countries.add') }}"> {{ __('messages.add') }} </a>
-                                </li>
-                            @endif
-                            <li class="show" >
-                                <a href="{{ route('countries.index') }}"> {{ __('messages.show') }} </a>
-                            </li>
-                        </ul>
-                    </li>
-                    @endif
-
-
-                    @if(in_array(13 , Auth::user()->custom['admin_permission']))
-                    <li class="menu areas">
-                        <a href="#areas" data-active="true" data-toggle="collapse" aria-expanded="true" class="dropdown-toggle first-link">
-                            <div class="">
-                                <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="css-i6dzq1"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
-                                <span>{{ __('messages.areas') }}</span>
-                            </div>
-                            <div>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg>
-                            </div>
-                        </a>
-                        <ul class="collapse submenu list-unstyled show" id="areas" data-parent="#accordionExample">
-                            @if(Auth::user()->add_data) 
-                                <li class="active add">
-                                    <a href="{{ route('areas.add') }}"> {{ __('messages.add') }} </a>
-                                </li>
-                            @endif
-                            <li class="show" >
-                                <a href="{{ route('areas.index') }}"> {{ __('messages.show') }} </a>
-                            </li>
-                        </ul>
-                    </li>
-                    @endif
-
-                    
-
                     
 
                     @if(in_array(5 , Auth::user()->custom['admin_permission']))

@@ -1,4 +1,4 @@
-@extends('admin.app')
+@extends('admin.ecommerce_app')
 
 @section('title' , __('messages.add_new_area'))
 

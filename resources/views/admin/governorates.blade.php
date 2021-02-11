@@ -1,6 +1,6 @@
-@extends('admin.ecommerce_app')
+@extends('admin.ad_app')
 
-@section('title' , __('messages.show_areas'))
+@section('title' , __('messages.show_governorates'))
 
 @section('content')
     <div id="tableSimple" class="col-lg-12 col-12 layout-spacing">
@@ -8,7 +8,7 @@
             <div class="widget-header">
             <div class="row">
                 <div class="col-xl-12 col-md-12 col-sm-12 col-12">
-                    <h4>{{ __('messages.show_areas') }}</h4>
+                    <h4>{{ __('messages.show_governorates') }}</h4>
                 </div>
             </div>
         </div>
@@ -18,7 +18,8 @@
                     <thead>
                         <tr>
                             <th>Id</th>
-                            <th>{{ __('messages.area_title') }}</th>
+                            <th>{{ __('messages.governorate') }}</th>
+                            <th>{{ __('messages.country') }}</th>
                             <th class="text-center">{{ __('messages.details') }}</th>
                             @if(Auth::user()->update_data) 
                                 <th class="text-center">{{ __('messages.edit') }}</th>                          
@@ -30,16 +31,26 @@
                     </thead>
                     <tbody>
                         <?php $i = 1; ?>
-                        @foreach ($data['areas'] as $area)
+                        @foreach ($data['governorates'] as $governorate)
                             <tr>
                                 <td><?=$i;?></td>
-                                <td>{{ App::isLocale('en') ? $area->title_en : $area->title_ar }}</td>
-                                <td class="text-center blue-color"><a href="{{ route('areas.details', $area->id) }}" ><i class="far fa-eye"></i></a></td>
+                                <td>{{ App::isLocale('en') ? $governorate->name_en : $governorate->name_ar }}</td>
+                                <td>
+                                    <a href="{{ route('countries.details', $governorate->country_id) }}" target="_blank">
+                                        {{ App::isLocale('en') ? $governorate->country->name_en : $governorate->country->name_ar }}
+                                    </a>
+                                </td>
+                                <td class="text-center blue-color"><a href="{{ route('governorates.details', $governorate->id) }}" ><i class="far fa-eye"></i></a></td>
                                 @if(Auth::user()->update_data) 
-                                    <td class="text-center blue-color" ><a href="{{ route('areas.edit', $area->id) }}" ><i class="far fa-edit"></i></a></td>
+                                    <td class="text-center blue-color" ><a href="{{ route('governorates.edit', $governorate->id) }}" ><i class="far fa-edit"></i></a></td>
                                 @endif
                                 @if(Auth::user()->delete_data) 
-                                    <td class="text-center blue-color" ><a onclick='return confirm("{{ __('messages.are_you_sure') }}");' href="{{ route('areas.delete', $area->id) }}" ><i class="far fa-trash-alt"></i></a></td>
+                                    <td class="text-center blue-color" >
+                                        
+                                        <a onclick='return confirm("{{ __('messages.are_you_sure') }}");' href="/admin-panel/categories/delete/{{ $governorate
+                                            ->id }}" ><i class="far fa-trash-alt"></i></a>
+                                        
+                                    </td>
                                 @endif                                
                                 <?php $i++; ?>
                             </tr>
