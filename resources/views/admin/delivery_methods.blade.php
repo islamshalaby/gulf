@@ -34,7 +34,7 @@
                         @foreach ($data['methods'] as $method)
                             <tr>
                                 <td><?=$i;?></td>
-                                <td>{{ App::isLocale('en') ? $method->title_en : $method->title_en }}</td>
+                                <td>{{ App::isLocale('en') ? $method->title_en : $method->title_ar }}</td>
                                 <td>{{ $method->price . " " . __('messages.dinar') }}</td>
                                 {{-- <td class="text-center blue-color"><a href="#" ><i class="far fa-eye"></i></a></td> --}}
                                 @if(Auth::user()->update_data) 

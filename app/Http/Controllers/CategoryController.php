@@ -60,26 +60,26 @@ class CategoryController extends Controller
 	
 	public function get_ecommerce_sub_categories(Request $request){
 
-                if($request->lang == 'en'){
-                    $data['sub_categories'] = SubCategory::where('deleted' , 0)->where('category_id' , $request->category_id)->select('id' , 'image' , 'title_en as title')->get()->toArray();
-                	$data['category'] = Category::select('id' , 'title_en as title')->find($request->category_id);
-                    $all = new \StdClass;
-                    $all->id = 0;
-                    $all->title = 'All';
-                    $all->image = 'all_liwbsi.png';
-				}else{
-                    $data['sub_categories'] = SubCategory::where('deleted' , 0)->where('category_id' , $request->category_id)->select('id' , 'image' , 'title_ar as title')->get()->toArray();
-                	$data['category'] = Category::select('id' , 'title_ar as title')->find($request->category_id);
-                    $all = new \StdClass;
-                    $all->id = 0;
-                    $all->title = 'الكل';
-                    $all->image = 'all_liwbsi.png';
-                }
+        if($request->lang == 'en'){
+            $data['sub_categories'] = SubCategory::where('deleted' , 0)->where('category_id' , $request->category_id)->select('id' , 'image' , 'title_en as title')->get()->toArray();
+            $data['category'] = Category::select('id' , 'title_en as title')->find($request->category_id);
+            $all = new \StdClass;
+            $all->id = 0;
+            $all->title = 'All';
+            $all->image = 'all_liwbsi.png';
+        }else{
+            $data['sub_categories'] = SubCategory::where('deleted' , 0)->where('category_id' , $request->category_id)->select('id' , 'image' , 'title_ar as title')->get()->toArray();
+            $data['category'] = Category::select('id' , 'title_ar as title')->find($request->category_id);
+            $all = new \StdClass;
+            $all->id = 0;
+            $all->title = 'الكل';
+            $all->image = 'all_liwbsi.png';
+        }
 
-                array_unshift($data['sub_categories'], $all);
-                
-            $response = APIHelpers::createApiResponse(false , 200 , '' , '' , $data , $request->lang);
-            return response()->json($response , 200);
+        array_unshift($data['sub_categories'], $all);
+        
+    $response = APIHelpers::createApiResponse(false , 200 , '' , '' , $data , $request->lang);
+    return response()->json($response , 200);
     }
 
     public function get_car_types(Request $request){
@@ -284,7 +284,7 @@ class CategoryController extends Controller
         $all->title = 'All';
         $all->image = 'all_liwbsi.png';
         $all->next_level = false;
-// dd($data['sub_categories']);
+
         if (count($data['sub_categories']) > 0) {
             for ($i =0; $i < count($data['sub_categories']); $i ++) {
                 $subThreeCats = SubThreeCategory::where('sub_category_id', $data['sub_categories'][$i]['id'])->select('id')->first();
@@ -299,10 +299,10 @@ class CategoryController extends Controller
         array_unshift($data['sub_categories'], $all);
 
         if($request->sub_category_id == 0){
-            $products = AdProduct::where('status' , 1)->where('country_id', $request->country)->where('category_id', $request->category_id)->select('id' , 'title' , 'price'  , 'publication_date as date', 'selected as feature')->orderBy('publication_date' , 'DESC')->simplePaginate(12);
+            $products = AdProduct::where('status' , 1)->where('country_id', $request->country)->where('category_id', $request->category_id)->select('id' , 'title' , 'price'  , 'publication_date as date', 'selected as feature')->orderBy('id' , 'DESC')->simplePaginate(12);
 
          }else{
-            $products = AdProduct::where('status' , 1)->where('country_id', $request->country)->where('sub_category_id' , $request->sub_category_id)->select('id' , 'title' , 'price'  , 'publication_date as date', 'selected as feature')->orderBy('publication_date' , 'DESC')->simplePaginate(12);
+            $products = AdProduct::where('status' , 1)->where('country_id', $request->country)->where('sub_category_id' , $request->sub_category_id)->select('id' , 'title' , 'price'  , 'publication_date as date', 'selected as feature')->orderBy('id' , 'DESC')->simplePaginate(12);
 
          }  
 
@@ -447,7 +447,7 @@ class CategoryController extends Controller
             $products = $products->where('sub_category_id' , $request->sub_category_level1_id);
         }
         
-        $products = $products->orderBy('publication_date' , 'DESC')->simplePaginate(12);
+        $products = $products->orderBy('id' , 'DESC')->simplePaginate(12);
          
 
          for($i = 0; $i < count($products); $i++){
@@ -592,7 +592,7 @@ class CategoryController extends Controller
             $products = $products->where('sub_category_id' , $request->sub_category_level1_id);
         }
 
-        $products = $products->select('id' , 'title' , 'price'  , 'publication_date as date', 'selected as feature')->orderBy('publication_date' , 'DESC')->simplePaginate(12);
+        $products = $products->select('id' , 'title' , 'price'  , 'publication_date as date', 'selected as feature')->orderBy('id' , 'DESC')->simplePaginate(12);
 
          for($i = 0; $i < count($products); $i++){
             $date = date_create($products[$i]['date']);

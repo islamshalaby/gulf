@@ -402,7 +402,7 @@ class AdProductController extends Controller
         if ($request->sub_category_level3_id != 0) {
             $products = $products->where('sub_category_three_id' , $request->sub_category_level3_id);
         }
-            $products = $products->where('sub_category_four_id' , $request->sub_category_id)->select('id' , 'title' , 'price'  , 'publication_date as date', 'selected as feature')->orderBy('publication_date' , 'DESC')->simplePaginate(12);
+            $products = $products->where('sub_category_four_id' , $request->sub_category_id)->select('id' , 'title' , 'price'  , 'publication_date as date', 'selected as feature')->orderBy('id' , 'DESC')->simplePaginate(12);
 
         
        

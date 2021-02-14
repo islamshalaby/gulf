@@ -314,6 +314,19 @@ class ProductController extends Controller
         }
 
         for($i =0; $i < count($products); $i++){
+            if(auth()->user()){
+                $user_id = auth()->user()->id;
+
+                $prevfavorite = Favorite::where('product_id' , $products[$i]['id'])->where('product_type' , 1)->where('user_id' , $user_id)->first();
+                if($prevfavorite){
+                    $products[$i]['favorite'] = true;
+                }else{
+                    $products[$i]['favorite'] = false;
+                }
+
+            }else{
+                $products[$i]['favorite'] = false;
+            }
             if($request->curr != 'kwd'){
                 $final = $products[$i]['final_price'] * $currency['value'];
                 $priceBefore = $products[$i]['price_before_offer'] * $currency['value'];
@@ -321,8 +334,9 @@ class ProductController extends Controller
                 $products[$i]['price_before_offer'] = number_format((float)$priceBefore, 2, '.', '');
             }
             $products[$i]['image'] = ProductImage::where('product_id' , $products[$i]['id'])->pluck('image')->first();
-
         }
+
+
 
 
         $response = APIHelpers::createApiResponse(false , 200 , '' , '' , $products , $request->lang) ;
