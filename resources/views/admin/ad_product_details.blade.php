@@ -31,31 +31,43 @@
                         <tr>
                             <td class="label-table" > {{ __('messages.category') }} </td>
                             <td>
-                                {{ $data['product']['category_name'] }}
+                                {{ App::isLocale('en') ? $data['product']->category->title_en : $data['product']->category->title_ar }}
                             </td>
                         </tr>
                         <tr>
                             <td class="label-table" > {{ __('messages.sub_category') }} </td>
                             <td>
-                                {{ $data['product']['sub_category_name'] }}
+                                {{ App::isLocale('en') ? $data['product']->subCategory->title_en : $data['product']->subCategory->title_ar }}
                             </td>
                         </tr>
                         <tr>
                             <td class="label-table" > {{ __('messages.sub_two_category') }} </td>
                             <td>
-                                {{ $data['product']['sub_two_category_name'] }}
+                                @if(!empty($data['product']->subTwoCategory))
+                                {{ App::isLocale('en') ? $data['product']->subTwoCategory->title_en : $data['product']->subTwoCategory->title_ar }}
+                                @endif
                             </td>
                         </tr>
                         <tr>
                             <td class="label-table" > {{ __('messages.sub_three_category') }} </td>
                             <td>
-                                {{ $data['product']['sub_three_category_name'] }}
+                                @if(!empty($data['product']->subThreeCategory))
+                                {{ App::isLocale('en') ? $data['product']->subThreeCategory->title_en : $data['product']->subThreeCategory->title_ar }}
+                                @endif
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="label-table" > {{ __('messages.sub_four_category') }} </td>
+                            <td>
+                                @if(!empty($data['product']->subFourCategory))
+                                {{ App::isLocale('en') ? $data['product']->subFourCategory->title_en : $data['product']->subFourCategory->title_ar }}
+                                @endif
                             </td>
                         </tr>
                         <tr>
                             <td class="label-table" > {{ __('messages.user') }} </td>
                             <td>
-                                {{ $data['product']['user_name'] }}
+                                {{ $data['product']->user->name }}
                             </td>
                         </tr>   
                         <tr>
@@ -76,16 +88,16 @@
                 <label for="">{{ __('messages.main_image') }}</label><br>
                 <div class="row">
                     <div class="col-md-2 product_image">
-                        <img style="width: 100%" src="https://res.cloudinary.com/dy4xq0cvc/image/upload/w_100,q_100/v1601416550/{{ $data['product']->images[0] }}"  />
+                        <img style="width: 100%" src="https://res.cloudinary.com/dy4xq0cvc/image/upload/w_100,q_100/v1601416550/{{ $data['product']->mainImage->image }}"  />
                     </div>
                 </div>
                 <label style="margin-top: 20px" for="">{{ __('messages.product_images') }}</label><br>
                 <div class="row">
-                    @if (count($data['product']['images']) > 0)
+                    @if (count($data['product']->images) > 0)
                         @php
                             $i = 0
                         @endphp
-                        @foreach ($data['product']['images'] as $image)
+                        @foreach ($data['product']->images as $image)
                         @if ($i != 0)
                         <div style="position : relative" class="col-md-2 product_image">
                             <img width="100%" src="https://res.cloudinary.com/dy4xq0cvc/image/upload/w_100,q_100/v1601416550/{{ $image }}"  />

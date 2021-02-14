@@ -52,4 +52,10 @@ class GovernorateController extends AdminController{
 
         return view('admin.governorate_details', ['data' => $data]);
     }
+
+    public function delete(Governorate $governorate) {
+        $governorate->update(['deleted' => 0]);
+
+        return redirect()->back();
+    }
 }

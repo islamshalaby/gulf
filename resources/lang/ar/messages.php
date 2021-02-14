@@ -370,6 +370,7 @@
             "description" => "الوصف",
             "sub_two_category" => "القسم الفرعي 2",
             "sub_three_category" => "القسم الفرعي 3",
+            "sub_four_category" => "القسم الفرعي 4",
             "main_image" => "الصوره الرئيسيه",
             "product_images" => "صور المنتج",
             "multiple_images" => "صور متعدده",
@@ -465,6 +466,7 @@
             "governorate_details" => "تفاصيل محافظة",
             "governorate_areas" => "مناطق المحافظات",
             "show_governorate_areas" => "عرض مناطق المحافظات",
-            "country_has_governorates" => "عذراً .. هذه الدولة مضاف لها محافظات"
+            "country_has_governorates" => "عذراً .. هذه الدولة مضاف بها محافظات",
+            "governorate_has_areas" => "عذراً .. هذه المحافظة مضاف بها مناطق"
         ];
 ?>

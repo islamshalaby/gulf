@@ -372,6 +372,7 @@
         "description" => "Description",
         "sub_two_category" => "Sub Category 2",
         "sub_three_category" => "Sub Category 3",
+        "sub_four_category" => "Sub Category 4",
         "main_image" => " Main Images",
         "product_images" => "Product Images",
         "multiple_images" => "Multiple Images ",
@@ -467,6 +468,7 @@
         "governorate_details" => "Governorate Details",
         "governorate_areas" => "Governorate Areas",
         "show_governorate_areas" => "Show Governorate Areas",
-        "country_has_governorates" => "Country Has Governorates"
+        "country_has_governorates" => "Country Has Governorates",
+        "governorate_has_areas" => "Governorate Has Areas"
     ];
 ?>

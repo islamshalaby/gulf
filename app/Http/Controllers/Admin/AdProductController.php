@@ -161,13 +161,6 @@ class AdProductController extends AdminController{
     // product details
     public function details(Request $request) {
         $data['product'] = AdProduct::find($request->id);
-        $data['product']->user_name = User::find($data['product']['user_id'])['name'];
-        $data['product']->category_name = Category::find($data['product']['category_id'])['title_ar'];
-        $data['product']->sub_category_name = SubCategory::find($data['product']['sub_category_id'])['title_ar'];
-        $data['product']->sub_two_category_name = SubTwoCategory::find($data['product']['sub_category_two_id'])['title_ar'];
-        $data['product']->sub_three_category_name = SubThreeCategory::find($data['product']['sub_category_three_id'])['title_ar'];
-
-        $data['product']->images = AdProductImage::where('product_id' , $data['product']['id'])->pluck('image');
 
         return view('admin.ad_product_details', ['data' => $data]);
     }

@@ -26,7 +26,7 @@ class ProductController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth:api' , ['except' => ['getdetails'  , 'getcategoryproducts' , 'getecommerceproducts' , 'getecommercefilterproducts' , 'ecommercesearch' , 'getecommerceproductdetails' , 'getecommercecompanyproducts' , 'getcompanies' , 'getdeliverymethods']]);
+        $this->middleware('auth:api' , ['except' => ['getdetails'  , 'getcategoryproducts' , 'getecommerceproducts' , 'getecommercefilterproducts' , 'ecommercesearch' , 'getecommerceproductdetails' , 'getecommercecompanyproducts' , 'getcompanies' , 'getdeliverymethods', 'getMaxMinPrice']]);
     }
 
 
@@ -443,6 +443,24 @@ class ProductController extends Controller
         }
 
         $response = APIHelpers::createApiResponse(false , 200 , '' , '' , $delivery_methods , $request->lang);
+        return response()->json($response , 200);
+    }
+
+    public function getMaxMinPrice(Request $request) {
+        $toCurr = trim(strtolower($request->curr));
+        if ($toCurr == "kwd") {
+            $currency = ["value" => 1];
+        }else {
+            $currency = Currency::where('from', "kwd")->where('to', $toCurr)->first();
+        }
+
+        $minPrice = Product::where('deleted' , 0)->where('hidden' , 0)->where('remaining_quantity', '>', 0)->min('final_price');
+        $convertedMinPrice = $minPrice * $currency['value'];
+        $data['min_price'] = number_format((float)$convertedMinPrice, 3, '.', '');
+        $maxPrice = Product::where('deleted' , 0)->where('hidden' , 0)->where('remaining_quantity', '>', 0)->max('final_price');
+        $convertedMaxPrice = $maxPrice * $currency['value'];
+        $data['max_price'] = number_format((float)$convertedMaxPrice, 3, '.', '');
+        $response = APIHelpers::createApiResponse(false , 200 , '' , '' , $data , $request->lang) ;
         return response()->json($response , 200);
     }
 

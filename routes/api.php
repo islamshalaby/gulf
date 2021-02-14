@@ -67,6 +67,7 @@ Route::group([
     Route::get('comments/{product}/{lang}/{v}' , 'AdProductController@getComments')->middleware('checkguest');
     Route::get('{curr}/details/{id}/{lang}/{v}' , 'AdProductController@getdetails')->middleware('checkguest');
     Route::get('{curr}/filter/{lang}/{v}' , 'AdProductController@adFilter')->middleware('checkguest');
+    Route::get('{curr}/getmaxminprice/{lang}/{v}' , 'AdProductController@getMaxMinPrice')->middleware('checkguest');
     
 });
 
@@ -175,6 +176,7 @@ Route::get('ecommerce/car_types/{curr}/{lang}/{v}' , 'CategoryController@get_car
 Route::get('ecommerce/sub_car_types/level1/{car_type_id}/{curr}/{lang}/{v}' , 'CategoryController@get_ecommerce_sub_car_type_level1')->middleware('checkguest');
 Route::get('ecommerce/sub_car_types/level2/{sub_car_type_id}/{curr}/{lang}/{v}' , 'CategoryController@get_ecommerce_sub_car_type_level2')->middleware('checkguest');
 Route::get('ecommerce/products/{curr}/{lang}/{v}' , 'ProductController@getecommercefilterproducts')->middleware('checkguest');
+Route::get('ecommerce/products/{curr}/getmaxminprice/{lang}/{v}' , 'ProductController@getMaxMinPrice')->middleware('checkguest');
 Route::get('ecommerce/products/filter/{curr}/{lang}/{v}' , 'ProductController@getecommercefilterproducts')->middleware('checkguest');
 Route::get('ecommerce/products/search/{curr}/{lang}/{v}' , 'ProductController@ecommercesearch' )->middleware('checkguest');
 Route::get('ecommerce/products/details/{id}/{curr}/{lang}/{v}' , 'ProductController@getecommerceproductdetails' )->middleware('checkguest');

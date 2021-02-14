@@ -144,7 +144,7 @@ Route::group([
         Route::get('edit/{governorate}' , 'GovernorateController@EditGet')->name('governorates.edit');
         Route::post('edit/{governorate}' , 'GovernorateController@postEdit');
         Route::get('details/{governorate}' , 'GovernorateController@details')->name('governorates.details');
-        // Route::get('delete/{id}' , 'CountryController@delete');
+        Route::get('delete/{governorate}' , 'GovernorateController@delete')->name('governorates.delete');
 
     });
 

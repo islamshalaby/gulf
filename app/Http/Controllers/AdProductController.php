@@ -33,7 +33,7 @@ class AdProductController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth:api' , ['except' => ['getdetails', 'getComments' , 'getproducts', 'getCountries', 'getGovernorates', 'getAreas', 'adSearch', 'adFilter' ]]);
+        $this->middleware('auth:api' , ['except' => ['getdetails', 'getComments' , 'getproducts', 'getCountries', 'getGovernorates', 'getAreas', 'adSearch', 'adFilter', 'getMaxMinPrice' ]]);
     }
 
     // get countries
@@ -562,7 +562,25 @@ class AdProductController extends Controller
     }
 
 
+    public function getMaxMinPrice(Request $request) {
+        $country = Country::where('id', $request->country)->select('id', 'currency')->first();
+        $fromCurr = trim(strtolower($country['currency']));
+        $toCurr = trim(strtolower($request->curr));
+        if ($fromCurr == $toCurr) {
+            $currency = ["value" => 1];
+        }else {
+            $currency = Currency::where('from', $fromCurr)->where('to', $toCurr)->first();
+        }
 
+        $minPrice = AdProduct::where('status' , 1)->where('country_id', $request->country)->min('price');
+        $convertedMinPrice = $minPrice * $currency['value'];
+        $data['min_price'] = number_format((float)$convertedMinPrice, 3, '.', '');
+        $maxPrice = AdProduct::where('status' , 1)->where('country_id', $request->country)->max('price');
+        $convertedMaxPrice = $maxPrice * $currency['value'];
+        $data['max_price'] = number_format((float)$convertedMaxPrice, 3, '.', '');
+        $response = APIHelpers::createApiResponse(false , 200 , '' , '' , $data , $request->lang) ;
+        return response()->json($response , 200);
+    }
 
 
 

@@ -11,4 +11,8 @@ class Governorate extends Model
     public function country() {
         return $this->belongsTo('App\Country', 'country_id');
     }
+
+    public function areas() {
+        return $this->hasMany('App\GovernorateAreas', 'governorate_id')->where('deleted', 0);
+    }
 }

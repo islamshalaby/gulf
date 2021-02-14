@@ -47,9 +47,11 @@
                                 @if(Auth::user()->delete_data) 
                                     <td class="text-center blue-color" >
                                         
-                                        <a onclick='return confirm("{{ __('messages.are_you_sure') }}");' href="/admin-panel/categories/delete/{{ $governorate
-                                            ->id }}" ><i class="far fa-trash-alt"></i></a>
-                                        
+                                        @if(count($governorate->areas) > 0)
+                                        {{ __('messages.governorate_has_areas') }}
+                                        @else
+                                        <a onclick='return confirm("{{ __('messages.are_you_sure') }}");' href="{{ route('governorates.delete', $governorate->id) }}" ><i class="far fa-trash-alt"></i></a>
+                                        @endif
                                     </td>
                                 @endif                                
                                 <?php $i++; ?>
