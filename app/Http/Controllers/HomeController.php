@@ -63,7 +63,7 @@ class HomeController extends Controller
         }else {
             $data['categories'] = Category::where('type', 2)->select('id', 'title_ar as title', 'image')->get();
         }
-        $data['feature_ads'] = AdProduct::where('country_id', $country['id'])->where('selected', 1)->select('id', 'title', 'price', 'publication_date as date', 'selected as feature')->get()->makeHidden('mainImage');
+        $data['feature_ads'] = AdProduct::where('country_id', $country['id'])->where('selected', 1)->select('id', 'title', 'price', 'publication_date as date', 'selected as feature')->orderBy('id', 'desc')->get()->makeHidden('mainImage');
 
         for($i = 0; $i < count($data['feature_ads']); $i ++) {
             $data['feature_ads'][$i]['image'] = $data['feature_ads'][$i]->mainImage['image'];

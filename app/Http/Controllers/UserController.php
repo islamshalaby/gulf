@@ -307,7 +307,7 @@ class UserController extends Controller
         $user = $request->id;
         $adUser = User::find($user);
 
-        $products = AdProduct::where('country_id', $country['id'])->where('user_id' , $user)->where('status' , 1)->orderBy('publication_date' , 'DESC')->select('id' , 'title' , 'price' , 'publication_date as date', 'selected as feature' )->simplePaginate(12);
+        $products = AdProduct::where('country_id', $country['id'])->where('user_id' , $user)->where('status' , 1)->orderBy('id' , 'DESC')->select('id' , 'title' , 'price' , 'publication_date as date', 'selected as feature' )->simplePaginate(12);
         $data['username'] = $adUser['name'];
         $data['email'] = $adUser['email'];
         $data['image'] = $adUser['image'];
