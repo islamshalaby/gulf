@@ -470,10 +470,10 @@ class ProductController extends Controller
 
         $minPrice = Product::where('deleted' , 0)->where('hidden' , 0)->where('remaining_quantity', '>', 0)->min('final_price');
         $convertedMinPrice = $minPrice * $currency['value'];
-        $data['min_price'] = number_format((float)$convertedMinPrice, 3, '.', '');
+        $data['min_price'] = (int)$convertedMinPrice;
         $maxPrice = Product::where('deleted' , 0)->where('hidden' , 0)->where('remaining_quantity', '>', 0)->max('final_price');
         $convertedMaxPrice = $maxPrice * $currency['value'];
-        $data['max_price'] = number_format((float)$convertedMaxPrice, 3, '.', '');
+        $data['max_price'] = (int)$convertedMaxPrice;
         $response = APIHelpers::createApiResponse(false , 200 , '' , '' , $data , $request->lang) ;
         return response()->json($response , 200);
     }

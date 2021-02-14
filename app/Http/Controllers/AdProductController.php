@@ -574,10 +574,10 @@ class AdProductController extends Controller
 
         $minPrice = AdProduct::where('status' , 1)->where('country_id', $request->country)->min('price');
         $convertedMinPrice = $minPrice * $currency['value'];
-        $data['min_price'] = number_format((float)$convertedMinPrice, 3, '.', '');
+        $data['min_price'] = (int)$convertedMinPrice;
         $maxPrice = AdProduct::where('status' , 1)->where('country_id', $request->country)->max('price');
         $convertedMaxPrice = $maxPrice * $currency['value'];
-        $data['max_price'] = number_format((float)$convertedMaxPrice, 3, '.', '');
+        $data['max_price'] = (int)$convertedMaxPrice;
         $response = APIHelpers::createApiResponse(false , 200 , '' , '' , $data , $request->lang) ;
         return response()->json($response , 200);
     }
