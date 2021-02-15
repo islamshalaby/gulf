@@ -529,7 +529,8 @@ class AdProductController extends Controller
         }
 
         if (isset($request->price_from) && isset($request->price_to)) {
-            // dd($request->price_to);
+            $request->price_from = $request->price_from / $currency['value'];
+            $request->price_to = $request->price_to / $currency['value'];
             $products = $products->whereBetween('price', [$request->price_from, $request->price_to]);
         }
 

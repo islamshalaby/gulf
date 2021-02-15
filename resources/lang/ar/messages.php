@@ -467,6 +467,10 @@
             "governorate_areas" => "مناطق المحافظات",
             "show_governorate_areas" => "عرض مناطق المحافظات",
             "country_has_governorates" => "عذراً .. هذه الدولة مضاف بها محافظات",
-            "governorate_has_areas" => "عذراً .. هذه المحافظة مضاف بها مناطق"
+            "governorate_has_areas" => "عذراً .. هذه المحافظة مضاف بها مناطق",
+            "add_to_best_offers" => "إضافة الى أفضل العروض",
+            "remove_from_best_offers" => "حذف من أفضل العروض",
+            "best_offers" => "أفضل العروض",
+            "comments" => "التعليقات"
         ];
 ?>

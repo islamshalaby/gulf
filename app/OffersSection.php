@@ -14,4 +14,8 @@ class OffersSection extends Model
     public function offers() {
         return $this->belongsToMany('App\Product', 'control_offers', 'offers_section_id','offer_id');
     }
+
+    public function adOffers() {
+        return $this->belongsToMany('App\AdProduct', 'control_offers', 'offers_section_id','offer_id');
+    }
 }

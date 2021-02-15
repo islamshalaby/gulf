@@ -88,7 +88,7 @@
                 <label for="">{{ __('messages.main_image') }}</label><br>
                 <div class="row">
                     <div class="col-md-2 product_image">
-                        <img style="width: 100%" src="https://res.cloudinary.com/dy4xq0cvc/image/upload/w_100,q_100/v1601416550/{{ $data['product']->mainImage->image }}"  />
+                        <img style="width: 100%" src="https://res.cloudinary.com/dyyeedzqi/image/upload/w_100,q_100/v1601416550/{{ $data['product']->mainImage->image }}"  />
                     </div>
                 </div>
                 <label style="margin-top: 20px" for="">{{ __('messages.product_images') }}</label><br>
@@ -100,7 +100,7 @@
                         @foreach ($data['product']->images as $image)
                         @if ($i != 0)
                         <div style="position : relative" class="col-md-2 product_image">
-                            <img width="100%" src="https://res.cloudinary.com/dy4xq0cvc/image/upload/w_100,q_100/v1601416550/{{ $image }}"  />
+                            <img width="100%" src="https://res.cloudinary.com/dyyeedzqi/image/upload/w_100,q_100/v1601416550/{{ $image->image }}"  />
                         </div>
                         @endif
                         

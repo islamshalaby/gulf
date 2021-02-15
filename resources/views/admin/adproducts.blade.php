@@ -21,10 +21,11 @@
                             <th>Id</th>
                             <th>{{ __('messages.publication_date') }}</th>
                             <th>{{ __('messages.product_name') }}</th>
-                            {{-- <th>{{ __('messages.category_title') }}</th> --}}
+                            <th>{{ __('messages.best_offers') }}</th>
                             {{-- <th>{{ __('messages.productType') }}</th> --}}
                             <th>{{ __('messages.user') }}</th>
                             <th>{{ __('messages.archived_or_not') }}</th>
+                            <th>{{ __('messages.comments') }}</th>
                             <th class="text-center">{{ __('messages.details') }}</th>
                             {{-- @if(Auth::user()->update_data) 
                                 <th class="text-center">{{ __('messages.edit') }}</th>
@@ -42,11 +43,19 @@
                                 <td>{{ date('Y-m-d', strtotime($product->publication_date)) }}</td>
                                 <td>{{ $product->title }}</td>
                                 <td>
-                                    <a href="/admin-panel/users/details/{{ $product->user_id }}" target="_blank">
-                                        {{ $product->user }}
+                                    @if ($product->bestOffer)
+                                    <a onclick="return confirm('{{ __('messages.are_you_sure') }}');" href="{{ route('adProduct.removefrombestoffers', $product->id) }}" >
+                                        <i class="fa fa-minus" aria-hidden="true"></i> {{ __('messages.remove_from_best_offers') }}
                                     </a>
+                                    @else
+                                    <a onclick="return confirm('{{ __('messages.are_you_sure') }}');"  href="{{ route('adProduct.addtobestoffers', $product->id) }}" >
+                                        <i class="fa fa-plus"></i> {{ __('messages.add_to_best_offers') }}
+                                    </a>
+                                    @endif
                                 </td>
+                                <td>{{ isset($product->user->name) ? $product->user->name : '' }}</td>
                                 <td>{{ $product->status == 1 ? __('messages.published') : __('messages.archived') }}</td>
+                                <td><a target="_blank" href="{{ route('adProduct.comments', $product->id) }}"><i class="far fa-eye"></i></a></td>
                                 <td class="text-center blue-color"><a href="/admin-panel/ad_products/details/{{ $product->id }}" ><i class="far fa-eye"></i></a></td>
                                 {{-- @if(Auth::user()->update_data) 
                                     <td class="text-center blue-color" ><a href="/admin-panel/ad_products/edit/{{ $product->id }}" ><i class="far fa-edit"></i></a></td>

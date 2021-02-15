@@ -227,6 +227,8 @@ class ProductController extends Controller
         }
 
         if($request->has('price_from') && $request->has('price_to') && $request->price_from != 0 && $request->price_to != 0){
+            $request->price_from = $request->price_from / $currency['value'];
+            $request->price_to = $request->price_to / $currency['value'];
             $products->whereBetween('final_price', [$request->price_from, $request->price_to]);
         }
         

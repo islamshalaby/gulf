@@ -191,7 +191,10 @@ Route::group([
         Route::post('edit/{id}' , 'AdProductController@EditPost');
         Route::get('delete/{id}' , 'AdProductController@delete');
         Route::get('details/{id}' , 'AdProductController@details');
+        Route::get('comments/{product}' , 'AdProductController@showComments')->name('adProduct.comments');
         Route::get('images/delete/{id}' , 'AdProductController@delete_product_image');
+        Route::get('addtobestoffers/{product}' , 'AdProductController@addToBestOffers')->name('adProduct.addtobestoffers');
+        Route::get('removefrombestoffers/{product}' , 'AdProductController@removeFromBestOffers')->name('adProduct.removefrombestoffers');
 
     });
 
@@ -270,12 +273,18 @@ Route::group([
         "prefix" => "offers_control"
     ], function($router){
             Route::get('add' , 'OffersControlController@AddGet')->name('offers_control.add');
+            Route::get('add-ad' , 'OffersControlController@AddGetAd')->name('offers_control.ad.add');
             Route::post('add' , 'OffersControlController@AddPost');
+            Route::post('add-ad' , 'OffersControlController@AddPostAd');
             Route::post('sort' , 'OffersControlController@updateOffersSorting')->name('offers_control.sort');
             Route::get('edit/{section}' , 'OffersControlController@EditGet')->name('offers_control.edit');
+            Route::get('edit-ad/{section}' , 'OffersControlController@EditGetAd')->name('offers_control.ad.edit');
             Route::post('edit/{section}' , 'OffersControlController@EditPost');
+            Route::post('edit-ad/{section}' , 'OffersControlController@EditPostAd');
             Route::get('show' , 'OffersControlController@show')->name('offers_control.index');
+            Route::get('show-ad' , 'OffersControlController@showAd')->name('offers_control.ad.index');
             Route::get('details/{section}' , 'OffersControlController@details')->name('offers_control.details');
+            Route::get('details-ad/{section}' , 'OffersControlController@detailsAd')->name('offers_control.ad.details');
             Route::get('delete/{section}' , 'OffersControlController@delete')->name('offers_control.delete');
     });
 

@@ -469,6 +469,10 @@
         "governorate_areas" => "Governorate Areas",
         "show_governorate_areas" => "Show Governorate Areas",
         "country_has_governorates" => "Country Has Governorates",
-        "governorate_has_areas" => "Governorate Has Areas"
+        "governorate_has_areas" => "Governorate Has Areas",
+        "add_to_best_offers" => "Add To Best Offers",
+        "remove_from_best_offers" => "Remove From Best Offers",
+        "best_offers" => "Best Offers",
+        "comments" => "Comments"
     ];
 ?>

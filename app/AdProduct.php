@@ -32,7 +32,7 @@ class AdProduct extends Model
     }
 
     public function images() {
-        return $this->belongsTo('App\AdProductImage', 'product_id');
+        return $this->hasMany('App\AdProductImage', 'product_id');
     }
 
     public function mainImage() {
@@ -61,5 +61,13 @@ class AdProduct extends Model
 
     public function user() {
         return $this->belongsTo('App\User', 'user_id');
+    }
+
+    public function bestOffer() {
+        return $this->hasOne('App\BestOffer', 'product_id');
+    }
+
+    public function comments() {
+        return $this->hasMany('App\Comment', 'product_id');
     }
 }

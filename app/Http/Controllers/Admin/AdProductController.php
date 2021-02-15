@@ -11,6 +11,8 @@ use App\SubTwoCategory;
 use App\SubThreeCategory;
 use App\User;
 use App\Setting;
+use App\BestOffer;
+use App\Comment;
 
 
 class AdProductController extends AdminController{
@@ -18,9 +20,7 @@ class AdProductController extends AdminController{
     // show
     public function show() {
         $data['products'] = AdProduct::orderBy('id','desc')->get();
-        for($i=0; $i<count($data['products']); $i++){
-            $data['products'][$i]['user'] = User::find($data['products'][$i]['user_id'])['name'];
-        }
+        
         return view('admin.adproducts', ['data' => $data]);
     }
 
@@ -171,6 +171,28 @@ class AdProductController extends AdminController{
         $product->delete();
 
         return redirect()->back();
+    }
+
+    // add to best offers
+    public function addToBestOffers(AdProduct $product) {
+        BestOffer::create(['product_id' => $product->id]);
+
+        return redirect()->back();
+    }
+
+    // remove from best offers
+    public function removeFromBestOffers(AdProduct $product) {
+        $bestOffer = BestOffer::where('product_id', $product->id)->first();
+        $bestOffer->delete();
+
+        return redirect()->back();
+    }
+
+    // show comments
+    public function showComments(AdProduct $product) {
+        $data['product'] = $product;
+
+        return view('admin.comments', compact('data'));
     }
 
     
