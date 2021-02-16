@@ -29,7 +29,7 @@ class HomeController extends AdminController{
         $data['products_less_than_ten'] = Product::where('deleted' , 0)->where('remaining_quantity' , '<' , 10)->count();
         $data['sub_categories'] = SubCategory::where('deleted', 0)->count();
         $data['most_sold_products']=OrderItem::join('products','products.id', '=','order_items.product_id')
-        ->where('orders.status', 2)
+        ->where('orders.status', 4)
         ->leftjoin('orders', function($join) {
             $join->on('orders.id', '=', 'order_items.order_id');
         })
@@ -57,14 +57,14 @@ class HomeController extends AdminController{
         
         $data['recent_orders'] = Order::orderBy('id' , 'desc')->take(7)->get();
         $data['in_progress_orders'] = Order::where('status', 1)->sum('total_price');
-        $data['canceled_orders'] = Order::where('status', 3)->sum('total_price');
-        $data['delivered_orders'] = Order::where('status', 2)->sum('total_price');
+        $data['canceled_orders'] = Order::where('status', 5)->sum('total_price');
+        $data['delivered_orders'] = Order::where('status', 4)->sum('total_price');
         $data['total_value'] = (double)$data['in_progress_orders'] + (double)$data['canceled_orders'] + (double)$data['delivered_orders'];
 
         // dd($data['in_progress_orders']);
 
         $data['monthly_canceled_orders'] = Order::select('id', 'created_at')
-        ->where('status', 3)
+        ->where('status', 5)
         ->get()
         ->groupBy(function($date) {
             return Carbon::parse($date->created_at)->format('m'); // grouping by months
@@ -85,7 +85,7 @@ class HomeController extends AdminController{
         }
 
         $data['monthly_completed_orders'] = Order::select('id', 'created_at')
-        ->where('status', 2)
+        ->where('status', 4)
         ->get()
         ->groupBy(function($date) {
             return Carbon::parse($date->created_at)->format('m'); // grouping by months
@@ -126,7 +126,7 @@ class HomeController extends AdminController{
             }
         }
 
-        $data['delivered_orders_cost'] = Order::where('status', 2)->sum('total_price');
+        $data['delivered_orders_cost'] = Order::where('status', 4)->sum('total_price');
 
         
         // dd($data['Inprogress_orders_arr']);

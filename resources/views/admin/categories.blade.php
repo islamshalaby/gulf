@@ -19,6 +19,7 @@
                         <tr>
                             <th>Id</th>
                             <th>{{ __('messages.category_title') }}</th>
+                            
                             <th class="text-center">{{ __('messages.details') }}</th>
                             @if(Auth::user()->update_data) 
                                 <th class="text-center">{{ __('messages.edit') }}</th>                          
@@ -34,6 +35,7 @@
                             <tr>
                                 <td><?=$i;?></td>
                                 <td>{{ App::isLocale('en') ? $category->title_en : $category->title_ar }}</td>
+                                
                                 <td class="text-center blue-color"><a href="{{ Request::segment(2) == 'categories' ? route('categories.details', $category->id) : route('categories.ads.details', $category->id) }}" ><i class="far fa-eye"></i></a></td>
                                 @if(Auth::user()->update_data) 
                                     <td class="text-center blue-color" ><a href="{{ Request::segment(2) == 'categories' ? '/admin-panel/categories/edit/' . $category->id : '/admin-panel/ads_categories/edit/' . $category->id }}" ><i class="far fa-edit"></i></a></td>

@@ -41,6 +41,7 @@ Route::group([
     ] , function($router){
             Route::get('add' , 'UserController@AddGet');
             Route::post('add' , 'UserController@AddPost');
+            Route::post('add-free-ads/{user}' , 'UserController@addFreeAds')->name("user.addfreeads");
             Route::get('show' , 'UserController@show');
             Route::get('edit/{id}' , 'UserController@edit');
             Route::post('edit/{id}' , 'UserController@EditPost');
@@ -52,6 +53,15 @@ Route::group([
             Route::get('address/details/{address}' , 'UserController@address_details')->name('address.details');
         }
     );
+
+    // category options
+    Route::resource('cat_options' , 'CategoryOptionsController');
+    Route::get('cat_options/deleted/{id}' , 'CategoryOptionsController@destroy')->name('cat_options.deleted');
+    // options values
+    Route::resource('options_values' , 'OptionsValuesController');
+    Route::get('options_values/create_new/{option_id}' , 'OptionsValuesController@create')->name('options_values.create_new');
+    Route::get('options_values/deleted/{id}' , 'OptionsValuesController@destroy')->name('options_values.deleted');
+    Route::post('options_values/update_new/{id}' , 'OptionsValuesController@update')->name('options_values.update.new');
 
     // admins routes for dashboard
     Route::group([

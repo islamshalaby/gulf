@@ -157,5 +157,25 @@ class UserController extends AdminController{
         return view('admin.address_details', ['data' => $data]);
     }
 
+    // add free ads
+    public function addFreeAds(Request $request, User $user) {
+        $user->update(['free_ads_count' => $user->free_ads_count + $request->free_ads_count]);
+        $insert_notification = new Notification();
+        $insert_notification->image = "";
+        $insert_notification->title = "رصيد إعلانات";
+        $insert_notification->body =   "تم إضافة " . $request->free_ads_count . "لرصيد إعلاناتك";
+        $insert_notification->save();
+
+        $user_notification = new UserNotification();
+        $user_notification->notification_id = $insert_notification->id;
+        $user_notification->user_id = $user->id;
+        $user_notification->save();
+        $fcm = [$user->fcm_token];
+
+        $notification = APIHelpers::send_notification($request->title , $request->body , "" , null , $fcm);
+        
+        return redirect()->back()->with('status', 'Added Successfully');
+    }
+
 
 }

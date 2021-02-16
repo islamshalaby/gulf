@@ -77,6 +77,19 @@
                 @endif
 
                 <div class="">
+                    <h4>{{ __('messages.add_free_ads') }}</h4>
+                </div>
+                <br>
+                <form style="margin-bottom: 50px" action="{{ route('user.addfreeads', $data['user']['id']) }}" method="post" enctype="multipart/form-data" >
+                    @csrf
+                    <div class="form-group mb-4">
+                        <label for="free_ads_count">{{ __('messages.ads') }}</label>
+                        <input type="number" name="free_ads_count" class="form-control" id="free_ads_count" placeholder="{{ __('messages.ads') }}" value="" >
+                    </div>                
+                    
+                    <input type="submit" value="{{ __('messages.submit') }}" class="btn btn-primary">
+                </form>
+                <div class="">
                      <h4>{{ __('messages.send_notification_to_user') }}</h4>
                 </div>
                 <br>

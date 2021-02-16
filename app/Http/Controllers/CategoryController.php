@@ -627,7 +627,7 @@ class CategoryController extends Controller
             if (count($data['options']) > 0) {
                 for ($i =0; $i < count($data['options']); $i ++) {
                     $data['options'][$i]['type'] = 'input';
-                    $optionValues = CategoryOptionValue::where('option_id', $data['options'][$i]['option_id'])->select('id as value_id', 'value_en as value')->get();
+                    $optionValues = CategoryOptionValue::where('option_id', $data['options'][$i]['option_id'])->where('deleted', 0)->select('id as value_id', 'value_en as value')->get();
                     if (count($optionValues) > 0) {
                         $data['options'][$i]['type'] = 'select';
                         $data['options'][$i]['values'] = $optionValues;
@@ -639,7 +639,7 @@ class CategoryController extends Controller
             if (count($data['options']) > 0) {
                 for ($i =0; $i < count($data['options']); $i ++) {
                     $data['options'][$i]['type'] = 'input';
-                    $optionValues = CategoryOptionValue::where('option_id', $data['options'][$i]['option_id'])->select('id as value_id', 'value_ar as value')->get();
+                    $optionValues = CategoryOptionValue::where('option_id', $data['options'][$i]['option_id'])->where('deleted', 0)->select('id as value_id', 'value_ar as value')->get();
                     if (count($optionValues) > 0) {
                         $data['options'][$i]['type'] = 'select';
                         $data['options'][$i]['values'] = $optionValues;

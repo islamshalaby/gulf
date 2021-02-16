@@ -491,9 +491,9 @@ chart1.render();
                                 <td><div class="td-content">
                                     @if($recent_order->status == 1)
                                     <span class="badge outline-badge-primary">{{ __('messages.in_progress') }}</span>
-                                    @elseif ($recent_order->status == 2)
+                                    @elseif ($recent_order->status == 4)
                                     <span class="badge outline-badge-success">{{ __('messages.delivered') }}</span>
-                                    @else
+                                    @elseif ($recent_order->status == 5)
                                     <span class="badge outline-badge-danger">{{ __('messages.canceled') }}</span>
                                     @endif
                                     </div></td>

@@ -4,6 +4,16 @@
         'add' => 'Add',
         'show' => 'Show',
         'show_users' => 'Show Users',
+        'cat_options' => "category options",
+        'name' => "name",
+        'list_values' => "list of values",
+        'added_s' => "Added successfully",
+        'updated_s' => "updated successfully",
+        'deleted_s' => "deleted successfully",
+        "add_cat_options" => "Add Category Option",
+        'name_ar' => "name in arabic",
+        'name_en' => "name in english",
+        'cancel' => "Cancel",
         "dashboard" => "Dashboard",
         "app_pages" => "App Pages",
         "settings" => "Settings",
@@ -473,6 +483,7 @@
         "add_to_best_offers" => "Add To Best Offers",
         "remove_from_best_offers" => "Remove From Best Offers",
         "best_offers" => "Best Offers",
-        "comments" => "Comments"
+        "comments" => "Comments",
+        "add_free_ads" => "Add Free Ads"
     ];
 ?>

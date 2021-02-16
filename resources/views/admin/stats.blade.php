@@ -147,10 +147,10 @@
                                                                 <th scope="col">{{ __('messages.contact_us_count') }}</th>
                                                                 <th scope="col">{{ $data['contact_us'] }}</th>
                                                             </tr>
-                                                            <tr>
+                                                            {{--  <tr>
                                                                 <th scope="col">{{ __('messages.brands_count') }}</th>
                                                                 <th scope="col">{{ $data['brands'] }}</th>
-                                                            </tr>
+                                                            </tr>  --}}
                                                             <tr>
                                                                 <th scope="col">{{ __('messages.sub_categories_count') }}</th>
                                                                 <th scope="col">{{ $data['sub_categories'] }}</th>
@@ -211,10 +211,10 @@
                                                                 <th scope="col">{{ __('messages.key_net_orders_cost') }}</th>
                                                                 <th scope="col">{{ $data['key_net_orders_cost'] }} {{ __('messages.dinar') }}</th>
                                                             </tr>
-                                                            <tr>
+                                                            {{--  <tr>
                                                                 <th scope="col">{{ __('messages.key_net_home_orders_cost') }}</th>
                                                                 <th scope="col">{{ $data['key_net_home_orders_cost'] }} {{ __('messages.dinar') }}</th>
-                                                            </tr>
+                                                            </tr>  --}}
                                                         </thead>
                                                         
                                                     </table>
@@ -294,10 +294,10 @@
                                                                 <th scope="col">{{ __('messages.today_key_net_cost') }}</th>
                                                                 <th scope="col">{{ $data['today_key_net_cost'] }} {{ __('messages.dinar') }}</th>
                                                             </tr>
-                                                            <tr>
+                                                            {{--  <tr>
                                                                 <th scope="col">{{ __('messages.today_key_net_home_cost') }}</th>
                                                                 <th scope="col">{{ $data['today_key_net_home_cost'] }} {{ __('messages.dinar') }}</th>
-                                                            </tr>
+                                                            </tr>  --}}
                                                             
                                                         </thead>
                                                         

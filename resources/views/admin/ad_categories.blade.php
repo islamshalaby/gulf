@@ -20,6 +20,7 @@
                         <tr>
                             <th>Id</th>
                             <th>{{ __('messages.category_title') }}</th>
+                            <th class="text-center">{{ __('messages.cat_options') }}</th>
                             <th class="text-center">{{ __('messages.details') }}</th>
                             @if(Auth::user()->update_data) 
                                 <th class="text-center">{{ __('messages.edit') }}</th>                          
@@ -35,6 +36,19 @@
                             <tr>
                                 <td><?=$i;?></td>
                                 <td>{{ App::isLocale('en') ? $category->title_en : $category->title_ar }}</td>
+                                <td>
+                                    <a href="{{route('cat_options.show',$category->id)}}">
+                                        <div class="">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                                stroke-linejoin="round" class="feather feather-inbox">
+                                                <polyline points="22 12 16 12 14 15 10 15 8 12 2 12"></polyline>
+                                                <path
+                                                    d="M5.45 5.11L2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z"></path>
+                                            </svg>
+                                        </div>
+                                    </a>
+                                </td>
                                 <td class="text-center blue-color"><a href="{{ Request::segment(2) == 'categories' ? route('categories.details', $category->id) : route('categories.ads.details', $category->id) }}" ><i class="far fa-eye"></i></a></td>
                                 @if(Auth::user()->update_data) 
                                     <td class="text-center blue-color" ><a href="{{ Request::segment(2) == 'categories' ? '/admin-panel/categories/edit/' . $category->id : '/admin-panel/ads_categories/edit/' . $category->id }}" ><i class="far fa-edit"></i></a></td>
