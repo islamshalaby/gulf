@@ -6,11 +6,9 @@
 @section('content')
 <div class="row" >
     <div class="col-md-6 layout-spacing">
-        <a href="{{ route('home.ad.index') }}" class="btn btn-dark">{{ __('messages.ad_dashboard') }}</a>
+        <p>{{ __('messages.ad_dashboard') }}</p>
     </div>  
-    <div class="col-md-6 layout-spacing">
-        <a href="{{ route('home.ecommerce.index') }}" class="btn btn-dark">{{ __('messages.ecommerce_dashboard') }}</a>
-    </div>
+    
 </div>                     
 @endsection
 

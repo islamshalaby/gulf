@@ -427,12 +427,6 @@ chart1.render();
 
 @section('content')
 <div class="row" >
-    <div class="col-md-6 layout-spacing">
-        <a href="{{ route('home.ad.index') }}" class="btn btn-dark">{{ __('messages.ad_dashboard') }}</a>
-    </div>  
-    <div class="col-md-6 layout-spacing">
-        <a href="{{ route('home.ecommerce.index') }}" class="btn btn-dark">{{ __('messages.ecommerce_dashboard') }}</a>
-    </div>
     <div class="col-xl-7 col-lg-12 col-md-12 col-sm-12 col-12 layout-spacing">
         <div class="widget widget-chart-one">
             <div class="widget-heading">
@@ -656,7 +650,7 @@ chart1.render();
             </div>
         </a>
     </div>
-    <div class="col-xl-4 col-lg-6 col-md-6 col-sm-6 col-12 layout-spacing">
+    {{--  <div class="col-xl-4 col-lg-6 col-md-6 col-sm-6 col-12 layout-spacing">
         <a href="{{ route('brands.index') }}" >
             <div class="widget widget-card-four">
                 <div class="widget-content">
@@ -677,7 +671,7 @@ chart1.render();
                 </div>
             </div>
         </a>
-    </div>
+    </div>  --}}
 
                        
 @endsection

@@ -169,14 +169,16 @@
 
                         <nav class="breadcrumb-one" aria-label="breadcrumb">
                             <ol class="breadcrumb">
-                                <li class="breadcrumb-item"><a href="{{ route('home.ad.index') }}">{{ __('messages.ad_dashboard') }}</a></li>
-                                <!-- <li class="breadcrumb-item active" aria-current="page"><span>Sales</span></li> -->
+                                {{--  <li class="breadcrumb-item"><a href="{{ route('home.ad.index') }}">{{ __('messages.ad_dashboard') }}</a></li>  --}}
+                                <li class="breadcrumb-item"><a href="{{ route('home.ad.index') }}" class="btn btn-dark">{{ __('messages.ad_dashboard') }}</a></li>
+                                <li class="breadcrumb-item"><a href="{{ route('home.ecommerce.index') }}" class="btn btn-dark">{{ __('messages.ecommerce_dashboard') }}</a></li>
                             </ol>
                         </nav>
 
                     </div>
                 </li>
             </ul>
+            
         </header>
     </div>
     <!--  END NAVBAR  -->
