@@ -630,7 +630,7 @@ class UserController extends Controller
                     }else {
                         $catOptionVal = AdProductOption::where('product_id', $ad['id'])->where('option_id', $categoryOptions[$i]['option_id'])->select('value')->first();
                         if ($catOptionVal) {
-                            $categoryOptions[$i]['value'] = $catOptionVal['value_ar'];
+                            $categoryOptions[$i]['value'] = $catOptionVal['value'];
                         }else {
                             $categoryOptions[$i]['value'] = "";
                         }
