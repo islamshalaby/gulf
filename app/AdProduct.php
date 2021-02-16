@@ -11,7 +11,8 @@ class AdProduct extends Model
     'price',
     'category_id',
     'user_id',
-    'type',
+    'type', // 1 => new
+            // 2 => used
     'views',
     'offer',
     'status',

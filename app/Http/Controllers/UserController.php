@@ -616,7 +616,7 @@ class UserController extends Controller
             if (count($categoryOptions) > 0) {
                 for ($i =0; $i < count($categoryOptions); $i ++) {
                     $categoryOptions[$i]['type'] = 'input';
-                    $optionValues = CategoryOptionValue::where('option_id', $categoryOptions[$i]['option_id'])->select('id as value_id', 'value_ar as value')->get();
+                    $optionValues = CategoryOptionValue::where('option_id', $categoryOptions[$i]['option_id'])->select('id as value_id', 'value_en as value')->get();
                     if (count($optionValues) > 0) {
                         $categoryOptions[$i]['type'] = 'select';
                         $categoryOptions[$i]['values'] = $optionValues;
@@ -628,8 +628,13 @@ class UserController extends Controller
                         }
                         
                     }else {
-                        $categoryOptions[$i]['value'] = AdProductOption::where('product_id', $ad['id'])->where('option_id', $categoryOptions[$i]['option_id'])->select('value')->first()['value'];
-                        
+                        $catOptionVal = AdProductOption::where('product_id', $ad['id'])->where('option_id', $categoryOptions[$i]['option_id'])->select('value')->first();
+                        if ($catOptionVal) {
+                            $categoryOptions[$i]['value'] = $catOptionVal['value_ar'];
+                        }else {
+                            $categoryOptions[$i]['value'] = "";
+                        }
+                        // AdProductOption::where('product_id', $ad['id'])->where('option_id', $categoryOptions[$i]['option_id'])->select('value')->first()['value'];
                     }
                 }
             }
