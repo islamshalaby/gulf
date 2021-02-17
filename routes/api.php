@@ -68,7 +68,7 @@ Route::group([
     Route::get('{curr}/details/{id}/{lang}/{v}' , 'AdProductController@getdetails')->middleware('checkguest');
     Route::get('{curr}/filter/{lang}/{v}' , 'AdProductController@adFilter')->middleware('checkguest');
     Route::get('{curr}/getmaxminprice/{lang}/{v}' , 'AdProductController@getMaxMinPrice')->middleware('checkguest');
-    
+
 });
 
 Route::get('ad/home/{curr}/{lang}/{v}' , 'HomeController@getAdData')->middleware('checkguest');
@@ -213,7 +213,7 @@ Route::get('/getappnumber/{lang}/{v}' , 'SettingController@getappnumber')->middl
 // get whats app number
 Route::get('/getwhatsappnumber/{lang}/{v}' , 'SettingController@getwhatsapp')->middleware('checkguest');
 
-// get products 
+// get products
 // Route::get('/products/{lang}/{v}' , 'ProductController@getproducts')->middleware('checkguest');
 
 // get products brand
@@ -223,11 +223,21 @@ Route::get('/ecommerce/products/category/{category_id}/{lang}/{v}' , 'ProductCon
 Route::get('/ecommerce/products/{id}/{lang}/{v}' , 'ProductController@getdetails')->middleware('checkguest');
 
 // rates
-// get rates 
+// get rates
 Route::get('/rate/{order_id}/{lang}/{v}' , 'RateController@getrates')->middleware('checkguest');
 // add rate
 Route::post('/rate/{lang}/{v}' , 'RateController@addrate');
 
 Route::get('/search/{lang}/{v}' , 'SearchByNameController@search' )->middleware('checkguest');
+
+//nasser code
+//chat api
+Route::get('/chat/test_exists_conversation/{id}/{lang}/{v}' , 'ChatController@test_exists_conversation');
+
+Route::post('/chat/send_message/{lang}/{v}' , 'ChatController@store');
+Route::get('/chat/my_messages/{lang}/{v}' , 'ChatController@my_messages');
+Route::get('/chat/get_ad_message/{id}/{lang}/{v}' , 'ChatController@get_ad_message');
+Route::get('/chat/search_conversation/{search}/{lang}/{v}' , 'ChatController@search_conversation');
+//end nasser code
 
 
