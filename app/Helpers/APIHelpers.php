@@ -39,7 +39,7 @@
               $dist = rad2deg($dist);
               $miles = $dist * 60 * 1.1515;
               $unit = strtoupper($unit);
-          
+
               if ($unit == "K") {
                 return ($miles * 1.609344);
               } else if ($unit == "N") {
@@ -52,7 +52,7 @@
 
           // send fcm notification
           public static function send_notification($title , $body , $image , $data , $token){
-            
+
             $message= $body;
             $title= $title;
             $image = $image;
@@ -64,8 +64,8 @@
                 'Content-Type:application/json'
             );
 
-            $fields =array('registration_ids'=>$token,  
-            'notification'=>array('title'=>$title,'body'=>$message , 'image'=>$image));  
+            $fields =array('registration_ids'=>$token,
+            'notification'=>array('title'=>$title,'body'=>$message , 'image'=>$image));
 
             $payload =json_encode($fields);
             $curl_session =curl_init();
@@ -97,9 +97,57 @@
             return $result;
           }
 
+        public static function send_chat_notification($tokens, $title="hello", $msg="helo msg", $type=1,$chat=null,$jobs=null){
+            $key = 'AAAAMUON44I:APA91bEA9uJBOkHS6LN-cnZ8UFs-acHT_T7xw5h9XyyA91FS51n3nFi11rhGs611jJ4ia4VisD2TIDqN5AbanKrcHdMhWO5mxPwSQL3I6S_NVyFInGtwtUbKZzRT12U2ybHGr29qf0IF';
+            $fields = array
+            (
+                "registration_ids" => (array)$tokens,  //array of user token whom notification sent two
+//            "registration_ids" => (array)'diLndYfZRFyxw8nOjU5yt0:APA91bGYE5TyP2VjgUHHEuCP5-dMEoY8K4AgEl_JuWYjcFyJxS1MamBtJhmp4y-q-lhYWF6AXvy9OpgOJJsJyJ5qSNCHFvSR3iWODWVb84NkbnpZYcuNL0mkforreA89wcwrHuntJdaG',
+                "priority" => 10,
+                'data' => [ // android developer
+                    'title' => $title,
+                    'body' => $msg,
+                    'chat' => $chat,
+                    'type' => $type,
+                    'icon' => 'myIcon',
+                    'sound' => 'mySound',
+                    'jobs' => $jobs
+                ],
+                'notification' => [  // ios developer
+                    'title' => $title,
+                    'body' => $msg,
+                    'chat' => $chat,
+                    'type' => 3,
+                    'icon' => 'myIcon',
+                    'sound' => 'mySound',
+                    'jobs' => $jobs
+                ],
+                'vibrate' => 1,
+                'sound' => 1
+            );
+
+            $headers = array
+            (
+                'accept: application/json',
+                'Content-Type: application/json',
+                'Authorization: key=' . $key
+            );
+            $ch = curl_init();
+            curl_setopt($ch, CURLOPT_URL, 'https://fcm.googleapis.com/fcm/send');
+            curl_setopt($ch, CURLOPT_POST, true);
+            curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+            curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($fields));
+            $result = curl_exec($ch);
+            if ($result === FALSE) {
+                die('Curl failed: ' . curl_error($ch));
+            }
+            curl_close($ch);
+            return $result;
+        }
 
 
-          
 
 
     }

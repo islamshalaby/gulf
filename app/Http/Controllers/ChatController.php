@@ -70,7 +70,6 @@ class ChatController extends Controller
         }else{
             if(auth()->user() != null){
                 $ad_product = AdProduct::findOrfail($request->ad_product_id);
-
                 if($request->conversation_id == null){
                     $conversation = Conversation::create();
                     $part_data['user_id'] = auth()->user()->id;
@@ -86,7 +85,7 @@ class ChatController extends Controller
                 }else{
                     $input['conversation_id'] = $request->conversation_id;
                 }
-
+                $other_user = Participant::where('conversation_id',$input['conversation_id'])->where('user_id','!=',auth()->user()->id)->first();
                 $input['user_id'] = auth()->user()->id;
                 if($request->type == 'text'){
                     $message = Message::create($input);
@@ -104,6 +103,12 @@ class ChatController extends Controller
                     $conv_data['last_message_id'] = $message->id ;
                     Conversation::findOrFail($input['conversation_id'])->update($conv_data);
                 }
+                //begin use firebase to send message
+                    $fb_token = $other_user->User->fcm_token;
+//                    $fb_token = 'fWhAQ1jMQ4iivvh3Qrnzlo:APA91bF8qD2dspOk8ASLmhO1Q3-mS7HFzcCwSoevdHNtv1JaL3Ps2-u1H6Uy_ASyBXmgpDq2VD_0rw5frliggpMIWnZNmlo-GNGI6tSf7m4Vd6mTPHKgA9sXUrC9Xqc_TbyjtN-xcU_F';
+                    $result =  APIHelpers::send_chat_notification($fb_token,'from ad product','new message arrived',$message->type,$message,null);
+                //end firebase
+
                 $response = APIHelpers::createApiResponse(false , 200 ,  'message sent successfully','تم ارسال الرسالة بنجاح' , null, $request->lang);
                 return response()->json($response , 200);
             }else{
@@ -142,6 +147,15 @@ class ChatController extends Controller
                             });
         $response = APIHelpers::createApiResponse(false , 200 , '' , '' , $data , $request->lang);
         return response()->json($response , 200);
+    }
+    public function make_read(Request $request)
+    {
+        $input['is_read'] = '1';
+        Message::where('id',$request->message_id)->update($input);
+        $response = APIHelpers::createApiResponse(false , 200 , 'message seen successfuly' , 'تم رؤية الرسالة بنجاح' , null , $request->lang);
+        return response()->json($response , 200);
+
+
     }
     public function search_conversation(Request $request)
     {
