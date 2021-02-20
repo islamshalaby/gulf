@@ -8,6 +8,7 @@ use App\Conversation;
 use App\Message;
 use App\Participant;
 use App\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use JD\Cloudder\Facades\Cloudder;
 use Illuminate\Support\Facades\Validator;
@@ -131,21 +132,23 @@ class ChatController extends Controller
         $data['ad_user_data']['email'] = $ad_pro_user_Data->user->email;
         $data['ad_user_data']['image'] = $ad_pro_user_Data->user->image;
         $data['ad_user_data']['phone'] = $ad_pro_user_Data->user->phone;
-
-        $data['messages'] =  Message::where('ad_product_id' , $request->id)
-                            ->where('conversation_id',$partic->conversation_id)
-                            ->select('id','message','type','user_id','conversation_id','ad_product_id','created_at')
-                            ->orderBy('id','desc')
-                            ->get()
-                            ->map(function ($messages) use ($user_id){
-                                $messages->time = $messages->created_at->format('g:i a');
-                                if($messages->user_id == $user_id){
-                                    $messages->position = 'right';
-                                }else{
-                                    $messages->position = 'left';
-                                }
-                                return $messages;
-                            });
+        $data['days'] =  Message::where('ad_product_id' , $request->id)
+            ->where('conversation_id',$partic->conversation_id)
+            ->select('id','message','type','user_id','conversation_id','ad_product_id','created_at')
+            ->orderBy('created_at','desc')
+            ->get()
+            ->map(function ($messages) use ($user_id){
+                $messages->time = $messages->created_at->format('g:i a');
+                if($messages->user_id == $user_id){
+                    $messages->position = 'right';
+                }else{
+                    $messages->position = 'left';
+                }
+                return $messages;
+            })
+            ->groupBy(function($date) {
+                return Carbon::parse($date->created_at)->format('Y-m-d'); // grouping by date
+            });
         $response = APIHelpers::createApiResponse(false , 200 , '' , '' , $data , $request->lang);
         return response()->json($response , 200);
     }
