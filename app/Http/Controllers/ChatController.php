@@ -132,7 +132,7 @@ class ChatController extends Controller
         $data['ad_user_data']['email'] = $ad_pro_user_Data->user->email;
         $data['ad_user_data']['image'] = $ad_pro_user_Data->user->image;
         $data['ad_user_data']['phone'] = $ad_pro_user_Data->user->phone;
-        $data['days'] =  Message::where('ad_product_id' , $request->id)
+        $days =  Message::where('ad_product_id' , $request->id)
             ->where('conversation_id',$partic->conversation_id)
             ->select('id','message','type','user_id','conversation_id','ad_product_id','created_at')
             ->orderBy('created_at','desc')
@@ -147,8 +147,15 @@ class ChatController extends Controller
                 return $messages;
             })
             ->groupBy(function($date) {
-                return Carbon::parse($date->created_at)->format('Y-m-d'); // grouping by date
+                return  Carbon::parse($date->created_at)->format('Y-m-d');   // grouping by date
             });
+//        foreach ($data['days'] as $key => $row){
+//            return $key;
+//        }
+        foreach ($days as $key => $row){
+            $data[$key]['day'] = $key;
+            $data[$key]['messages'] = $row;
+        }
         $response = APIHelpers::createApiResponse(false , 200 , '' , '' , $data , $request->lang);
         return response()->json($response , 200);
     }
