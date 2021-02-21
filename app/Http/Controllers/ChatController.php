@@ -149,13 +149,14 @@ class ChatController extends Controller
             ->groupBy(function($date) {
                 return  Carbon::parse($date->created_at)->format('Y-m-d');   // grouping by date
             });
-//        foreach ($data['days'] as $key => $row){
-//            return $key;
-//        }
+         $i = 0;
         foreach ($days as $key => $row){
-            $data[$key]['day'] = $key;
-            $data[$key]['messages'] = $row;
+
+            $message[$i]['day'] = $key;
+            $message[$i]['day_messages'] = $row;
+            $i = $i+1;
         }
+        $data['messages'] = $message;
         $response = APIHelpers::createApiResponse(false , 200 , '' , '' , $data , $request->lang);
         return response()->json($response , 200);
     }
