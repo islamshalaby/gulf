@@ -31,7 +31,7 @@ class ChatController extends Controller
             $data['conversation_id'] = $exist->conversation_id;
         }else{
             $data['exist'] = 'false';
-            $data['conversation_id'] = null;
+            $data['conversation_id'] = 0;
         }
         $response = APIHelpers::createApiResponse(false , 200 , '' , '' , $data , $request->lang);
         return response()->json($response , 200);
@@ -71,7 +71,12 @@ class ChatController extends Controller
         }else{
             if(auth()->user() != null){
                 $ad_product = AdProduct::findOrfail($request->ad_product_id);
-                if($request->conversation_id == null){
+                if(auth()->user()->id == $ad_product->user_id){
+                    $response = APIHelpers::createApiResponse(true , 406 , 'you can`t make conversation to your self ad' ,'لا يمكنك اجراء محادثة لاعلان تمتلكه' , null , $request->lang);
+                    return response()->json($response , 406);
+                }
+
+                if($request->conversation_id == 0){
                     $conversation = Conversation::create();
                     $part_data['user_id'] = auth()->user()->id;
                     $part_data['conversation_id'] = $conversation->id;
@@ -81,7 +86,6 @@ class ChatController extends Controller
                     $part_data['conversation_id'] = $conversation->id;
                     $part_data['ad_product_id'] = $ad_product->id;
                     Participant::create($part_data);
-
                     $input['conversation_id'] = $conversation->id;
                 }else{
                     $input['conversation_id'] = $request->conversation_id;
