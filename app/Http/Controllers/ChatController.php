@@ -71,12 +71,13 @@ class ChatController extends Controller
         }else{
             if(auth()->user() != null){
                 $ad_product = AdProduct::findOrfail($request->ad_product_id);
-                if(auth()->user()->id == $ad_product->user_id){
-                    $response = APIHelpers::createApiResponse(true , 406 , 'you can`t make conversation to your self ad' ,'لا يمكنك اجراء محادثة لاعلان تمتلكه' , null , $request->lang);
-                    return response()->json($response , 406);
-                }
+                
 
                 if($request->conversation_id == 0){
+                    if(auth()->user()->id == $ad_product->user_id){
+                        $response = APIHelpers::createApiResponse(true , 406 , 'you can`t make conversation to your self ad' ,'لا يمكنك اجراء محادثة لاعلان تمتلكه' , null , $request->lang);
+                        return response()->json($response , 406);
+                    }
                     $conversation = Conversation::create();
                     $part_data['user_id'] = auth()->user()->id;
                     $part_data['conversation_id'] = $conversation->id;
