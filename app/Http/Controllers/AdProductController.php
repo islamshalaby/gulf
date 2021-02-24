@@ -93,8 +93,8 @@ class AdProductController extends Controller
             "description" => "required",
             "price" => "required",
             "images" => "required",
-            "options" => "required",
-            "values" => "required",
+            // "options" => "required",
+            // "values" => "required",
             "type" => "required"    // 1 => normal ad
                                     // 2 => feature ad
         ]);
@@ -158,30 +158,33 @@ class AdProductController extends Controller
             $product->image = $image_new_name;
         }
 
-        for ($k = 0; $k < count($request->options); $k ++) {
-            $categoryOption = CategoryOption::where('id', $request->options[$k])->first();
-            $type = 1;
-            $val_en = "";
-            $val_ar = "";
-            if (count($categoryOption->values) > 0) {
-                $categoryOptionValue = CategoryOptionValue::where('id', $request->values[$k])->first();
-                $val_en = $categoryOptionValue['value_en'];
-                $val_ar = $categoryOptionValue['value_ar'];
-            }else {
-                $type = 2;
+        if (isset($request->options) && count($request->options) > 0) {
+            for ($k = 0; $k < count($request->options); $k ++) {
+                $categoryOption = CategoryOption::where('id', $request->options[$k])->first();
+                $type = 1;
+                $val_en = "";
+                $val_ar = "";
+                if (count($categoryOption->values) > 0) {
+                    $categoryOptionValue = CategoryOptionValue::where('id', $request->values[$k])->first();
+                    $val_en = $categoryOptionValue['value_en'];
+                    $val_ar = $categoryOptionValue['value_ar'];
+                }else {
+                    $type = 2;
+                }
+                
+                AdProductOption::create([
+                    'option_id' => $request->options[$k],
+                    'option_en' => $categoryOption['title_en'],
+                    'option_ar' => $categoryOption['title_ar'],
+                    'value' => $request->values[$k],
+                    'val_en' => $val_en,
+                    'val_ar' => $val_ar,
+                    'type' => $type,
+                    'product_id' => $product->id
+                ]);
             }
-            
-            AdProductOption::create([
-                'option_id' => $request->options[$k],
-                'option_en' => $categoryOption['title_en'],
-                'option_ar' => $categoryOption['title_ar'],
-                'value' => $request->values[$k],
-                'val_en' => $val_en,
-                'val_ar' => $val_ar,
-                'type' => $type,
-                'product_id' => $product->id
-            ]);
         }
+        
         
 
         $response = APIHelpers::createApiResponse(false , 200 ,'' ,   '' , $product , $request->lang );
@@ -253,35 +256,38 @@ class AdProductController extends Controller
         $specs = AdProductOption::where('product_id', $request->id)->get()->toArray();
         // dd($specs);
         $allSpecs = [];
-        for ($n = 0; $n < count($specs); $n ++) {
-            if ($request->lang == 'en') {
-                if ($specs[$n]['type'] == 1) {
-                    $spec = (object)[
-                        "option" => $specs[$n]['option_en'],
-                        "value" => $specs[$n]['val_en']
-                    ];
+        if (count($specs) > 0) {
+            for ($n = 0; $n < count($specs); $n ++) {
+                if ($request->lang == 'en') {
+                    if ($specs[$n]['type'] == 1) {
+                        $spec = (object)[
+                            "option" => $specs[$n]['option_en'],
+                            "value" => $specs[$n]['val_en']
+                        ];
+                    }else {
+                        $spec = (object)[
+                            "option" => $specs[$n]['option_en'],
+                            "value" => $specs[$n]['value']
+                        ];
+                    }
+                    
                 }else {
-                    $spec = (object)[
-                        "option" => $specs[$n]['option_en'],
-                        "value" => $specs[$n]['value']
-                    ];
+                    if ($specs[$n]['type'] == 1) {
+                        $spec = (object)[
+                            "option" => $specs[$n]['option_ar'],
+                            "value" => $specs[$n]['val_ar']
+                        ];
+                    }else {
+                        $spec = (object)[
+                            "option" => $specs[$n]['option_ar'],
+                            "value" => $specs[$n]['value']
+                        ];
+                    }
                 }
-                
-            }else {
-                if ($specs[$n]['type'] == 1) {
-                    $spec = (object)[
-                        "option" => $specs[$n]['option_ar'],
-                        "value" => $specs[$n]['val_ar']
-                    ];
-                }else {
-                    $spec = (object)[
-                        "option" => $specs[$n]['option_ar'],
-                        "value" => $specs[$n]['value']
-                    ];
-                }
+                array_push($allSpecs, $spec);
             }
-            array_push($allSpecs, $spec);
         }
+        
         $product['specs'] = $allSpecs;
         $user_product = User::find($product['user_id']);
         $product['user_name'] = $user_product['name'];
@@ -531,7 +537,12 @@ class AdProductController extends Controller
         if (isset($request->price_from) && isset($request->price_to)) {
             $request->price_from = $request->price_from / $currency['value'];
             $request->price_to = $request->price_to / $currency['value'];
-            $products = $products->whereBetween('price', [$request->price_from, $request->price_to]);
+            if ($request->price_from == 0 && $request->price_to == 0) {
+
+            }else {
+                $products = $products->whereBetween('price', [$request->price_from, $request->price_to]);
+            }
+            
         }
 
         $products = $products->select('id' , 'title' , 'price'  , 'publication_date as date', 'selected as feature')->orderBy('publication_date' , 'DESC')->simplePaginate(12);

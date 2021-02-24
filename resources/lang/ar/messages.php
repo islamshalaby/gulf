@@ -485,6 +485,7 @@
             "remove_from_best_offers" => "حذف من أفضل العروض",
             "best_offers" => "أفضل العروض",
             "comments" => "التعليقات",
+            "personal_data" => "البيانات الشخصية",
             "add_free_ads" => "إضافة رصيد إعلانات مجانية"
         ];
 ?>

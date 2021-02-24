@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\AdminController;
 use Illuminate\Http\Request;
 use JD\Cloudder\Facades\Cloudder;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 use App\Company;
 
 class CompanyController extends AdminController{
@@ -24,6 +25,8 @@ class CompanyController extends AdminController{
         $company->image = $image_new_name;
         $company->title_en = $request->title_en;
         $company->title_ar = $request->title_ar;
+        $company->email = $request->email;
+        $company->password = Hash::make($request->password);
         $company->save();
 
         return redirect('admin-panel/companies/show'); 
@@ -60,6 +63,12 @@ class CompanyController extends AdminController{
 
         $company->title_en = $request->title_en;
         $company->title_ar = $request->title_ar;
+        $company->email = $request->email;
+        if (isset($request->email) && !empty($request->email)) {
+            $company->password = Hash::make($request->password);
+        }else {
+            $company->password = $company->password;
+        }
         
         $company->save();
         return redirect('admin-panel/companies/show');

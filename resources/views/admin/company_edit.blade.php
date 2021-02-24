@@ -34,6 +34,14 @@
                 <label for="title_ar">{{ __('messages.title_ar') }}</label>
                 <input required type="text" name="title_ar" class="form-control" id="title_ar" placeholder="{{ __('messages.title_ar') }}" value="{{ $data['company']['title_ar'] }}" >
             </div>
+            <div class="form-group mb-4">
+                <label for="email">{{ __('messages.email') }}</label>
+                <input required type="text" name="email" class="form-control" id="email" placeholder="{{ __('messages.email') }}" value="{{ $data['company']['email'] }}" >
+            </div>
+            <div class="form-group mb-4">
+                <label for="password">{{ __('messages.password') }}</label>
+                <input required type="password" class="form-control" id="password" name="password" placeholder="{{ __('messages.password') }}" value="" >
+            </div>
                
             <input type="submit" value="{{ __('messages.submit') }}" class="btn btn-primary">
         </form>

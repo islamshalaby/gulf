@@ -484,6 +484,7 @@
         "remove_from_best_offers" => "Remove From Best Offers",
         "best_offers" => "Best Offers",
         "comments" => "Comments",
+        "personal_data" => "Personal Data",
         "add_free_ads" => "Add Free Ads"
     ];
 ?>

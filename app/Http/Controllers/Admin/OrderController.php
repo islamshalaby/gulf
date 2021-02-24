@@ -32,11 +32,13 @@ class OrderController extends AdminController{
                 $product_id = $order_items[$i]['product_id'];
                 if ($order->status == 4) {
                     $product = Product::find($product_id);
-                    $product->update(['remaining_quantity' => $product->remaining_quantity + $count, 'sold_count' => $product->sold_count - $count]);
-                    if ($order_items[$i]['option_id'] != 0) {
-                        $m_option = ProductMultiOption::find($order_items[$i]['option_id']);
-                        $m_option->update(['remaining_quantity' => $m_option->remaining_quantity + $count, 'sold_count' => $m_option->sold_count - $count]);
-                    }
+                    $product->remaining_quantity = $product->remaining_quantity + $count;
+                    $product->sold_count = $product->sold_count - $count;
+                    $product->save();
+                    // if ($order_items[$i]['option_id'] != 0) {
+                    //     $m_option = ProductMultiOption::find($order_items[$i]['option_id']);
+                    //     $m_option->update(['remaining_quantity' => $m_option->remaining_quantity + $count, 'sold_count' => $m_option->sold_count - $count]);
+                    // }
                 }
             }
         }
@@ -47,15 +49,15 @@ class OrderController extends AdminController{
             for($i = 0; $i < count($order_items); $i++){
                 $count = (int)$order_items[$i]['count'];
                 $product_id = $order_items[$i]['product_id'];
-                $product = Product::find($product_id);
-                $sum_count = (int)$product->sold_count + $count;
-                $product->update(['sold_count' => $sum_count]);
+                $product = Product::where('id', $product_id)->first();
+                $sum_count = $product->sold_count + $count;
+                $product->sold_count = $sum_count;
+                $product->save();
                 
-                
-                if ($order_items[$i]['option_id'] != 0) {
-                    $m_option = ProductMultiOption::find($order_items[$i]['option_id']);
-                    $m_option->update(['sold_count' => (int)$m_option->sold_count + $count]);
-                }
+                // if ($order_items[$i]['option_id'] != 0) {
+                //     $m_option = ProductMultiOption::find($order_items[$i]['option_id']);
+                //     $m_option->update(['sold_count' => (int)$m_option->sold_count + $count]);
+                // }
             }
         }
 

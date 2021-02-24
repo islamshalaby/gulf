@@ -570,3 +570,19 @@ Route::group([
     Route::get('returnpolicy/{lang}' , 'WebViewController@returnpolicy');
     Route::get('deliveryinformation/{lang}' , 'WebViewController@deliveryinformation');
 });
+
+
+/**
+ * Company Panel
+ */
+Route::group([
+    'middleware'=>'language',
+    'prefix' => "company-panel",
+    'namespace' => "Company"  
+] , function($router){
+    Route::get('' ,'HomeController@show');
+    Route::get('login' ,  [ 'as' => 'companylogin', 'uses' => 'CompanyController@getlogin']);
+    Route::post('login' , 'CompanyController@postlogin');
+    Route::get('personal-data' , 'CompanyController@personal_data_get')->name('personal.data');
+    Route::post('personal-data' , 'CompanyController@personal_data_post');
+});

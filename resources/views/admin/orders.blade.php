@@ -256,6 +256,16 @@ $url = 'http://' . $_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI'];
                                     <a style="margin-bottom: 5px" href="{{ route('orders.action', [$order->id, 5]) }}" onclick='return confirm("{{ __('messages.are_you_sure') }}");' class="btn btn-sm btn-danger hide_col">
                                         {{ __('messages.cancel_order') }}
                                     </a>
+                                    @else if($order->status == 4)
+                                    <a style="margin-bottom: 5px" href="{{ route('orders.action', [$order->id, 2]) }}" onclick='return confirm("{{ __('messages.are_you_sure') }}");' class="btn btn-sm btn-info hide_col">
+                                        {{ __('messages.delivery_stage') }}
+                                    </a>
+                                    <a style="margin-bottom: 5px" href="{{ route('orders.action', [$order->id, 3]) }}" onclick='return confirm("{{ __('messages.are_you_sure') }}");' class="btn btn-sm btn-primary hide_col">
+                                        {{ __('messages.installation') }}
+                                    </a>
+                                    <a style="margin-bottom: 5px" href="{{ route('orders.action', [$order->id, 5]) }}" onclick='return confirm("{{ __('messages.are_you_sure') }}");' class="btn btn-sm btn-danger hide_col">
+                                        {{ __('messages.cancel_order') }}
+                                    </a>
                                     @else
                                     
                                     <a style="margin-bottom: 5px" href="{{ route('orders.action', [$order->id, 2]) }}" onclick='return confirm("{{ __('messages.are_you_sure') }}");' class="btn btn-sm btn-info hide_col">

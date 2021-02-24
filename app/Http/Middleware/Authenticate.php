@@ -19,6 +19,8 @@ class Authenticate extends Middleware
 
             if (strpos($uri, 'admin-panel') !== false) {
                 return route('adminlogin');
+            }else if(strpos($uri, 'company-panel') !== false){
+                return route('companylogin');
             }else{
                 return route('invalid' , [1,2]);   
             }

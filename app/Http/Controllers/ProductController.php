@@ -225,11 +225,16 @@ class ProductController extends Controller
         if ($request->has('year') && $request->year != 0) {
             $products->where('year', $request->year);
         }
-
-        if($request->has('price_from') && $request->has('price_to') && $request->price_from != 0 && $request->price_to != 0){
+        // dd(($request->price_from != 0 && $request->price_to != 0));
+        if($request->has('price_from') && $request->has('price_to')){
+            
             $request->price_from = $request->price_from / $currency['value'];
             $request->price_to = $request->price_to / $currency['value'];
-            $products->whereBetween('final_price', [$request->price_from, $request->price_to]);
+            if ($request->price_from == 0 && $request->price_to == 0) {
+
+            }else {
+                $products->whereBetween('final_price', [$request->price_from, $request->price_to]);
+            }
         }
         
         if (isset($request->type) && $request->type != 0) {
