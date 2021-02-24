@@ -56,14 +56,14 @@
                                 @endif
                             </td>
                         </tr>
-                        <tr>
+                        {{-- <tr>
                             <td class="label-table" > {{ __('messages.sub_four_category') }} </td>
                             <td>
                                 @if(!empty($data['product']->subFourCategory))
                                 {{ App::isLocale('en') ? $data['product']->subFourCategory->title_en : $data['product']->subFourCategory->title_ar }}
                                 @endif
                             </td>
-                        </tr>
+                        </tr> --}}
                         <tr>
                             <td class="label-table" > {{ __('messages.user') }} </td>
                             <td>

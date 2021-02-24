@@ -388,7 +388,7 @@
                     @endif
 
                     @if(in_array(15 , Auth::user()->custom['admin_permission']))
-                    <li class="menu sub_four_categories">
+                    {{-- <li class="menu sub_four_categories">
                         <a href="#sub_four_categories" data-active="true" data-toggle="collapse" aria-expanded="true" class="dropdown-toggle first-link">
                             <div class="">
                                 <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="css-i6dzq1"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
@@ -409,7 +409,7 @@
                                 <a href="{{ route('sub_four_categories.index') }}"> {{ __('messages.show') }} </a>
                             </li>
                         </ul>
-                    </li>
+                    </li> --}}
                     @endif
                     
 
