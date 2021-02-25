@@ -48,9 +48,9 @@ class CategoryController extends Controller
     public function getecommercecategories(Request $request){
   
         if($request->lang == 'en'){
-            $data['categories'] = Category::where('deleted' , 0)->where('type' , 1)->select('id' , 'title_en as title' , 'image')->get();   
+            $data['categories'] = Category::where('deleted' , 0)->where('type' , 1)->has('products', '>', 0)->select('id' , 'title_en as title' , 'image')->get();   
         }else{
-            $data['categories'] = Category::where('deleted' , 0)->where('type' , 1)->select('id' , 'title_ar as title' , 'image')->get();   
+            $data['categories'] = Category::where('deleted' , 0)->where('type' , 1)->has('products', '>', 0)->select('id' , 'title_ar as title' , 'image')->get();   
         }
          
 
@@ -61,14 +61,14 @@ class CategoryController extends Controller
 	public function get_ecommerce_sub_categories(Request $request){
 
         if($request->lang == 'en'){
-            $data['sub_categories'] = SubCategory::where('deleted' , 0)->where('category_id' , $request->category_id)->select('id' , 'image' , 'title_en as title')->get()->toArray();
+            $data['sub_categories'] = SubCategory::where('deleted' , 0)->where('category_id' , $request->category_id)->has('products', '>', 0)->select('id' , 'image' , 'title_en as title')->get()->toArray();
             $data['category'] = Category::select('id' , 'title_en as title')->find($request->category_id);
             $all = new \StdClass;
             $all->id = 0;
             $all->title = 'All';
             $all->image = 'all_liwbsi.png';
         }else{
-            $data['sub_categories'] = SubCategory::where('deleted' , 0)->where('category_id' , $request->category_id)->select('id' , 'image' , 'title_ar as title')->get()->toArray();
+            $data['sub_categories'] = SubCategory::where('deleted' , 0)->where('category_id' , $request->category_id)->has('products', '>', 0)->select('id' , 'image' , 'title_ar as title')->get()->toArray();
             $data['category'] = Category::select('id' , 'title_ar as title')->find($request->category_id);
             $all = new \StdClass;
             $all->id = 0;
@@ -78,16 +78,16 @@ class CategoryController extends Controller
 
         array_unshift($data['sub_categories'], $all);
         
-    $response = APIHelpers::createApiResponse(false , 200 , '' , '' , $data , $request->lang);
-    return response()->json($response , 200);
+        $response = APIHelpers::createApiResponse(false , 200 , '' , '' , $data , $request->lang);
+        return response()->json($response , 200);
     }
 
     public function get_car_types(Request $request){
         if($request->lang == 'en'){
-            $data = CarType::where('deleted' , 0)->select('id' , 'image' , 'title_en as title')->get();
+            $data = CarType::where('deleted' , 0)->select('id' , 'image' , 'title_en as title')->has('products', '>', 0)->get();
 
 		}else{
-            $data = CarType::where('deleted' , 0)->select('id' , 'image' , 'title_ar as title')->get();
+            $data = CarType::where('deleted' , 0)->select('id' , 'image' , 'title_ar as title')->has('products', '>', 0)->get();
         }
 
         $response = APIHelpers::createApiResponse(false , 200 , '' , '' , $data , $request->lang);
@@ -98,17 +98,17 @@ class CategoryController extends Controller
     public function get_ecommerce_sub_car_type_level1(Request $request){
         if($request->lang == 'en'){
             if ($request->car_type_id == 0) {
-                $data = SubOneCarType::where('deleted' , 0)->select('id' , 'image' , 'title_en as title')->get();
+                $data = SubOneCarType::where('deleted' , 0)->select('id' , 'image' , 'title_en as title')->has('products', '>', 0)->get();
             }else {
-                $data = SubOneCarType::where('deleted' , 0)->where('car_type_id' , $request->car_type_id)->select('id' , 'image' , 'title_en as title')->get();
+                $data = SubOneCarType::where('deleted' , 0)->where('car_type_id' , $request->car_type_id)->has('products', '>', 0)->select('id' , 'image' , 'title_en as title')->get();
             }
             
 
 		}else{
             if ($request->car_type_id == 0) {
-                $data = SubOneCarType::where('deleted' , 0)->select('id' , 'image' , 'title_ar as title')->get();
+                $data = SubOneCarType::where('deleted' , 0)->select('id' , 'image' , 'title_ar as title')->has('products', '>', 0)->get();
             }else {
-                $data = SubOneCarType::where('deleted' , 0)->where('car_type_id' , $request->car_type_id)->select('id' , 'image' , 'title_ar as title')->get();
+                $data = SubOneCarType::where('deleted' , 0)->where('car_type_id' , $request->car_type_id)->select('id' , 'image' , 'title_ar as title')->has('products', '>', 0)->get();
             }
             
 		}
@@ -121,13 +121,13 @@ class CategoryController extends Controller
         if($request->lang == 'en'){
             
             if ($request->sub_car_type_id == 0) {
-                $data['sub_car_types'] = SubTwoCarType::where('deleted' , 0)->select('id' , 'image' , 'title_en as title')->get()->toArray();
+                $data['sub_car_types'] = SubTwoCarType::where('deleted' , 0)->has('products', '>', 0)->select('id' , 'image' , 'title_en as title')->get()->toArray();
                 $car_type = new \StdClass;
                 $car_type->id = 0;
                 $car_type->title = 'الكل';
                 $car_type->image = 'all_liwbsi.png';
             }else {
-                $data['sub_car_types'] = SubTwoCarType::where('deleted' , 0)->where('sub_one_car_type_id' , $request->sub_car_type_id)->select('id' , 'image' , 'title_en as title')->get()->toArray();
+                $data['sub_car_types'] = SubTwoCarType::where('deleted' , 0)->where('sub_one_car_type_id' , $request->sub_car_type_id)->has('products', '>', 0)->select('id' , 'image' , 'title_en as title')->get()->toArray();
 
                 $sub_one_car_type = SubOneCarType::select('id'  , 'title_en as title' , 'car_type_id')->find($request->sub_car_type_id);
                 $car_type = CarType::select('id' , 'title_en as title')->find($sub_one_car_type->car_type_id);
@@ -139,13 +139,13 @@ class CategoryController extends Controller
             
 		}else{
             if ($request->sub_car_type_id == 0) {
-                $data['sub_car_types'] = SubTwoCarType::where('deleted' , 0)->select('id' , 'image' , 'title_ar as title')->get()->toArray();
+                $data['sub_car_types'] = SubTwoCarType::where('deleted' , 0)->has('products', '>', 0)->select('id' , 'image' , 'title_ar as title')->get()->toArray();
                 $car_type = new \StdClass;
                 $car_type->id = 0;
                 $car_type->title = 'الكل';
                 $car_type->image = 'all_liwbsi.png';
             }else {
-                $data['sub_car_types'] = SubTwoCarType::where('deleted' , 0)->where('sub_one_car_type_id' , $request->sub_car_type_id)->select('id' , 'image' , 'title_ar as title')->get()->toArray();
+                $data['sub_car_types'] = SubTwoCarType::where('deleted' , 0)->where('sub_one_car_type_id' , $request->sub_car_type_id)->has('products', '>', 0)->select('id' , 'image' , 'title_ar as title')->get()->toArray();
 
                 $sub_one_car_type = SubOneCarType::select('id'  , 'title_ar as title' , 'car_type_id')->find($request->sub_car_type_id);
                 $car_type = CarType::select('id' , 'title_en as title')->find($sub_one_car_type->car_type_id);

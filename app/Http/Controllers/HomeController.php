@@ -188,14 +188,14 @@ class HomeController extends Controller
             }elseif($home_data[$i]['type'] == 2){
 				
                 if($request->lang == 'en'){
-                $element['data'] = CarType::select('id' ,'image' , 'title_en as title')->where('deleted' , 0)->whereIn('id' , $ids)->limit(5)->get()->toArray();
+                $element['data'] = CarType::select('id' ,'image' , 'title_en as title')->where('deleted' , 0)->whereIn('id' , $ids)->has('products', '>', 0)->limit(5)->get()->toArray();
                     $all = [];
                     $all['id'] = 0;
                     $all['title'] = "All";
                     $all['image'] = "all_liwbsi.png";
 					
                 }else{
-                    $element['data'] = CarType::select('id' ,'image' , 'title_ar as title')->where('deleted' , 0)->whereIn('id' , $ids)->limit(5)->get()->toArray();
+                    $element['data'] = CarType::select('id' ,'image' , 'title_ar as title')->where('deleted' , 0)->whereIn('id' , $ids)->has('products', '>', 0)->limit(5)->get()->toArray();
                     $all = [];
                     $all['id'] = 0;
                     $all['title'] = "الكل";
@@ -209,16 +209,16 @@ class HomeController extends Controller
                 for($j = 0; $j < count($element['data']); $j++){
                     if($element['data'][$j]['id'] == 0){
                         if($request->lang == 'en'){
-                            $element['data'][$j]['sub_car_types'] = SubOneCarType::select('id' ,'image' , 'title_en as title')->where('deleted' , 0)->get();
+                            $element['data'][$j]['sub_car_types'] = SubOneCarType::select('id' ,'image' , 'title_en as title')->where('deleted' , 0)->has('products', '>', 0)->get();
                         }else{
-                            $element['data'][$j]['sub_car_types'] = SubOneCarType::select('id' ,'image' , 'title_ar as title')->where('deleted' , 0)->get();
+                            $element['data'][$j]['sub_car_types'] = SubOneCarType::select('id' ,'image' , 'title_ar as title')->where('deleted' , 0)->has('products', '>', 0)->get();
     
                         }
                     }else{
                         if($request->lang == 'en'){
-                            $element['data'][$j]['sub_car_types'] = SubOneCarType::select('id' ,'image' , 'title_en as title')->where('deleted' , 0)->where('car_type_id' , $element['data'][$j]['id'])->get();
+                            $element['data'][$j]['sub_car_types'] = SubOneCarType::select('id' ,'image' , 'title_en as title')->where('deleted' , 0)->where('car_type_id' , $element['data'][$j]['id'])->has('products', '>', 0)->get();
                         }else{
-                            $element['data'][$j]['sub_car_types'] = SubOneCarType::select('id' ,'image' , 'title_ar as title')->where('deleted' , 0)->where('car_type_id' , $element['data'][$j]['id'])->get();
+                            $element['data'][$j]['sub_car_types'] = SubOneCarType::select('id' ,'image' , 'title_ar as title')->where('deleted' , 0)->where('car_type_id' , $element['data'][$j]['id'])->has('products', '>', 0)->get();
     
                         }
                     }
