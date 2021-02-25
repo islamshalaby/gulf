@@ -59,9 +59,9 @@ class HomeController extends Controller
         $data['slider'] = AdSlider::select('id', 'image', 'content', 'type', 'link_type')->where('country_id', $country['id'])->get();
 
         if ($request->lang == 'en') {
-            $data['categories'] = Category::where('type', 2)->select('id', 'title_en as title', 'image')->get();
+            $data['categories'] = Category::where('type', 2)->has('adProducts', '>' , 0)->select('id', 'title_en as title', 'image')->get();
         }else {
-            $data['categories'] = Category::where('type', 2)->select('id', 'title_ar as title', 'image')->get();
+            $data['categories'] = Category::where('type', 2)->has('adProducts', '>' , 0)->select('id', 'title_ar as title', 'image')->get();
         }
         $data['feature_ads'] = AdProduct::where('country_id', $country['id'])->where('selected', 1)->select('id', 'title', 'price', 'publication_date as date', 'selected as feature')->orderBy('id', 'desc')->get()->makeHidden('mainImage');
 
