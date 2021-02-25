@@ -9,7 +9,7 @@ class CarType extends Model
     protected $fillable = ['title_en', 'title_ar', 'image', 'deleted'];
 
     public function products() {
-        return $this->hasMany('App\Product', 'car_type_id');
+        return $this->hasMany('App\Product', 'car_type_id')->where('deleted', 0)->where('hidden', 0);
     }
 
     public function options() {

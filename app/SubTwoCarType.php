@@ -13,6 +13,6 @@ class SubTwoCarType extends Model
     }
 
     public function products() {
-        return $this->hasMany('App\Product', 'sub_two_car_type_id');
+        return $this->hasMany('App\Product', 'sub_two_car_type_id')->where('deleted', 0)->where('hidden', 0);
     }
 }
