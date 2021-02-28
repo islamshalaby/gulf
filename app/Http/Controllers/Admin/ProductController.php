@@ -166,11 +166,17 @@ class ProductController extends AdminController{
         }
         
         if (isset($product_post['offer'])) {
-            $price_before = (int)$product_post['price_before_offer'];
+            $price_before = number_format((float)$product_post['price_before_offer'], 3, '.', '');
             $discount_value = (int)$product_post['offer_percentage'] / 100;
             $price_value = $price_before * $discount_value;
-            $product_post['final_price'] = $price_before - $price_value;
+            $finalVP = $price_before - $price_value;
+            $product_post['final_price'] = number_format((float)$finalVP, 3, '.', '');
         }
+        
+        if (!isset($product_post['final_price']) || empty($product_post['final_price'])) {
+            $product_post['final_price'] = number_format((float)$product_post['price_before_offer'], 3, '.', '');
+        }
+        
         if (isset($product_post['offer'])) {
             $product_post['offer'] = 1;
         }else {
@@ -178,6 +184,7 @@ class ProductController extends AdminController{
             $product_post['offer_percentage'] = 0;
             $product_post['price_before_offer'] = 0;
         }
+        // dd($product_post['final_price']);
         $product->update($product_post);
         if ( $images = $request->file('images') ) {
             foreach ($images as $image) {
@@ -230,11 +237,12 @@ class ProductController extends AdminController{
             $price_before = (double)$request->price_before_offer;
             $discount_value = (double)$request->offer_percentage / 100;
             $price_value = $price_before * $discount_value;
-            $selected_prod_data['final_price'] = $price_before - $price_value;
+            $fPO = $price_before - $price_value;
+            $selected_prod_data['final_price'] = number_format((float)$fPO, 3, '.', '');
         }
 
         if (!isset($request->offer)) {
-            $selected_prod_data['final_price'] = $request->price_before_offer;
+            $selected_prod_data['final_price'] = number_format((float)$request->price_before_offer, 3, '.', '');
         }
 
         if (isset($request->offer)) {
@@ -434,14 +442,15 @@ class ProductController extends AdminController{
         
         
         if (isset($request->offer)) {
-            $price_before = (double)$request->price_before_offer;
+            $price_before = number_format((float)$request->price_before_offer, 3, '.', '');
             $discount_value = (double)$request->offer_percentage / 100;
             $price_value = $price_before * $discount_value;
-            $selected_prod_data['final_price'] = $price_before - $price_value;
+            $fPV = $price_before - $price_value;
+            $selected_prod_data['final_price'] = number_format((float)$fPV, 3, '.', '');
         }
 
         if (!isset($request->offer)) {
-            $selected_prod_data['final_price'] = $request->price_before_offer;
+            $selected_prod_data['final_price'] = number_format((float)$request->price_before_offer, 3, '.', '');
         }
 
         if (isset($request->offer)) {
@@ -450,7 +459,7 @@ class ProductController extends AdminController{
         }else {
             $selected_prod_data['offer'] = 0;
             $selected_prod_data['offer_percentage'] = 0;
-            $selected_prod_data['price_before_offer'] = $request->price_before_offer;
+            $selected_prod_data['price_before_offer'] = number_format((float)$request->price_before_offer, 3, '.', '');
         }
         $selected_prod_data['total_quatity'] = $request->total_quatity;
         $selected_prod_data['remaining_quantity'] = $request->remaining_quantity;

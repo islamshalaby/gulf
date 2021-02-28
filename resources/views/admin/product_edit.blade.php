@@ -293,6 +293,7 @@
                     discountNumber = Number(priceVal) * (Number(discountValue) / 100),
                     total = Number(priceVal) - discountNumber
 
+                    total = Math.round((total + Number.EPSILON) * 1000) / 1000
                 $(this).parent("td").next('td').children('input[disabled="disabled"]').val(total)
                 $(this).parent("td").next('td').children('input[name="price_after_discount[]"]').val(total)
             })
@@ -355,7 +356,7 @@
                             price = $("#example tbody").children("tr").eq(m).children('td').eq(3).children("input").val(),
                             discountNumber = Number(price) * (Number(discountValue) / 100),
                             total = Number(price) - discountNumber
-                            
+                            total = Math.round((total + Number.EPSILON) * 1000) / 1000
                             $("#example tbody").children("tr").eq(m).children('td').eq(4).children("input").eq(0).val(total)
                             $("#example tbody").children("tr").eq(m).children('td').eq(4).children("input").eq(1).val(total)
                     }
@@ -364,7 +365,8 @@
                     price = $("#price_before_offer").val(),
                     discountNumber = Number(price) * (Number(discountValue) / 100),
                     total = Number(price) - discountNumber
-                $("#final_price").val(total)
+                    total = Math.round((total + Number.EPSILON) * 1000) / 1000
+                    $("#final_price").val(total)
                 }
                 
             })
@@ -374,6 +376,7 @@
                     price = $("#price_before_offer").val(),
                     discountNumber = Number(price) * (Number(discountValue) / 100),
                     total = Number(price) - discountNumber
+                    total = Math.round((total + Number.EPSILON) * 1000) / 1000
                 $("#final_price").val(total)
             })
 
@@ -1411,7 +1414,7 @@
                                 </div>
                             </div>
                             
-                            {{-- <div style="margin-bottom: 20px; margin-top : 20px" class="col-md-3" >
+                            <div style="margin-bottom: 20px; margin-top : 20px" class="col-md-3" >
                                 <div >
                                    <label class="new-control new-checkbox new-checkbox-text checkbox-primary">
                                      <input {{ $data['product']['offer_percentage'] > 0 ? 'checked' : '' }} id="discount" name="offer" value="1" type="checkbox" class="new-control-input">
@@ -1428,7 +1431,7 @@
                                     <label for="final_price">{{ __('messages.price_after_discount') }}</label>
                                     <input disabled type="number" step="any" min="0" name="final_price" class="form-control" id="final_price" placeholder="{{ __('messages.price_after_discount') }}" value="{{ $data['product']['final_price'] }}" >
                                 </div>
-                            </div> --}}
+                            </div>
 
                             {{-- <div class="form-group mb-4" >
                                 <label class="new-control new-checkbox new-checkbox-text checkbox-primary">

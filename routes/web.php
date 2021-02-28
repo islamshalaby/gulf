@@ -583,6 +583,17 @@ Route::group([
     Route::get('' ,'HomeController@show');
     Route::get('login' ,  [ 'as' => 'companylogin', 'uses' => 'CompanyController@getlogin']);
     Route::post('login' , 'CompanyController@postlogin');
+    Route::get('logout' , 'CompanyController@logout');
     Route::get('personal-data' , 'CompanyController@personal_data_get')->name('personal.data');
     Route::post('personal-data' , 'CompanyController@personal_data_post');
+
+    Route::group([
+        "prefix" => "products"
+    ], function($router){
+        Route::get('show' , 'ProductController@show')->name('products.company.index');
+        Route::get('add' , 'ProductController@AddGet')->name('products.company.add');
+        Route::get('search' , 'ProductController@product_search')->name('products.company.search');
+        Route::get('getbysubcat' , 'ProductController@get_product_by_sub_cat')->name('products.company.getbysubcat');
+        Route::post('update/quantity/{product}' , 'ProductController@update_quantity')->name('update.quantity');
+    });
 });

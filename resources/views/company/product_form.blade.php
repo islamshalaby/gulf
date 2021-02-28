@@ -1,4 +1,4 @@
-@extends('admin.ecommerce_app')
+@extends('company.app')
 
 @section('title' , __('messages.add_product'))
 
@@ -365,8 +365,6 @@
                 discountNumber = Number(priceVal) * (Number(discountValue) / 100),
                 total = Number(priceVal) - discountNumber
 
-                total = Math.round((total + Number.EPSILON) * 1000) / 1000
-
             $(this).parent("td").next('td').children('input[disabled="disabled"]').val(total)
             $(this).parent("td").next('td').children('input[name="price_after_discount[]"]').val(total)
         })
@@ -433,7 +431,7 @@
                         discountNumber = Number(price) * (Number(discountValue) / 100),
                         total = Number(price) - discountNumber
                         
-                        total = Math.round((total + Number.EPSILON) * 1000) / 1000
+                        
                     $("#example tbody").children("tr").eq(m).children('td').eq(4).children("input").eq(0).val(total)
                     $("#example tbody").children("tr").eq(m).children('td').eq(4).children("input").eq(1).val(total)
                 }
@@ -442,8 +440,6 @@
                 price = $("#price_before_offer").val(),
                 discountNumber = Number(price) * (Number(discountValue) / 100),
                 total = Number(price) - discountNumber
-
-                total = Math.round((total + Number.EPSILON) * 1000) / 1000
                 $("#final_price").val(total)
             }
             
@@ -1251,16 +1247,6 @@
                                 </select>
                             </div>
 
-                            <div class="form-group">
-                                <label for="companies_select">{{ __('messages.company') }} *</label>
-                                <select id="companies_select" name="company_id" class="form-control">
-                                    <option selected>{{ __('messages.select') }}</option>
-                                    @foreach ( $data['companies'] as $company )
-                                    <option {{ old('company_id') == $company->id ? 'selected' : '' }} value="{{ $company->id }}">{{ App::isLocale('en') ? $company->title_en : $company->title_ar }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-
                             <div class="form-group mb-4">
                                 <label for="year">{{ __('messages.year') }} *</label>
                                 <input required type="text" name="year" class="form-control" id="year" placeholder="{{ __('messages.year') }}" value="{{ old('year') }}" >
@@ -1332,7 +1318,7 @@
                                     <input type="text" name="barcode" class="form-control" id="barcode" placeholder="{{ __('messages.barcode') }}" >
                                 </div>
                             </div>
-                            <div style="margin-bottom: 20px; margin-top : 20px" class="col-md-3" >
+                            {{-- <div style="margin-bottom: 20px; margin-top : 20px" class="col-md-3" >
                                 <div >
                                    <label class="new-control new-checkbox new-checkbox-text checkbox-primary">
                                      <input id="discount" name="offer" value="1" type="checkbox" class="new-control-input">
@@ -1349,7 +1335,7 @@
                                     <label for="final_price">{{ __('messages.price_after_discount') }}</label>
                                     <input style="font-size: 15px" disabled type="number" step="any" min="0" name="final_price" class="form-control" id="final_price" placeholder="{{ __('messages.price_after_discount') }}" value="" >
                                 </div>
-                            </div>
+                            </div> --}}
 
 
                             {{-- <div class="form-group mb-4" >
