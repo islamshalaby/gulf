@@ -71,10 +71,7 @@
                         var priceBeforeOffer = element.price_before_offer,
                             finalPrice = element.final_price,
                             startFrom = "{{ __('messages.start_from') }}"
-                        if (element.multi_options == 1) {
-                            priceBeforeOffer = startFrom + " " + element.multi_optionss[0].price_before_offer,
-                            finalPrice = startFrom + " " + element.multi_optionss[0].final_price
-                        }
+                        
                         var rowNode = dTbls.row.add( [
                             `${i}`,
                             `<img src="https://res.cloudinary.com/dyyeedzqi/image/upload/w_50,q_50/v1581928924/${ (element.images[0].image) ? element.images[0].image : '' }"  />`,

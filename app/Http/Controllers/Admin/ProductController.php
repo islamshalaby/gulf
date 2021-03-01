@@ -264,8 +264,8 @@ class ProductController extends AdminController{
     }
 
     // fetch category products
-    public function fetch_category_products(Category $category) {
-        $rows = Product::where('category_id', $category->id)->with('images', 'category')->get();
+    public function fetch_category_products(CarType $category) {
+        $rows = Product::where('car_type_id', $category->id)->where('deleted', 0)->with('images', 'category')->get();
         // dd($rows);
         $data = json_decode(($rows));
 

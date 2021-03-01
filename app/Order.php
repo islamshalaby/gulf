@@ -32,4 +32,5 @@ class Order extends Model
     public function oItems() {
         return $this->hasMany('App\OrderItem', 'order_id');
     }
+
 }

@@ -20,7 +20,7 @@
 
         $("#properties-items .row").html("")
             $.ajax({
-                url : "/admin-panel/products/fetchcategoryoptions/" + categoryId,
+                url : "/company-panel/products/fetchcategoryoptions/" + categoryId,
                 type : 'GET',
                 success : function (data) {
                     $('#properties-items').show()
@@ -70,7 +70,7 @@
 
             $('select#sub_category_select').html("")
             $.ajax({
-                url : "/admin-panel/products/fetchsubcategorybycategory/" + categoryId,
+                url : "/company-panel/products/fetchsubcategorybycategory/" + categoryId,
                 type : 'GET',
                 success : function (data) {
                     $('#sub_category_select').parent('.form-group').show()
@@ -97,7 +97,7 @@
         $("select#sub_cartwo_select").html("")
         var subCarOne = $(this).find("option:selected").val();
         $.ajax({
-            url : "/admin-panel/products/fetchsubcartwobycarone/" + subCarOne,
+            url : "/company-panel/products/fetchsubcartwobycarone/" + subCarOne,
             type : 'GET',
             success : function (data) {
                 $('#sub_cartwo_select').parent('.form-group').show()
@@ -123,7 +123,7 @@
         var secId = $(this).find("option:selected").val();
 
         $.ajax({
-            url : "/admin-panel/products/fetchsubcatsbycat/" + secId,
+            url : "/company-panel/products/fetchsubcatsbycat/" + secId,
             type : 'GET',
             success : function (data) {
                 $('#sub_main_sections').parent('.form-group').show()
@@ -150,7 +150,7 @@
         var brandId = $(this).find("option:selected").val();
         
         $.ajax({
-            url : "/admin-panel/products/fetchsubcategories/" + brandId,
+            url : "/company-panel/products/fetchsubcategories/" + brandId,
             type : 'GET',
             success : function (data) {
                 $('#sub_category_select').parent('.form-group').show()
@@ -175,7 +175,7 @@
     var categoryId = $("#category").find("option:selected").val()
 
     $.ajax({
-        url : "/admin-panel/products/fetchsubcategorybycategory/" + categoryId,
+        url : "/company-panel/products/fetchsubcategorybycategory/" + categoryId,
         type : 'GET',
         success : function (data) {
             $('#sub_category_select').parent('.form-group').show()
@@ -199,7 +199,7 @@
     })
 
     $.ajax({
-        url : "/admin-panel/products/fetchcategoryoptions/" + categoryId,
+        url : "/company-panel/products/fetchcategoryoptions/" + categoryId,
         type : 'GET',
         success : function (data) {
             
@@ -512,7 +512,7 @@
                 descriptionEnText = $('textarea[name="description_en"]').val(),
                 descriptionArText = $('textarea[name="description_ar"]').val()
 
-            if (image.length > 0 && categorySelect > 0 && subCarOneSelect > 0 && companySelect > 0 && yearInput.length > 0 && subCarTwoSelect > 0 && mainSectionSelect > 0 && subMainSectionSelect > 0 && titleEnInput.length > 0 && titleArInput.length > 0 && descriptionEnText.length > 0 && descriptionArText.length > 0) {
+            if (image.length > 0 && categorySelect > 0 && subCarOneSelect > 0 && yearInput.length > 0 && subCarTwoSelect > 0 && mainSectionSelect > 0 && subMainSectionSelect > 0 && titleEnInput.length > 0 && titleArInput.length > 0 && descriptionEnText.length > 0 && descriptionArText.length > 0) {
                 $(this).attr('href', '#next')
                 $(this).addClass('next2')
                 
@@ -697,6 +697,7 @@
 
         //section two | three | four validation
         $(".actions ul").find('li').eq(1).on('click', function() {
+            console.log("SGFDDFFD")
             var fieldRequired = "{{ __('messages.field_required') }}",
                 remaininiLessTotal = "{{ __('messages.remaining_q_less_total') }}"
 
@@ -742,89 +743,90 @@
             // section three
             if ($(".steps ul").find('li').eq(2).hasClass('current')) {
                 $(".actions ul").find('li').eq(2).on("mouseover", "a", function() {
-                var totalQRequired = "{{ __('messages.total_quantity_required') }}",
-                    remainingQRequired = "{{ __('messages.remaining_quantity_required') }}",
-                    priceRequired = "{{ __('messages.price_required') }}",
-                    offerRequired = "{{ __('messages.offer_required') }}",
-                    remainingQLess = "{{ __('messages.remaining_q_less_total') }}"
+                    var totalQRequired = "{{ __('messages.total_quantity_required') }}",
+                        remainingQRequired = "{{ __('messages.remaining_quantity_required') }}",
+                        priceRequired = "{{ __('messages.price_required') }}",
+                        offerRequired = "{{ __('messages.offer_required') }}",
+                        remainingQLess = "{{ __('messages.remaining_q_less_total') }}"
 
-                $("input[name='total_quatity']").on('keyup', function() {
-                    if ( !$(this).val() ) {
-                        $(this).attr('valid', "0")
-                        if ($(this).next('.offerV-required').length) {
-
-                        }else {
-                            $(this).after(`
-                            <div style="margin-top:20px" class="alert alert-outline-danger mb-4 offerV-required" role="alert"> <button type="button" class="close" data-dismiss="alert" aria-label="Close"> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x close" data-dismiss="alert"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button><i class="flaticon-cancel-12 close" data-dismiss="alert"></i> ${totalQRequired}</div>
-                            `)
-                        }
-                    }else {
-                        $(this).attr('valid', "1")
-                        $(this).next('.offerV-required').remove()
-                    }
-                })
-
-                $("input[name='remaining_quantity']").on('keyup', function() {
-                    var remainingQ = $(this).val(),
-                        totalQ = $("input[name='total_quatity']").val()
-                    if ( !$(this).val() || Number(remainingQ) > Number(totalQ) ) {
-                        $(this).attr('valid', "0")
                         
-                        if (Number(remainingQ) > Number(totalQ)) {
+                    $("input[name='total_quatity']").on('keyup', function() {
+                        if ( !$(this).val() ) {
+                            $(this).attr('valid', "0")
                             if ($(this).next('.offerV-required').length) {
 
                             }else {
                                 $(this).after(`
-                                <div style="margin-top:20px" class="alert alert-outline-danger mb-4 offerV-required" role="alert"> <button type="button" class="close" data-dismiss="alert" aria-label="Close"> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x close" data-dismiss="alert"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button><i class="flaticon-cancel-12 close" data-dismiss="alert"></i> ${remainingQLess} ${totalQ}</div>
+                                <div style="margin-top:20px" class="alert alert-outline-danger mb-4 offerV-required" role="alert"> <button type="button" class="close" data-dismiss="alert" aria-label="Close"> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x close" data-dismiss="alert"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button><i class="flaticon-cancel-12 close" data-dismiss="alert"></i> ${totalQRequired}</div>
                                 `)
                             }
                         }else {
+                            $(this).attr('valid', "1")
+                            $(this).next('.offerV-required').remove()
+                        }
+                    })
+
+                    $("input[name='remaining_quantity']").on('keyup', function() {
+                        var remainingQ = $(this).val(),
+                            totalQ = $("input[name='total_quatity']").val()
+                        if ( !$(this).val() || Number(remainingQ) > Number(totalQ) ) {
+                            $(this).attr('valid', "0")
+                            
+                            if (Number(remainingQ) > Number(totalQ)) {
+                                if ($(this).next('.offerV-required').length) {
+
+                                }else {
+                                    $(this).after(`
+                                    <div style="margin-top:20px" class="alert alert-outline-danger mb-4 offerV-required" role="alert"> <button type="button" class="close" data-dismiss="alert" aria-label="Close"> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x close" data-dismiss="alert"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button><i class="flaticon-cancel-12 close" data-dismiss="alert"></i> ${remainingQLess} ${totalQ}</div>
+                                    `)
+                                }
+                            }else {
+                                if ($(this).next('.offerV-required').length) {
+
+                                }else {
+                                    $(this).after(`
+                                    <div style="margin-top:20px" class="alert alert-outline-danger mb-4 offerV-required" role="alert"> <button type="button" class="close" data-dismiss="alert" aria-label="Close"> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x close" data-dismiss="alert"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button><i class="flaticon-cancel-12 close" data-dismiss="alert"></i> ${remainingQRequired}</div>
+                                    `)
+                                }
+                            }
+                            
+                        }else {
+                            $(this).attr('valid', "1")
+                            $(this).next('.offerV-required').remove()
+                        }
+                    })
+
+                    $("input[name='price_before_offer']").on('keyup', function() {
+                        if ( !$(this).val() ) {
+                            $(this).attr('valid', "0")
                             if ($(this).next('.offerV-required').length) {
 
                             }else {
                                 $(this).after(`
-                                <div style="margin-top:20px" class="alert alert-outline-danger mb-4 offerV-required" role="alert"> <button type="button" class="close" data-dismiss="alert" aria-label="Close"> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x close" data-dismiss="alert"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button><i class="flaticon-cancel-12 close" data-dismiss="alert"></i> ${remainingQRequired}</div>
+                                <div style="margin-top:20px" class="alert alert-outline-danger mb-4 offerV-required" role="alert"> <button type="button" class="close" data-dismiss="alert" aria-label="Close"> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x close" data-dismiss="alert"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button><i class="flaticon-cancel-12 close" data-dismiss="alert"></i> ${priceRequired}</div>
                                 `)
                             }
-                        }
-                        
-                    }else {
-                        $(this).attr('valid', "1")
-                        $(this).next('.offerV-required').remove()
-                    }
-                })
-
-                $("input[name='price_before_offer']").on('keyup', function() {
-                    if ( !$(this).val() ) {
-                        $(this).attr('valid', "0")
-                        if ($(this).next('.offerV-required').length) {
-
                         }else {
-                            $(this).after(`
-                            <div style="margin-top:20px" class="alert alert-outline-danger mb-4 offerV-required" role="alert"> <button type="button" class="close" data-dismiss="alert" aria-label="Close"> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x close" data-dismiss="alert"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button><i class="flaticon-cancel-12 close" data-dismiss="alert"></i> ${priceRequired}</div>
-                            `)
+                            $(this).attr('valid', "1")
+                            $(this).next('.offerV-required').remove()
                         }
-                    }else {
-                        $(this).attr('valid', "1")
-                        $(this).next('.offerV-required').remove()
-                    }
-                })
+                    })
 
-                $("#offer_percentage").on('keyup', function() {
-                    if ( !$(this).val() ) {
-                        $(this).attr('valid', "0")
-                        if ($(this).next('.offerV-required').length) {
+                    $("#offer_percentage").on('keyup', function() {
+                        if ( !$(this).val() ) {
+                            $(this).attr('valid', "0")
+                            if ($(this).next('.offerV-required').length) {
 
+                            }else {
+                                $(this).after(`
+                                <div style="margin-top:20px" class="alert alert-outline-danger mb-4 offerV-required" role="alert"> <button type="button" class="close" data-dismiss="alert" aria-label="Close"> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x close" data-dismiss="alert"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button><i class="flaticon-cancel-12 close" data-dismiss="alert"></i> ${offerRequired}</div>
+                                `)
+                            }
                         }else {
-                            $(this).after(`
-                            <div style="margin-top:20px" class="alert alert-outline-danger mb-4 offerV-required" role="alert"> <button type="button" class="close" data-dismiss="alert" aria-label="Close"> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x close" data-dismiss="alert"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button><i class="flaticon-cancel-12 close" data-dismiss="alert"></i> ${offerRequired}</div>
-                            `)
+                            $(this).attr('valid', "1")
+                            $(this).next('.offerV-required').remove()
                         }
-                    }else {
-                        $(this).attr('valid', "1")
-                        $(this).next('.offerV-required').remove()
-                    }
-                })
+                    })
                 
 
                 // validation on click section 3     
@@ -851,54 +853,7 @@
             }
         })
 
-        // on click prev
-        $(".actions ul").find('li').eq(0).on("click", "a", function() {
-            $("#multi_options_radio .row").on('change', 'input[type="radio"]', function() {
-                if ($(this).val() != "none") {
-                    $("#multi_options_radio").find(".col-sm-4 select:not(:disabled)").parent(".col-sm-4").prev('.col-sm-1').find('.new-control-indicator').css('background', '#1b55e2')
-                    $("#multi_options_radio").find(".col-sm-4 select:not(:disabled)").parent(".col-sm-4").prev('.col-sm-1').find('.new-chk-content').css('color', '#1b55e2')
-                    $("#multi_options_radio").find(".col-sm-4 select:not(:disabled)").parent(".col-sm-4").find('.select2-selection--multiple').css('border', '#bfc9d4 solid 1px')
-                    $("#multi_options_radio").find(".col-sm-4 select[disabled]").parent(".col-sm-4").prev('.col-sm-1').find('.new-control-indicator').css('background', '#e0e6ed')
-                    $("#multi_options_radio").find(".col-sm-4 select[disabled]").parent(".col-sm-4").prev('.col-sm-1').find('.new-chk-content').css('color', '#e0e6ed')
-                    $("#multi_options_radio").find(".col-sm-4 select[disabled]").parent(".col-sm-4").find('.select2-selection--multiple').css('border', '#bfc9d4 solid 1px')
-                    $(".actions ul").find('li').eq(1).on("mouseover", "a", function() {
-                        $(this).attr('href', "#")
-                    })
-                }else {
-                    $("#multi_options_radio").find(".col-sm-4 select[disabled]").parent(".col-sm-4").prev('.col-sm-1').find('.new-control-indicator').css('background', '#e0e6ed')
-                    $("#multi_options_radio").find(".col-sm-4 select[disabled]").parent(".col-sm-4").prev('.col-sm-1').find('.new-chk-content').css('color', '#e0e6ed')
-                    $("#multi_options_radio").find(".col-sm-4 select[disabled]").parent(".col-sm-4").find('.select2-selection--multiple').css('border', '#bfc9d4 solid 1px')
-                    $(".actions ul").find('li').eq(1).on("mouseover", "a", function() {
-                        $(this).attr('href', "#next")
-                    })
-                }
-                var multiId = $(this).data('multi')
-                if ($(this).is(":checked")) {
-                    $("select.multi_tags").prop('disabled', true)
-                    $(`#${multiId}`).prop('disabled', false)
-                    $(`#${multiId}`).prop('required', true)
-                    $(`#${multiId}`).parent('.col-sm-4').siblings('.col-sm-4').children('select').prop('required', false)
-                    $(`#${multiId}`).on("change", function () {
-                        if ($(`#${multiId}`).val().length > 0) {
-                            $("#multi_options_radio").find(".col-sm-4 select:not(:disabled)").parent(".col-sm-4").prev('.col-sm-1').find('.new-control-indicator').css('background', '#1b55e2')
-                            $("#multi_options_radio").find(".col-sm-4 select:not(:disabled)").parent(".col-sm-4").prev('.col-sm-1').find('.new-chk-content').css('color', '#1b55e2')
-                            $("#multi_options_radio").find(".col-sm-4 select:not(:disabled)").parent(".col-sm-4").find('.select2-selection--multiple').css('border', '#bfc9d4 solid 1px')
-                            $(`#${multiId}`).siblings('.offerV-required').remove()
-                            $(".actions ul").find('li').eq(1).on("mouseover", "a", function() {
-                                $(this).attr('href', "#next")
-                            })
-                        }else {
-                            $("#multi_options_radio").find(".col-sm-4 select:not(:disabled)").parent(".col-sm-4").prev('.col-sm-1').find('.new-control-indicator').css('background', 'red')
-                            $("#multi_options_radio").find(".col-sm-4 select:not(:disabled)").parent(".col-sm-4").prev('.col-sm-1').find('.new-chk-content').css('color', 'red')
-                            $("#multi_options_radio").find(".col-sm-4 select:not(:disabled)").parent(".col-sm-4").find('.select2-selection--multiple').css('border', 'red solid 1px')
-                            
-                        }
-                    })
-                }
-            })
-            
-            
-        })
+        
 
         /*
         *  show / hide message on change value
@@ -1144,6 +1099,92 @@
             }
         })
 
+        var totalQRequired = "{{ __('messages.total_quantity_required') }}",
+            remainingQRequired = "{{ __('messages.remaining_quantity_required') }}",
+            priceRequired = "{{ __('messages.price_required') }}",
+            offerRequired = "{{ __('messages.offer_required') }}",
+            remainingQLess = "{{ __('messages.remaining_q_less_total') }}"
+
+            
+        $("input[name='total_quatity']").on('keyup', function() {
+            console.log("DDDS")
+            if ( !$(this).val() ) {
+                $(this).attr('valid', "0")
+                if ($(this).next('.offerV-required').length) {
+
+                }else {
+                    $(this).after(`
+                    <div style="margin-top:20px" class="alert alert-outline-danger mb-4 offerV-required" role="alert"> <button type="button" class="close" data-dismiss="alert" aria-label="Close"> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x close" data-dismiss="alert"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button><i class="flaticon-cancel-12 close" data-dismiss="alert"></i> ${totalQRequired}</div>
+                    `)
+                }
+            }else {
+                $(this).attr('valid', "1")
+                $(this).next('.offerV-required').remove()
+            }
+        })
+
+        $("input[name='remaining_quantity']").on('keyup', function() {
+            var remainingQ = $(this).val(),
+                totalQ = $("input[name='total_quatity']").val()
+            if ( !$(this).val() || Number(remainingQ) > Number(totalQ) ) {
+                $(this).attr('valid', "0")
+                
+                if (Number(remainingQ) > Number(totalQ)) {
+                    if ($(this).next('.offerV-required').length) {
+
+                    }else {
+                        $(this).after(`
+                        <div style="margin-top:20px" class="alert alert-outline-danger mb-4 offerV-required" role="alert"> <button type="button" class="close" data-dismiss="alert" aria-label="Close"> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x close" data-dismiss="alert"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button><i class="flaticon-cancel-12 close" data-dismiss="alert"></i> ${remainingQLess} ${totalQ}</div>
+                        `)
+                    }
+                }else {
+                    if ($(this).next('.offerV-required').length) {
+
+                    }else {
+                        $(this).after(`
+                        <div style="margin-top:20px" class="alert alert-outline-danger mb-4 offerV-required" role="alert"> <button type="button" class="close" data-dismiss="alert" aria-label="Close"> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x close" data-dismiss="alert"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button><i class="flaticon-cancel-12 close" data-dismiss="alert"></i> ${remainingQRequired}</div>
+                        `)
+                    }
+                }
+                
+            }else {
+                $(this).attr('valid', "1")
+                $(this).next('.offerV-required').remove()
+            }
+        })
+
+        $("input[name='price_before_offer']").on('keyup', function() {
+            if ( !$(this).val() ) {
+                $(this).attr('valid', "0")
+                if ($(this).next('.offerV-required').length) {
+
+                }else {
+                    $(this).after(`
+                    <div style="margin-top:20px" class="alert alert-outline-danger mb-4 offerV-required" role="alert"> <button type="button" class="close" data-dismiss="alert" aria-label="Close"> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x close" data-dismiss="alert"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button><i class="flaticon-cancel-12 close" data-dismiss="alert"></i> ${priceRequired}</div>
+                    `)
+                }
+            }else {
+                $(this).attr('valid', "1")
+                $(this).next('.offerV-required').remove()
+            }
+        })
+
+        $("#offer_percentage").on('keyup', function() {
+            if ( !$(this).val() ) {
+                $(this).attr('valid', "0")
+                if ($(this).next('.offerV-required').length) {
+
+                }else {
+                    $(this).after(`
+                    <div style="margin-top:20px" class="alert alert-outline-danger mb-4 offerV-required" role="alert"> <button type="button" class="close" data-dismiss="alert" aria-label="Close"> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x close" data-dismiss="alert"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button><i class="flaticon-cancel-12 close" data-dismiss="alert"></i> ${offerRequired}</div>
+                    `)
+                }
+            }else {
+                $(this).attr('valid', "1")
+                $(this).next('.offerV-required').remove()
+            }
+        })
+
         $("input[name='air_shipping']").on('change', function() {
             if ($(this).is(':checked')) {
                 $(".air_shipping_price").show()
@@ -1163,6 +1204,10 @@
                 $(".sea_shipping_price").find("#sea_shipping_price").prop('disabled', true)
             }
         })
+
+
+
+        
         
 
         // submit form on click finish
@@ -1318,7 +1363,7 @@
                                     <input type="text" name="barcode" class="form-control" id="barcode" placeholder="{{ __('messages.barcode') }}" >
                                 </div>
                             </div>
-                            {{-- <div style="margin-bottom: 20px; margin-top : 20px" class="col-md-3" >
+                            <div style="margin-bottom: 20px; margin-top : 20px" class="col-md-3" >
                                 <div >
                                    <label class="new-control new-checkbox new-checkbox-text checkbox-primary">
                                      <input id="discount" name="offer" value="1" type="checkbox" class="new-control-input">
@@ -1335,7 +1380,7 @@
                                     <label for="final_price">{{ __('messages.price_after_discount') }}</label>
                                     <input style="font-size: 15px" disabled type="number" step="any" min="0" name="final_price" class="form-control" id="final_price" placeholder="{{ __('messages.price_after_discount') }}" value="" >
                                 </div>
-                            </div> --}}
+                            </div>
 
 
                             {{-- <div class="form-group mb-4" >

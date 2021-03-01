@@ -53,50 +53,50 @@ class CompanyController extends Controller{
     }
 
     // update profile
-    public function updateprofile(Request $request){
-        $current_admin_id =  Auth::user()->id;
-        $check_manager_email = Shop::where('email' , $request->email)->where('id' , '!=' , $current_admin_id)->first();
-        if($check_manager_email){
-            return redirect()->back()->with('status' , 'Email Exists Before');
-        }
+    // public function updateprofile(Request $request){
+    //     $current_admin_id =  Auth::user()->id;
+    //     $check_manager_email = Shop::where('email' , $request->email)->where('id' , '!=' , $current_admin_id)->first();
+    //     if($check_manager_email){
+    //         return redirect()->back()->with('status' , 'Email Exists Before');
+    //     }
         
-        $current_manager = Shop::find($current_admin_id);
-        if($request->file('logo')){
-            $image = $current_manager->logo;
-            $publicId = substr($image, 0 ,strrpos($image, "."));
-            if (!empty($publicId)) {
-                Cloudder::delete($publicId);
-            }
-            $image_name = $request->file('logo')->getRealPath();
-            Cloudder::upload($image_name, null);
-            $imagereturned = Cloudder::getResult();
-            $image_id = $imagereturned['public_id'];
-            $image_format = $imagereturned['format'];    
-            $image_new_name = $image_id.'.'.$image_format;
-            $current_manager->logo = $image_new_name;
-        }
-        if($request->file('cover')){
-            $image_cover = $current_manager->cover;
-            $publicId = substr($image_cover, 0 ,strrpos($image_cover, "."));
-            if (!empty($publicId)) {
-                Cloudder::delete($publicId);
-            }
-            $cover_name = $request->file('cover')->getRealPath();
-            Cloudder::upload($cover_name, null);
-            $coverreturned = Cloudder::getResult();
-            $cover_id = $coverreturned['public_id'];
-            $cover_format = $coverreturned['format'];    
-            $cover_new_name = $cover_id.'.'.$cover_format;
-            $current_manager->cover = $cover_new_name;
-        }
-        $current_manager->name = $request->name;
-        $current_manager->email = $request->email;
-        if($request->password){
-            $current_manager->password = Hash::make($request->password);
-        }
-        $current_manager->save();
-        return redirect()->back();
-    }
+    //     $current_manager = Shop::find($current_admin_id);
+    //     if($request->file('logo')){
+    //         $image = $current_manager->logo;
+    //         $publicId = substr($image, 0 ,strrpos($image, "."));
+    //         if (!empty($publicId)) {
+    //             Cloudder::delete($publicId);
+    //         }
+    //         $image_name = $request->file('logo')->getRealPath();
+    //         Cloudder::upload($image_name, null);
+    //         $imagereturned = Cloudder::getResult();
+    //         $image_id = $imagereturned['public_id'];
+    //         $image_format = $imagereturned['format'];    
+    //         $image_new_name = $image_id.'.'.$image_format;
+    //         $current_manager->logo = $image_new_name;
+    //     }
+    //     if($request->file('cover')){
+    //         $image_cover = $current_manager->cover;
+    //         $publicId = substr($image_cover, 0 ,strrpos($image_cover, "."));
+    //         if (!empty($publicId)) {
+    //             Cloudder::delete($publicId);
+    //         }
+    //         $cover_name = $request->file('cover')->getRealPath();
+    //         Cloudder::upload($cover_name, null);
+    //         $coverreturned = Cloudder::getResult();
+    //         $cover_id = $coverreturned['public_id'];
+    //         $cover_format = $coverreturned['format'];    
+    //         $cover_new_name = $cover_id.'.'.$cover_format;
+    //         $current_manager->cover = $cover_new_name;
+    //     }
+    //     $current_manager->name = $request->name;
+    //     $current_manager->email = $request->email;
+    //     if($request->password){
+    //         $current_manager->password = Hash::make($request->password);
+    //     }
+    //     $current_manager->save();
+    //     return redirect()->back();
+    // }
 
     public function personal_data_get() {
         $data['company'] = Company::find(Auth::user()->id);

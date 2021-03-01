@@ -1,4 +1,4 @@
-@extends('admin.ecommerce_app')
+@extends('company.app')
 
 @section('title' , __('messages.product_details'))
 
@@ -31,52 +31,43 @@
                         <tr>
                             <td class="label-table" > {{ __('messages.category') }} </td>
                             <td>
-                                <a target="_blank" href="{{ route('categories.details', $data['product']['category']['id']) }}">
+                                {{-- <a target="_blank" href="{{ route('categories.details', $data['product']['category']['id']) }}"> --}}
                                     {{ App::isLocale('en') ? $data['product']['category']['title_en'] : $data['product']['category']['title_ar'] }}
-                                </a>
+                                {{-- </a> --}}
                             </td>
                         </tr>
                         <tr>
                             <td class="label-table" > {{ __('messages.sub_category') }} </td>
                             <td>
-                                <a target="_blank" href="{{ route('sub_one_car_types.details', $data['product']['subOneCar']['id']) }}">
+                                {{-- <a target="_blank" href="{{ route('sub_one_car_types.details', $data['product']['subOneCar']['id']) }}"> --}}
                                     {{ App::isLocale('en') ? $data['product']['subOneCar']['title_en'] : $data['product']['subOneCar']['title_ar'] }}
-                                </a>
+                                {{-- </a> --}}
                             </td>
                         </tr>
                         <tr>
                             <td class="label-table" > {{ __('messages.sub_two_car_types') }} </td>
                             <td>
-                                <a target="_blank" href="{{ route('sub_two_car_types.details', $data['product']['subTwoCar']['id']) }}">
+                                {{-- <a target="_blank" href="{{ route('sub_two_car_types.details', $data['product']['subTwoCar']['id']) }}"> --}}
                                     {{ App::isLocale('en') ? $data['product']->subTwoCar->title_en : $data['product']->subTwoCar->title_ar }}
-                                </a>
+                                {{-- </a> --}}
                             </td>
                         </tr>
 
                         <tr>
                             <td class="label-table" > {{ __('messages.section') }} </td>
                             <td>
-                                <a target="_blank" href="{{ route('categories.details', $data['product']['section']['id']) }}">
+                                {{-- <a target="_blank" href="{{ route('categories.details', $data['product']['section']['id']) }}"> --}}
                                     {{ App::isLocale('en') ? $data['product']->section->title_en : $data['product']->section->title_ar }}
-                                </a>
+                                {{-- </a> --}}
                             </td>
                         </tr>
 
                         <tr>
                             <td class="label-table" > {{ __('messages.sub_section') }} </td>
                             <td>
-                                <a target="_blank" href="{{ route('sub_categories.details', $data['product']['subCategory']['id']) }}">
+                                {{-- <a target="_blank" href="{{ route('sub_categories.details', $data['product']['subCategory']['id']) }}"> --}}
                                     {{ App::isLocale('en') ? $data['product']->subCategory->title_en : $data['product']->subCategory->title_ar }}
-                                </a>
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td class="label-table" > {{ __('messages.company') }} </td>
-                            <td>
-                                <a target="_blank" href="{{ route('companies.details', $data['product']['company']['id']) }}">
-                                    {{ App::isLocale('en') ? $data['product']->company->title_en : $data['product']->company->title_ar }}
-                                </a>
+                                {{-- </a> --}}
                             </td>
                         </tr>
 
@@ -184,7 +175,7 @@
                                 </button>
                             </div>
                             <div class="modal-body">
-                                <form action="{{ route('update.quantity', $data['product']['id']) }}" method="post" enctype="multipart/form-data" >
+                                <form action="{{ route('update.company.quantity', $data['product']['id']) }}" method="post" enctype="multipart/form-data" >
                                     @csrf    
                                     <div class="form-group mb-4">
                                         <label for="remaining_quantity">{{ __('messages.quantity') }}</label>

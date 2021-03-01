@@ -485,6 +485,7 @@
         "best_offers" => "Best Offers",
         "comments" => "Comments",
         "personal_data" => "Personal Data",
-        "add_free_ads" => "Add Free Ads"
+        "add_free_ads" => "Add Free Ads",
+        "options2" => "Options"
     ];
 ?>

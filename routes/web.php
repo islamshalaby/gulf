@@ -592,8 +592,33 @@ Route::group([
     ], function($router){
         Route::get('show' , 'ProductController@show')->name('products.company.index');
         Route::get('add' , 'ProductController@AddGet')->name('products.company.add');
+        Route::post('add' , 'ProductController@addPost');
         Route::get('search' , 'ProductController@product_search')->name('products.company.search');
         Route::get('getbysubcat' , 'ProductController@get_product_by_sub_cat')->name('products.company.getbysubcat');
-        Route::post('update/quantity/{product}' , 'ProductController@update_quantity')->name('update.quantity');
+        Route::post('update/quantity/{product}' , 'ProductController@update_quantity')->name('update.company.quantity');
+        Route::get('fetchcategoryoptions/{category}' , 'ProductController@fetch_category_options');
+        Route::get('fetchsubcategorybycategory/{category}' , 'ProductController@fetch_sub_categories_by_category');
+        Route::get('fetchsubcartwobycarone/{carOne}' , 'ProductController@fetch_sub_cartwotype_by_sub_caronetype');
+        Route::get('fetchsubcatsbycat/{category}' , 'ProductController@fetch_sub_cats_cats');
+        Route::get('fetchcategoryproducts/{category}' , 'ProductController@fetch_category_products');
+        Route::get('details/{product}' , 'ProductController@details')->name('products.company.details');
+        Route::get('delete/{product}' , 'ProductController@delete')->name('products.company.delete');
+        Route::get('edit/{product}' , 'ProductController@EditGet')->name('products.company.edit');
+        Route::post('edit/{product}' , 'ProductController@EditPost');
+        Route::get('hide/{product}/{status}' , 'ProductController@visibility_status_product')->name('products.company.visibility.status');
+    });
+
+    // Orders Route
+    Route::group([
+        "prefix" => "orders"
+    ], function($router){
+         Route::get('show' , 'OrderController@show')->name('orders.company.index');
+        //  Route::get('action/{order}/{status}' , 'OrderController@action_order')->name('orders.action');
+        //  Route::get('details/{order}' , 'OrderController@details')->name('orders.details');
+        //  Route::get('filter/{status}' , 'OrderController@filter_orders')->name('orders.filter');
+        //  Route::get('fetchbyarea' , 'OrderController@fetch_orders_by_area')->name('orders.fetchbyarea');
+        //  Route::get('fetchbydate' , 'OrderController@fetch_orders_date')->name('orders.fetchbydate');
+        //  Route::get('fetchbypayment' , 'OrderController@fetch_order_payment_method')->name('orders.fetchbypayment');
+        //  Route::get('invoice/{order}' , 'OrderController@getInvoice')->name('orders.invoice');
     });
 });

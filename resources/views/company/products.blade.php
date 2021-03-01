@@ -47,17 +47,17 @@
                         }
                         
                         var permition = [],
-                            detailsLink = "/admin-panel/products/details/" + element.id,
-                            editLink = "/admin-panel/products/edit/" + element.id,
-                            deleteLink = "/admin-panel/products/delete/" + element.id,
+                            detailsLink = "/company-panel/products/details/" + element.id,
+                            editLink = "/company-panel/products/edit/" + element.id,
+                            deleteLink = "/company-panel/products/delete/" + element.id,
                             dinar = "{{ __('messages.dinar') }}",
                             visibilityStatus = "{{ __('messages.visible') }}",
                             hideShoProduct = "{{ __('messages.hide_product') }}",
-                            hideShowLink = "/admin-panel/products/hide/" + element.id + "/" + 1
+                            hideShowLink = "/company-panel/products/hide/" + element.id + "/" + 1
 
                             if (element.hidden == 1) {
                                 hideShoProduct = "{{ __('messages.show_product') }}"
-                                hideShowLink = "/admin-panel/products/hide/" + element.id + "/" + 0
+                                hideShowLink = "/company-panel/products/hide/" + element.id + "/" + 0
                                 visibilityStatus = "{{ __('messages.hidden') }}"
                             }
                         @if(Auth::user()->update_data) 
@@ -71,10 +71,7 @@
                         var priceBeforeOffer = element.price_before_offer,
                             finalPrice = element.final_price,
                             startFrom = "{{ __('messages.start_from') }}"
-                        if (element.multi_options == 1) {
-                            priceBeforeOffer = startFrom + " " + element.multi_optionss[0].price_before_offer,
-                            finalPrice = startFrom + " " + element.multi_optionss[0].final_price
-                        }
+                        
                         var rowNode = dTbls.row.add( [
                             `${i}`,
                             `<img src="https://res.cloudinary.com/dyyeedzqi/image/upload/w_50,q_50/v1581928924/${ (element.images[0].image) ? element.images[0].image : '' }"  />`,
@@ -134,11 +131,11 @@
                 </div>
             </div>
             @if($data['expire'] == 'no')
-            <a class="btn btn-primary" href="/admin-panel/products/show?expire=soon">{{ __('messages.expired_soon') }}</a>
+            <a class="btn btn-primary" href="/company-panel/products/show?expire=soon">{{ __('messages.expired_soon') }}</a>
             @endif
 
             @if($data['expire'] == 'soon')
-            <a class="btn btn-primary" href="/admin-panel/products/show">{{ __('messages.return_all_products') }}</a>
+            <a class="btn btn-primary" href="/company-panel/products/show">{{ __('messages.return_all_products') }}</a>
             @endif            
         </div>
         
@@ -229,20 +226,20 @@
                                           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-down"><polyline points="6 9 12 15 18 9"></polyline></svg>
                                         </button>
                                         <div class="dropdown-menu" aria-labelledby="dropdownMenuReference5" style="will-change: transform;">
-                                          <a class="dropdown-item" href="{{ route('products.details', $product->id) }}">{{ __('messages.details') }}</a>
-                                            @if(Auth::user()->update_data) 
-                                            <a class="dropdown-item" href="{{ route('products.edit', $product->id) }}">{{ __('messages.edit') }}</a>
-                                            @endif
-                                            @if(Auth::user()->delete_data) 
+                                          <a class="dropdown-item" href="{{ route('products.company.details', $product->id) }}">{{ __('messages.details') }}</a>
+                                           
+                                            <a class="dropdown-item" href="{{ route('products.company.edit', $product->id) }}">{{ __('messages.edit') }}</a>
+                                            
+                                            
                                             <a class="dropdown-item"  onclick='return confirm("{{ __('messages.are_you_sure') }}");' href="{{ route('products.delete', $product->id) }}">{{ __('messages.delete') }}</a>
                                              
                                           <div class="dropdown-divider"></div>
                                           @if($product->hidden == 0)
-                                          <a class="dropdown-item" onclick='return confirm("{{ __('messages.are_you_sure') }}");' href="{{ route('products.visibility.status', [$product->id, 1]) }}">{{ __('messages.hide_product') }}</a>
+                                          <a class="dropdown-item" onclick='return confirm("{{ __('messages.are_you_sure') }}");' href="{{ route('products.company.visibility.status', [$product->id, 1]) }}">{{ __('messages.hide_product') }}</a>
                                           @else
-                                          <a class="dropdown-item" onclick='return confirm("{{ __('messages.are_you_sure') }}");' href="{{ route('products.visibility.status', [$product->id, 0]) }}">{{ __('messages.show_product') }}</a>
+                                          <a class="dropdown-item" onclick='return confirm("{{ __('messages.are_you_sure') }}");' href="{{ route('products.company.visibility.status', [$product->id, 0]) }}">{{ __('messages.show_product') }}</a>
                                           @endif
-                                          @endif 
+                                          
                                         </div>
                                       </div>
                                 </td>
@@ -261,7 +258,7 @@
             <ul class="pagination">
                 <li class="prev"><a href="{{$data['categories']->previousPageUrl()}}">Prev</a></li>
                 @for($i = 1 ; $i <= $data['categories']->lastPage(); $i++ )
-                    <li class="{{ $data['categories']->currentPage() == $i ? "active" : '' }}"><a href="/admin-panel/categories/show?page={{$i}}">{{$i}}</a></li>               
+                    <li class="{{ $data['categories']->currentPage() == $i ? "active" : '' }}"><a href="/company-panel/categories/show?page={{$i}}">{{$i}}</a></li>               
                 @endfor
                 <li class="next"><a href="{{$data['categories']->nextPageUrl()}}">Next</a></li>
             </ul>

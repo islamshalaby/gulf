@@ -213,62 +213,14 @@
                             </li>
                         </ul>
                     </li>
-                    {{--<li class="menu multi_options">
-                        <a href="#multi_options" data-active="true" data-toggle="collapse" aria-expanded="true" class="dropdown-toggle first-link">
-                            <div class="">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-check-square"><polyline points="9 11 12 14 22 4"></polyline><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path></svg>
-                                <span>{{ __('messages.multi_option_value') }}</span>
-                            </div>
-                            <div>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg>
-                            </div>
-                        </a>
-                        <ul class="collapse submenu list-unstyled show" id="multi_options" data-parent="#accordionExample">
-                            <li class="active add">
-                                <a href="{{ route('multi_options.store.edit', 8) }}"> {{ __('messages.add') }} </a>
-                            </li>
-                            <li class="show" >
-                                <a href="{{ route('multi_options.store.index') }}"> {{ __('messages.show') }} </a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li class="menu delivery_costs">
-                        <a href="#delivery_costs" data-active="true" data-toggle="collapse" aria-expanded="true" class="dropdown-toggle first-link">
-                            <div class="">
-                                <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="css-i6dzq1"><line x1="16.5" y1="9.4" x2="7.5" y2="4.21"></line><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
-                                <span>{{ __('messages.delivery_costs') }}</span>
-                            </div>
-                            <div>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg>
-                            </div>
-                        </a>
-                        <ul class="collapse submenu list-unstyled show" id="delivery_costs" data-parent="#accordionExample">
-                            
-                            <li class="active add">
-                                <a href="{{ route('delivery_costs.store.add') }}"> {{ __('messages.add') }} </a>
-                            </li>
-                            
-                            <li class="show" >
-                                <a href="{{ route('delivery_costs.store.index') }}"> {{ __('messages.show') }} </a>
-                            </li>
-                        </ul>
-                    </li>
                     <li class="menu orders">
-                        <a href="{{ route('orders.store.index') }}" class="dropdown-toggle first-link">
+                        <a href="{{ route('orders.company.index') }}" class="dropdown-toggle first-link">
                             <div class="">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-archive"><polyline points="21 8 21 21 3 21 3 8"></polyline><rect x="1" y="3" width="22" height="5"></rect><line x1="10" y1="12" x2="14" y2="12"></line></svg>
                                 <span>{{ __('messages.orders') }}</span>
                             </div>
                         </a>
                     </li>
-                    <li class="menu stats">
-                        <a href="{{ route('statistics.store.index') }}" class="dropdown-toggle first-link">
-                            <div class="">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-activity"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg>
-                                <span>{{ __('messages.statistics') }}</span>
-                            </div>
-                        </a>
-                    </li> --}}
                 </ul>
                 <!-- <div class="shadow-bottom"></div> -->
                 

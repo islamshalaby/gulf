@@ -1148,6 +1148,92 @@
             }
         })
 
+        var totalQRequired = "{{ __('messages.total_quantity_required') }}",
+            remainingQRequired = "{{ __('messages.remaining_quantity_required') }}",
+            priceRequired = "{{ __('messages.price_required') }}",
+            offerRequired = "{{ __('messages.offer_required') }}",
+            remainingQLess = "{{ __('messages.remaining_q_less_total') }}"
+
+            
+        $("input[name='total_quatity']").on('keyup', function() {
+            console.log("DDDS")
+            if ( !$(this).val() ) {
+                $(this).attr('valid', "0")
+                if ($(this).next('.offerV-required').length) {
+
+                }else {
+                    $(this).after(`
+                    <div style="margin-top:20px" class="alert alert-outline-danger mb-4 offerV-required" role="alert"> <button type="button" class="close" data-dismiss="alert" aria-label="Close"> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x close" data-dismiss="alert"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button><i class="flaticon-cancel-12 close" data-dismiss="alert"></i> ${totalQRequired}</div>
+                    `)
+                }
+            }else {
+                $(this).attr('valid', "1")
+                $(this).next('.offerV-required').remove()
+            }
+        })
+
+        $("input[name='remaining_quantity']").on('keyup', function() {
+            var remainingQ = $(this).val(),
+                totalQ = $("input[name='total_quatity']").val()
+            if ( !$(this).val() || Number(remainingQ) > Number(totalQ) ) {
+                $(this).attr('valid', "0")
+                
+                if (Number(remainingQ) > Number(totalQ)) {
+                    if ($(this).next('.offerV-required').length) {
+
+                    }else {
+                        $(this).after(`
+                        <div style="margin-top:20px" class="alert alert-outline-danger mb-4 offerV-required" role="alert"> <button type="button" class="close" data-dismiss="alert" aria-label="Close"> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x close" data-dismiss="alert"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button><i class="flaticon-cancel-12 close" data-dismiss="alert"></i> ${remainingQLess} ${totalQ}</div>
+                        `)
+                    }
+                }else {
+                    if ($(this).next('.offerV-required').length) {
+
+                    }else {
+                        $(this).after(`
+                        <div style="margin-top:20px" class="alert alert-outline-danger mb-4 offerV-required" role="alert"> <button type="button" class="close" data-dismiss="alert" aria-label="Close"> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x close" data-dismiss="alert"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button><i class="flaticon-cancel-12 close" data-dismiss="alert"></i> ${remainingQRequired}</div>
+                        `)
+                    }
+                }
+                
+            }else {
+                $(this).attr('valid', "1")
+                $(this).next('.offerV-required').remove()
+            }
+        })
+
+        $("input[name='price_before_offer']").on('keyup', function() {
+            if ( !$(this).val() ) {
+                $(this).attr('valid', "0")
+                if ($(this).next('.offerV-required').length) {
+
+                }else {
+                    $(this).after(`
+                    <div style="margin-top:20px" class="alert alert-outline-danger mb-4 offerV-required" role="alert"> <button type="button" class="close" data-dismiss="alert" aria-label="Close"> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x close" data-dismiss="alert"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button><i class="flaticon-cancel-12 close" data-dismiss="alert"></i> ${priceRequired}</div>
+                    `)
+                }
+            }else {
+                $(this).attr('valid', "1")
+                $(this).next('.offerV-required').remove()
+            }
+        })
+
+        $("#offer_percentage").on('keyup', function() {
+            if ( !$(this).val() ) {
+                $(this).attr('valid', "0")
+                if ($(this).next('.offerV-required').length) {
+
+                }else {
+                    $(this).after(`
+                    <div style="margin-top:20px" class="alert alert-outline-danger mb-4 offerV-required" role="alert"> <button type="button" class="close" data-dismiss="alert" aria-label="Close"> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x close" data-dismiss="alert"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button><i class="flaticon-cancel-12 close" data-dismiss="alert"></i> ${offerRequired}</div>
+                    `)
+                }
+            }else {
+                $(this).attr('valid', "1")
+                $(this).next('.offerV-required').remove()
+            }
+        })
+
         $("input[name='air_shipping']").on('change', function() {
             if ($(this).is(':checked')) {
                 $(".air_shipping_price").show()
