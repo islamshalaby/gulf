@@ -97,6 +97,18 @@
             return $result;
           }
 
+          // convert currency
+          public static function converCurruncy2($token, $from, $to) {
+            // Fetching JSON
+            $req_url = 'https://v6.exchangerate-api.com/v6/' . $token . '/pair/' . $from . '/' . $to;
+            $response_json = file_get_contents($req_url);
+
+            // Decoding
+            $response = json_decode($response_json);
+
+            return ['value' => $response->conversion_rate];
+          }
+
         public static function send_chat_notification($tokens, $title="hello", $msg="helo msg", $type=1,$chat=null,$jobs=null){
             $key = 'AAAAMUON44I:APA91bEA9uJBOkHS6LN-cnZ8UFs-acHT_T7xw5h9XyyA91FS51n3nFi11rhGs611jJ4ia4VisD2TIDqN5AbanKrcHdMhWO5mxPwSQL3I6S_NVyFInGtwtUbKZzRT12U2ybHGr29qf0IF';
             $fields = array

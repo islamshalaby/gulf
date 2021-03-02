@@ -42,16 +42,16 @@ class HomeController extends Controller
         
         if (isset($currency['id'])) {
             if (!$currency->updated_at->isToday()) {
-                $result = APIHelpers::converCurruncy("oS-hVi-XUF5EKiaDtRhUbqkNmNfcLfu8q5Ad0I7IxcsVVpjUfOWe4", $fromCurr, $toCurr);
-                if(isset($result->amount)){
-					$currency->update(['value' => $result->amount, 'updated_at' => Carbon::now()]);
+                $result = APIHelpers::converCurruncy2("4ab95df1bf98d41d1c3bfb0e", "kwd", $toCurr);
+                if(isset($result['value'])){
+					$currency->update(['value' => $result['value'], 'updated_at' => Carbon::now()]);
 					$currency = Currency::where('from', $fromCurr)->where('to', $toCurr)->first();
 				}
             }
         }else {
-            $result = APIHelpers::converCurruncy("oS-hVi-XUF5EKiaDtRhUbqkNmNfcLfu8q5Ad0I7IxcsVVpjUfOWe4", $fromCurr, $toCurr);
-            if(isset($result->amount) && $currency['value'] != 1){
-				$currency = Currency::create(['value' => $result->amount, "from" => $fromCurr, "to" => $toCurr]);
+            $result = APIHelpers::converCurruncy2("4ab95df1bf98d41d1c3bfb0e", "kwd", $toCurr);
+            if(isset($result['value']) && !$currency){
+				$currency = Currency::create(['value' => $result['value'], "from" => $fromCurr, "to" => $toCurr]);
 			}
         }
         
@@ -146,23 +146,26 @@ class HomeController extends Controller
             $currency = ["value" => 1];
         }else {
             $currency = Currency::where('from', "kwd")->where('to', $toCurr)->first();
+            // dd($currency);
         }
         
-        
+        // $result = APIHelpers::converCurruncy2("4ab95df1bf98d41d1c3bfb0e", "kwd", $toCurr);
+        // dd($result->value);
         if (isset($currency['id'])) {
             if (!$currency->updated_at->isToday()) {
-                $result = APIHelpers::converCurruncy("oS-hVi-XUF5EKiaDtRhUbqkNmNfcLfu8q5Ad0I7IxcsVVpjUfOWe4", "kwd", $toCurr);
-                if(isset($result->amount)){
-					$currency->update(['value' => $result->amount, 'updated_at' => Carbon::now()]);
+                $result = APIHelpers::converCurruncy2("4ab95df1bf98d41d1c3bfb0e", "kwd", $toCurr);
+                if(isset($result['value'])){
+					$currency->update(['value' => $result['value'], 'updated_at' => Carbon::now()]);
 					$currency = Currency::where('from', "kwd")->where('to', $toCurr)->first();
 				}
                 
             }
             
         }else {
-            $result = APIHelpers::converCurruncy("oS-hVi-XUF5EKiaDtRhUbqkNmNfcLfu8q5Ad0I7IxcsVVpjUfOWe4", "kwd", $toCurr);
-            if(isset($result->amount) && $currency['value'] != 1){
-				$currency = Currency::create(['value' => $result->amount, "from" => "kwd", "to" => $toCurr]);
+            $result = APIHelpers::converCurruncy2("4ab95df1bf98d41d1c3bfb0e", "kwd", $toCurr);
+            // dd($currency);
+            if(isset($result['value']) && !$currency){
+				$currency = Currency::create(['value' => $result['value'], "from" => "kwd", "to" => $toCurr]);
 			}
             
         }
