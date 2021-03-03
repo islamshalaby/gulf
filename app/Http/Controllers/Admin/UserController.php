@@ -163,7 +163,7 @@ class UserController extends AdminController{
         $insert_notification = new Notification();
         $insert_notification->image = "";
         $insert_notification->title = "رصيد إعلانات";
-        $insert_notification->body =   "تم إضافة " . $request->free_ads_count . "لرصيد إعلاناتك";
+        $insert_notification->body =   "تم إضافة " . $request->free_ads_count . " لرصيد إعلاناتك";
         $insert_notification->save();
 
         $user_notification = new UserNotification();
@@ -172,7 +172,7 @@ class UserController extends AdminController{
         $user_notification->save();
         $fcm = [$user->fcm_token];
 
-        $notification = APIHelpers::send_notification($request->title , $request->body , "" , null , $fcm);
+        $notification = APIHelpers::send_notification($insert_notification->title , $insert_notification->body , "" , null , $fcm);
         
         return redirect()->back()->with('status', 'Added Successfully');
     }
