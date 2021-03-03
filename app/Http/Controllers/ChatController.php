@@ -140,10 +140,19 @@ class ChatController extends Controller
         Message::where('ad_product_id',$request->id)->where('user_id',$other_user->user_id)->where('conversation_id',$partic->conversation_id)->update($input);
 
         $ad_pro_user_Data = AdProduct::with('user')->findOrFail($request->id);
-        $data['ad_user_data']['name'] = $ad_pro_user_Data->user->name;
-        $data['ad_user_data']['email'] = $ad_pro_user_Data->user->email;
-        $data['ad_user_data']['image'] = $ad_pro_user_Data->user->image;
-        $data['ad_user_data']['phone'] = $ad_pro_user_Data->user->phone;
+        if($ad_pro_user_Data->user_id == $user_id){
+            $user_other_data = User::where('id',$other_user->user_id)->first();
+            $data['ad_user_data']['name'] = $user_other_data->name;
+            $data['ad_user_data']['email'] = $user_other_data->email;
+            $data['ad_user_data']['image'] = $user_other_data->image;
+            $data['ad_user_data']['phone'] = $user_other_data->phone;
+        }else{
+            $data['ad_user_data']['name'] = $ad_pro_user_Data->user->name;
+            $data['ad_user_data']['email'] = $ad_pro_user_Data->user->email;
+            $data['ad_user_data']['image'] = $ad_pro_user_Data->user->image;
+            $data['ad_user_data']['phone'] = $ad_pro_user_Data->user->phone;
+        }
+
         $days =  Message::where('ad_product_id' , $request->id)
             ->where('conversation_id',$partic->conversation_id)
             ->select('id','message','type','user_id','conversation_id','ad_product_id','created_at')
