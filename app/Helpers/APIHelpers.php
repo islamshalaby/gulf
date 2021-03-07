@@ -123,7 +123,7 @@
                     'type' => $type,
                     'icon' => 'myIcon',
                     'sound' => 'mySound',
-                    'link' => $link
+                    'jobs' => $link
                 ],
                 'notification' => [  // ios developer
                     'title' => $title,
@@ -132,7 +132,7 @@
                     'type' => 3,
                     'icon' => 'myIcon',
                     'sound' => 'mySound',
-                    'link' => $link
+                    'jobs' => $link
                 ],
                 'vibrate' => 1,
                 'sound' => 1
