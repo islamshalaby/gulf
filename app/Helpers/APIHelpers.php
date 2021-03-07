@@ -109,7 +109,7 @@
             return ['value' => $response->conversion_rate];
           }
 
-        public static function send_chat_notification($tokens, $title="hello", $msg="helo msg", $type=1,$chat=null,$jobs=null){
+        public static function send_chat_notification($tokens, $title="hello", $msg="helo msg", $type=1,$chat=null,$link=null){
             $key = 'AAAAMUON44I:APA91bEA9uJBOkHS6LN-cnZ8UFs-acHT_T7xw5h9XyyA91FS51n3nFi11rhGs611jJ4ia4VisD2TIDqN5AbanKrcHdMhWO5mxPwSQL3I6S_NVyFInGtwtUbKZzRT12U2ybHGr29qf0IF';
             $fields = array
             (
@@ -123,7 +123,7 @@
                     'type' => $type,
                     'icon' => 'myIcon',
                     'sound' => 'mySound',
-                    'jobs' => $jobs
+                    'jobs' => $link
                 ],
                 'notification' => [  // ios developer
                     'title' => $title,
@@ -132,7 +132,7 @@
                     'type' => 3,
                     'icon' => 'myIcon',
                     'sound' => 'mySound',
-                    'jobs' => $jobs
+                    'jobs' => $link
                 ],
                 'vibrate' => 1,
                 'sound' => 1
