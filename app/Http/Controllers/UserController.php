@@ -41,6 +41,7 @@ class UserController extends Controller
         $returned_user['user_name'] = $user['name'];
         $returned_user['phone'] = $user['phone'];
         $returned_user['email'] = $user['email'];
+        $returned_user['image'] = $user['image'];
         $response = APIHelpers::createApiResponse(false , 200 , '' , '' , $returned_user , $request->lang);
         return response()->json($response , 200);  
     }
