@@ -26,6 +26,8 @@ use App\SubTwoCategory;
 use App\Comment;
 use App\CategoryOption;
 use App\CategoryOptionValue;
+use App\Option;
+use App\OptionValue;
 use JD\Cloudder\Facades\Cloudder;
 use Illuminate\Support\Facades\DB;
 
@@ -170,6 +172,8 @@ class AdProductController extends Controller
                     $val_ar = $categoryOptionValue['value_ar'];
                 }else {
                     $type = 2;
+                    $val_en = $request->values[$k];
+                    $val_ar = $request->values[$k];
                 }
                 
                 AdProductOption::create([
@@ -514,10 +518,9 @@ class AdProductController extends Controller
 
         $products = AdProduct::where('deleted', 0)->where('status' , 1)->where('country_id', $request->country);
         
-        
         if (isset($request->category_id)) {
             if (isset($request->options)) {
-                $adPOptions = AdProductOption::whereIn('option_id', $request->options)->whereIn('value', $request->values)->pluck('product_id');
+                $adPOptions = AdProductOption::whereIn('val_en', $request->values)->orWhereIn('val_ar', $request->values)->pluck('product_id');
                 $products = $products->whereIn('id', $adPOptions);
             }
             $products = $products->where('category_id', $request->category_id);
