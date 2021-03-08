@@ -25,7 +25,8 @@ class AdProduct extends Model
     'selected',
     'country_id',
     'governorate_id',
-    'governorate_area_id'
+    'governorate_area_id',
+    'deleted'
     ];
 
     public function options() {

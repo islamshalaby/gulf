@@ -70,7 +70,7 @@ class HomeController extends Controller
         }else {
             $data['categories'] = Category::where('type', 2)->has('adProducts', '>' , 0)->select('id', 'title_ar as title', 'image')->get();
         }
-        $data['feature_ads'] = AdProduct::where('country_id', $country['id'])->where('selected', 1)->where('status', 1)->select('id', 'title', 'price', 'publication_date as date', 'selected as feature')->orderBy('id', 'desc')->get()->makeHidden('mainImage');
+        $data['feature_ads'] = AdProduct::where('deleted', 0)->where('country_id', $country['id'])->where('selected', 1)->where('status', 1)->select('id', 'title', 'price', 'publication_date as date', 'selected as feature')->orderBy('id', 'desc')->get()->makeHidden('mainImage');
 
         for($i = 0; $i < count($data['feature_ads']); $i ++) {
             $data['feature_ads'][$i]['image'] = "";
@@ -99,7 +99,7 @@ class HomeController extends Controller
         $bestOffers = BestOffer::get();
         $data['best_offers'] = [];
         for ($n = 0; $n < count($bestOffers); $n ++) {
-            $product = AdProduct::where('id', $bestOffers[$n]['product_id'])->where('status', 1)->select('id', 'title', 'price', 'publication_date as date', 'selected as feature')->first();
+            $product = AdProduct::where('deleted', 0)->where('id', $bestOffers[$n]['product_id'])->where('status', 1)->select('id', 'title', 'price', 'publication_date as date', 'selected as feature')->first();
             if ($product) {
                 $product->makeHidden('mainImage');
                 $product['date'] = date_format(date_create($product['date']) , "d-m-Y");

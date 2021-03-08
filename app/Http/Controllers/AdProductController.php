@@ -299,7 +299,7 @@ class AdProductController extends Controller
         // dd($images);
         $product['images'] = $images;
 
-        $related = AdProduct::where('category_id' , $product['category_id'])->where('id' , '!=' , $product['id'])->where('status' , 1)->select('id' , 'title' , 'price' )->limit(3)->get();
+        $related = AdProduct::where('deleted', 0)->where('category_id' , $product['category_id'])->where('id' , '!=' , $product['id'])->where('status' , 1)->select('id' , 'title' , 'price' )->limit(3)->get();
 
         for($i = 0 ; $i < count($related); $i++){
             if($user){
@@ -395,7 +395,7 @@ class AdProductController extends Controller
                 $data['sub_category_array'] = SubThreeCategory::where('deleted' , 0)->whereIn('sub_category_id' , $subCategoriesTwo)->select('id' , 'image' , 'title_ar as title')->get()->toArray();
             }
         }
-        $products = AdProduct::where('status' , 1)->where('country_id', $request->country);
+        $products = AdProduct::where('deleted', 0)->where('status' , 1)->where('country_id', $request->country);
 
         if ($request->sub_category_level1_id != 0) {
             $products = $products->where('sub_category_id' , $request->sub_category_level1_id);
@@ -475,7 +475,7 @@ class AdProductController extends Controller
         }
 
         
-        $products = AdProduct::select('id' , 'title' , 'price'  , 'publication_date as date', 'selected as feature')->where('status' , 1)->where('country_id', $request->country)->Where('title', 'like', '%' . $search . '%')->orderBy('publication_date' , 'DESC')->simplePaginate(12);
+        $products = AdProduct::select('id' , 'title' , 'price'  , 'publication_date as date', 'selected as feature')->where('status' , 1)->where('country_id', $request->country)->where('deleted', 0)->Where('title', 'like', '%' . $search . '%')->orderBy('publication_date' , 'DESC')->simplePaginate(12);
         // dd($products);
 
         for($i = 0; $i < count($products); $i++){
@@ -512,7 +512,7 @@ class AdProductController extends Controller
             $currency = Currency::where('from', $fromCurr)->where('to', $toCurr)->first();
         }
 
-        $products = AdProduct::where('status' , 1)->where('country_id', $request->country);
+        $products = AdProduct::where('deleted', 0)->where('status' , 1)->where('country_id', $request->country);
         
         if (isset($request->category_id)) {
             $products = $products->where('category_id', $request->category_id);
@@ -584,10 +584,10 @@ class AdProductController extends Controller
             $currency = Currency::where('from', $fromCurr)->where('to', $toCurr)->first();
         }
 
-        $minPrice = AdProduct::where('status' , 1)->where('country_id', $request->country)->min('price');
+        $minPrice = AdProduct::where('deleted', 0)->where('status' , 1)->where('country_id', $request->country)->min('price');
         $convertedMinPrice = $minPrice * $currency['value'];
         $data['min_price'] = (int)$convertedMinPrice;
-        $maxPrice = AdProduct::where('status' , 1)->where('country_id', $request->country)->max('price');
+        $maxPrice = AdProduct::where('deleted', 0)->where('status' , 1)->where('country_id', $request->country)->max('price');
         $convertedMaxPrice = $maxPrice * $currency['value'];
         $data['max_price'] = (int)$convertedMaxPrice;
         $response = APIHelpers::createApiResponse(false , 200 , '' , '' , $data , $request->lang) ;

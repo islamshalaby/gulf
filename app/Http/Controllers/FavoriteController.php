@@ -86,9 +86,9 @@ class FavoriteController extends Controller
         $user_id = auth()->user()->id;
         $favorites = Favorite::where('user_id' , $user_id)->where('product_type' , 1)->pluck('product_id')->toArray();
         if($request->lang == 'en'){
-            $products = Product::whereIn('id', $favorites)->where('deleted' , 0)->where('hidden' , 0)->where('remaining_quantity', '>', 0)->select('id', 'title_en as title' , 'final_price as price' , 'type' )->get();
+            $products = Product::whereIn('id', $favorites)->where('deleted' , 0)->where('hidden' , 0)->where('remaining_quantity', '>', 0)->select('id', 'title_en as title' , 'final_price as price' , 'type', 'year' )->get();
         }else{
-            $products = Product::whereIn('id', $favorites)->where('deleted' , 0)->where('hidden' , 0)->where('remaining_quantity', '>', 0)->select('id', 'title_ar as title' , 'final_price as price' , 'type' )->get();
+            $products = Product::whereIn('id', $favorites)->where('deleted' , 0)->where('hidden' , 0)->where('remaining_quantity', '>', 0)->select('id', 'title_ar as title' , 'final_price as price' , 'type', 'year' )->get();
         }
 
         

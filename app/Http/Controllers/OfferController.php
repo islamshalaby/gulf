@@ -46,9 +46,9 @@ class OfferController extends Controller
             }
             $ids = ControlOffer::where('offers_section_id' , $offers_sections[$i]['id'])->pluck('offer_id');
             if($request->lang == 'en'){
-                $element['data'] = Product::select('id', 'title_en as title' , 'offer' , 'offer_percentage' , 'final_price', 'price_before_offer' , 'type')->where('deleted' , 0)->where('hidden' , 0)->where('remaining_quantity', '>', 0)->whereIn('id' , $ids)->get();
+                $element['data'] = Product::select('id', 'title_en as title' , 'offer' , 'offer_percentage' , 'final_price', 'price_before_offer' , 'type', 'year')->where('deleted' , 0)->where('hidden' , 0)->where('remaining_quantity', '>', 0)->whereIn('id' , $ids)->get();
             }else{
-                $element['data'] = Product::select('id', 'title_ar as title' , 'offer' , 'offer_percentage' , 'final_price', 'price_before_offer' , 'type')->where('deleted' , 0)->where('hidden' , 0)->where('remaining_quantity', '>', 0)->whereIn('id' , $ids)->get();
+                $element['data'] = Product::select('id', 'title_ar as title' , 'offer' , 'offer_percentage' , 'final_price', 'price_before_offer' , 'type', 'year')->where('deleted' , 0)->where('hidden' , 0)->where('remaining_quantity', '>', 0)->whereIn('id' , $ids)->get();
             }
             
             for($j = 0; $j < count($element['data']) ; $j++){
@@ -165,6 +165,7 @@ class OfferController extends Controller
 
 
         }
+
 
         $new_offers = [];
         for($i = 0; $i < count($offers); $i++){
