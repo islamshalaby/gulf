@@ -19,7 +19,7 @@ class AdProductController extends AdminController{
 
     // show
     public function show() {
-        $data['products'] = AdProduct::orderBy('id','desc')->get();
+        $data['products'] = AdProduct::where('deleted', 0)->orderBy('id','desc')->get();
         
         return view('admin.adproducts', ['data' => $data]);
     }
