@@ -776,7 +776,37 @@ class UserController extends Controller
         return response()->json($response , 200);
     }
 
-    
+    // upload profile image
+    public function uploadProfileIamge(Request $request) {
+        $validator = Validator::make($request->all(), [
+            'image' => 'required'
+        ]);
+
+        if ($validator->fails()) {
+            $response = APIHelpers::createApiResponse(true , 406 , 'Missing Required Fields' , 'بعض الحقول مفقودة' , null , $request->lang);
+            return response()->json($response , 406);
+        }
+        $user = User::where('id', auth()->user()->id)->select('id', 'image')->first();
+
+        $image = $request->image;
+        $oldImage = $user->image;
+        if (!empty($oldImage)) {
+            $publicId = substr($image, 0 ,strrpos($oldImage, "."));  
+            Cloudder::delete($publicId);
+        }
+        Cloudder::upload("data:image/jpeg;base64,".$image, null);
+        $imagereturned = Cloudder::getResult();
+        $image_id = $imagereturned['public_id'];
+        $image_format = $imagereturned['format'];    
+        $image_new_name = $image_id.'.'.$image_format;
+
+        $user->image = $image_new_name;
+
+        $user->save();
+
+        $response = APIHelpers::createApiResponse(false , 200 ,  '' , '' ,'' , $request->lang );
+        return response()->json($response , 200);
+    }
 
 
 }

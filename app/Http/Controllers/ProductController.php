@@ -39,7 +39,7 @@ class ProductController extends Controller
         }
         $id = $request->id;
         if($request->lang == 'en'){
-            $data['product'] = Product::select('id' , 'title_en as title' , 'description_en as description' , 'offer' , 'price_before_offer' , 'final_price' , 'offer_percentage' , 'sub_category_id' , 'company_id')->find($id);
+            $data['product'] = Product::select('id' , 'title_en as title' , 'description_en as description' , 'offer' , 'price_before_offer' , 'final_price' , 'offer_percentage' , 'sub_category_id' , 'company_id', 'year')->find($id);
             $data['product']['category_name'] = SubCategory::select('title_en')->find($data['product']['sub_category_id'])->title_en;
             $data['product']['company'] = Company::select('id' , 'title_en as title')->find($data['product']['company_id']); 
 
@@ -49,7 +49,7 @@ class ProductController extends Controller
             }
 
         }else{
-            $data['product'] = Product::select('id' , 'title_ar as title' , 'description_ar as description' , 'offer' , 'price_before_offer' , 'final_price' , 'offer_percentage' , 'sub_category_id' , 'company_id')->find($id);
+            $data['product'] = Product::select('id' , 'title_ar as title' , 'description_ar as description' , 'offer' , 'price_before_offer' , 'final_price' , 'offer_percentage' , 'sub_category_id' , 'company_id', 'year')->find($id);
             $data['product']['category_name'] = SubCategory::select('title_ar')->find($data['product']['sub_category_id'])->title_ar;
             $data['product']['company'] = Company::select('id' , 'title_en as title')->find($data['product']['company_id']); 
 
@@ -85,9 +85,9 @@ class ProductController extends Controller
         
         
         if($request->lang == 'en'){
-            $data['related'] = Product::select('id', 'title_en as title' , 'final_price' , 'price_before_offer' , 'offer' , 'offer_percentage' , 'sub_category_id' )->where('deleted' , 0)->where('sub_category_id' , $data['product']['sub_category_id'])->where('id' , '!=' , $data['product']['id'])->get();
+            $data['related'] = Product::select('id', 'title_en as title' , 'final_price' , 'price_before_offer' , 'offer' , 'offer_percentage' , 'sub_category_id', 'year')->where('deleted' , 0)->where('sub_category_id' , $data['product']['sub_category_id'])->where('id' , '!=' , $data['product']['id'])->get();
         }else{
-            $data['related'] = Product::select('id', 'title_ar as title' , 'final_price' , 'price_before_offer' , 'offer' , 'offer_percentage' , 'sub_category_id')->where('deleted' , 0)->where('sub_category_id' , $data['product']['sub_category_id'])->where('id' , '!=' , $data['product']['id'])->get();
+            $data['related'] = Product::select('id', 'title_ar as title' , 'final_price' , 'price_before_offer' , 'offer' , 'offer_percentage' , 'sub_category_id', 'year')->where('deleted' , 0)->where('sub_category_id' , $data['product']['sub_category_id'])->where('id' , '!=' , $data['product']['id'])->get();
         }
         
         for($j = 0; $j < count($data['related']) ; $j++){
@@ -227,9 +227,9 @@ class ProductController extends Controller
         }
         // dd(($request->price_from != 0 && $request->price_to != 0));
         if($request->has('price_from') && $request->has('price_to')){
-            
             $request->price_from = $request->price_from / $currency['value'];
             $request->price_to = $request->price_to / $currency['value'];
+            // dd(strval($request->price_to));
             if ($request->price_from == 0 && $request->price_to == 0) {
 
             }else {
@@ -262,12 +262,10 @@ class ProductController extends Controller
         $products = $products->simplePaginate(16);
         
         for($i = 0; $i < count($products); $i++){
-            if($request->curr != 'kwd'){
-                $final = $products[$i]['final_price'] * $currency['value'];
-                $priceBefore = $products[$i]['price_before_offer'] * $currency['value'];
-                $products[$i]['final_price'] = number_format((float)$final, 3, '.', '');
-                $products[$i]['price_before_offer'] = number_format((float)$priceBefore, 2, '.', '');
-            }
+            $final = $products[$i]['final_price'] * $currency['value'];
+            $priceBefore = $products[$i]['price_before_offer'] * $currency['value'];
+            $products[$i]['final_price'] = number_format((float)$final, 3, '.', '');
+            $products[$i]['price_before_offer'] = number_format((float)$priceBefore, 2, '.', '');
             if(auth()->user()){
                 $user_id = auth()->user()->id;
 
@@ -334,12 +332,10 @@ class ProductController extends Controller
             }else{
                 $products[$i]['favorite'] = false;
             }
-            if($request->curr != 'kwd'){
-                $final = $products[$i]['final_price'] * $currency['value'];
-                $priceBefore = $products[$i]['price_before_offer'] * $currency['value'];
-                $products[$i]['final_price'] = number_format((float)$final, 3, '.', '');
-                $products[$i]['price_before_offer'] = number_format((float)$priceBefore, 2, '.', '');
-            }
+            $final = $products[$i]['final_price'] * $currency['value'];
+            $priceBefore = $products[$i]['price_before_offer'] * $currency['value'];
+            $products[$i]['final_price'] = number_format((float)$final, 3, '.', '');
+            $products[$i]['price_before_offer'] = number_format((float)$priceBefore, 2, '.', '');
             $products[$i]['image'] = ProductImage::where('product_id' , $products[$i]['id'])->pluck('image')->first();
         }
 
@@ -364,18 +360,18 @@ class ProductController extends Controller
 
         if($company_id && $type){
             if($request->lang == 'en'){
-                $products = Product::select('id', 'title_en as title' , 'final_price'  , 'price_before_offer' , 'offer' , 'offer_percentage', 'created_at' , 'updated_at' , 'type' )->where('deleted' , 0)->where('hidden' , 0)->where('remaining_quantity', '>', 0)->where('company_id' , $request->id)->where('type' , $request->type)->simplePaginate(16);
+                $products = Product::select('id', 'title_en as title' , 'final_price'  , 'price_before_offer' , 'offer' , 'offer_percentage', 'created_at' , 'updated_at' , 'type', 'year' )->where('deleted' , 0)->where('hidden' , 0)->where('remaining_quantity', '>', 0)->where('company_id' , $request->id)->where('type' , $request->type)->simplePaginate(16);
             }else{
-                $products = Product::select('id', 'title_ar as title' , 'final_price' , 'price_before_offer' , 'offer' , 'offer_percentage', 'created_at' , 'updated_at' , 'type'  )->where('deleted' , 0)->where('hidden' , 0)->where('remaining_quantity', '>', 0)->where('company_id' , $request->id)->where('type' , $request->type)->simplePaginate(16);
+                $products = Product::select('id', 'title_ar as title' , 'final_price' , 'price_before_offer' , 'offer' , 'offer_percentage', 'created_at' , 'updated_at' , 'type', 'year'  )->where('deleted' , 0)->where('hidden' , 0)->where('remaining_quantity', '>', 0)->where('company_id' , $request->id)->where('type' , $request->type)->simplePaginate(16);
             }
-            $all  = Product::select('id', 'title_ar as title' , 'final_price' , 'price_before_offer' , 'offer' , 'offer_percentage', 'created_at' , 'updated_at' , 'type'  )->where('deleted' , 0)->where('hidden' , 0)->where('remaining_quantity', '>', 0)->where('company_id' , $request->id)->where('type' , $request->type)->get();
+            $all  = Product::select('id', 'title_ar as title' , 'final_price' , 'price_before_offer' , 'offer' , 'offer_percentage', 'created_at' , 'updated_at' , 'type', 'year'  )->where('deleted' , 0)->where('hidden' , 0)->where('remaining_quantity', '>', 0)->where('company_id' , $request->id)->where('type' , $request->type)->get();
         }else if($company_id && !$type){
             if($request->lang == 'en'){
-                $products = Product::select('id', 'title_en as title' , 'final_price' , 'price_before_offer' , 'offer' , 'offer_percentage', 'created_at' , 'updated_at' , 'type' )->where('deleted' , 0)->where('hidden' , 0)->where('remaining_quantity', '>', 0)->where('company_id' , $request->id)->simplePaginate(16);
+                $products = Product::select('id', 'title_en as title' , 'final_price' , 'price_before_offer' , 'offer' , 'offer_percentage', 'created_at' , 'updated_at' , 'type', 'year' )->where('deleted' , 0)->where('hidden' , 0)->where('remaining_quantity', '>', 0)->where('company_id' , $request->id)->simplePaginate(16);
             }else{
-                $products = Product::select('id', 'title_ar as title' , 'final_price' , 'price_before_offer' , 'offer' , 'offer_percentage', 'created_at' , 'updated_at' , 'type'  )->where('deleted' , 0)->where('hidden' , 0)->where('remaining_quantity', '>', 0)->where('company_id' , $request->id)->simplePaginate(16);
+                $products = Product::select('id', 'title_ar as title' , 'final_price' , 'price_before_offer' , 'offer' , 'offer_percentage', 'created_at' , 'updated_at' , 'type', 'year'  )->where('deleted' , 0)->where('hidden' , 0)->where('remaining_quantity', '>', 0)->where('company_id' , $request->id)->simplePaginate(16);
             }
-            $all  = Product::select('id', 'title_ar as title' , 'final_price' , 'price_before_offer' , 'offer' , 'offer_percentage', 'created_at' , 'updated_at' , 'type'  )->where('deleted' , 0)->where('hidden' , 0)->where('remaining_quantity', '>', 0)->where('company_id' , $request->id)->get();
+            $all  = Product::select('id', 'title_ar as title' , 'final_price' , 'price_before_offer' , 'offer' , 'offer_percentage', 'created_at' , 'updated_at' , 'type', 'year'  )->where('deleted' , 0)->where('hidden' , 0)->where('remaining_quantity', '>', 0)->where('company_id' , $request->id)->get();
         }
 
         if($request->lang == 'en'){
@@ -388,12 +384,10 @@ class ProductController extends Controller
         
 
         for($i = 0; $i < count($products); $i++){
-            if($request->curr != 'kwd'){
-                $final = $products[$i]['final_price'] * $currency['value'];
-                $priceBefore = $products[$i]['price_before_offer'] * $currency['value'];
-                $products[$i]['final_price'] = number_format((float)$final, 3, '.', '');
-                $products[$i]['price_before_offer'] = number_format((float)$priceBefore, 2, '.', '');
-            }
+            $final = $products[$i]['final_price'] * $currency['value'];
+            $priceBefore = $products[$i]['price_before_offer'] * $currency['value'];
+            $products[$i]['final_price'] = number_format((float)$final, 3, '.', '');
+            $products[$i]['price_before_offer'] = number_format((float)$priceBefore, 2, '.', '');
             if(auth()->user()){
                 $user_id = auth()->user()->id;
 
@@ -456,10 +450,8 @@ class ProductController extends Controller
         if (count($delivery_methods) > 0) {
             for ($i = 0; $i < count($delivery_methods); $i ++) {
                 
-                if($request->curr != 'kwd'){
-                    $final = $delivery_methods[$i]['price'] * $currency['value'];
-                    $delivery_methods[$i]['price'] = number_format((float)$final, 3, '.', '');
-                }
+                $final = $delivery_methods[$i]['price'] * $currency['value'];
+                $delivery_methods[$i]['price'] = number_format((float)$final, 3, '.', '');
             }
         }
 

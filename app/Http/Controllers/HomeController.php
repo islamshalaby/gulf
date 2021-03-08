@@ -31,6 +31,13 @@ class HomeController extends Controller
     }
 
     public function getAdData(Request $request) {
+        $expired = \DB::table('ad_products')->whereDate('expiry_date', '<', Carbon::now())->get();
+		
+		for($i = 0; $i < count($expired); $i++){
+			$product = AdProduct::find($expired[$i]->id);
+			$product->status = 2;
+			$product->save();
+		}
         $country = Country::where('id', $request->country)->select('id', 'currency')->first();
         $fromCurr = trim(strtolower($country['currency']));
         $toCurr = trim(strtolower($request->curr));
@@ -63,10 +70,13 @@ class HomeController extends Controller
         }else {
             $data['categories'] = Category::where('type', 2)->has('adProducts', '>' , 0)->select('id', 'title_ar as title', 'image')->get();
         }
-        $data['feature_ads'] = AdProduct::where('country_id', $country['id'])->where('selected', 1)->select('id', 'title', 'price', 'publication_date as date', 'selected as feature')->orderBy('id', 'desc')->get()->makeHidden('mainImage');
+        $data['feature_ads'] = AdProduct::where('country_id', $country['id'])->where('selected', 1)->where('status', 1)->select('id', 'title', 'price', 'publication_date as date', 'selected as feature')->orderBy('id', 'desc')->get()->makeHidden('mainImage');
 
         for($i = 0; $i < count($data['feature_ads']); $i ++) {
-            $data['feature_ads'][$i]['image'] = $data['feature_ads'][$i]->mainImage['image'];
+            $data['feature_ads'][$i]['image'] = "";
+            if (isset($data['feature_ads'][$i]->mainImage)) {
+                $data['feature_ads'][$i]['image'] = $data['feature_ads'][$i]->mainImage['image'];
+            }
             $featureAdsPrice = $data['feature_ads'][$i]['price'] * $currency['value'];
             $data['feature_ads'][$i]['price'] = number_format((float)$featureAdsPrice, 3, '.', '');
             $data['feature_ads'][$i]['date'] = date_format(date_create($data['feature_ads'][$i]['date']) , "d-m-Y");
@@ -89,7 +99,7 @@ class HomeController extends Controller
         $bestOffers = BestOffer::get();
         $data['best_offers'] = [];
         for ($n = 0; $n < count($bestOffers); $n ++) {
-            $product = AdProduct::where('id', $bestOffers[$n]['product_id'])->select('id', 'title', 'price', 'publication_date as date', 'selected as feature')->first();
+            $product = AdProduct::where('id', $bestOffers[$n]['product_id'])->where('status', 1)->select('id', 'title', 'price', 'publication_date as date', 'selected as feature')->first();
             if ($product) {
                 $product->makeHidden('mainImage');
                 $product['date'] = date_format(date_create($product['date']) , "d-m-Y");
@@ -243,18 +253,16 @@ class HomeController extends Controller
 
             }elseif($home_data[$i]['type'] == 4){
                 if($request->lang == 'en'){
-                    $element['data'] = Product::select('id', 'title_en as title' , 'final_price' , 'price_before_offer' , 'offer' , 'offer_percentage'  , 'type' )->where('deleted' , 0)->where('hidden' , 0)->where('remaining_quantity', '>', 0)->whereIn('id' , $ids)->limit(5)->get();
+                    $element['data'] = Product::select('id', 'title_en as title' , 'final_price' , 'price_before_offer' , 'offer' , 'offer_percentage'  , 'type', 'year' )->where('deleted' , 0)->where('hidden' , 0)->where('remaining_quantity', '>', 0)->whereIn('id' , $ids)->limit(5)->get();
                 }else{
-                    $element['data'] = Product::select('id', 'title_ar as title' , 'final_price' , 'price_before_offer' , 'offer' , 'offer_percentage'  , 'type' )->where('deleted' , 0)->where('hidden' , 0)->where('remaining_quantity', '>', 0)->whereIn('id' , $ids)->limit(5)->get();
+                    $element['data'] = Product::select('id', 'title_ar as title' , 'final_price' , 'price_before_offer' , 'offer' , 'offer_percentage'  , 'type', 'year' )->where('deleted' , 0)->where('hidden' , 0)->where('remaining_quantity', '>', 0)->whereIn('id' , $ids)->limit(5)->get();
                 }
                 
                 for($j = 0; $j < count($element['data']) ; $j++){
-                    if($request->curr != 'kwd'){
-                        $final = $element['data'][$j]['final_price'] * $currency['value'];
-                        $priceBefore = $element['data'][$j]['price_before_offer'] * $currency['value'];
-                        $element['data'][$j]['final_price'] = number_format((float)$final, 3, '.', '');
-                        $element['data'][$j]['price_before_offer'] = number_format((float)$priceBefore, 2, '.', '');
-                    }
+                    $final = $element['data'][$j]['final_price'] * $currency['value'];
+                    $priceBefore = $element['data'][$j]['price_before_offer'] * $currency['value'];
+                    $element['data'][$j]['final_price'] = number_format((float)$final, 3, '.', '');
+                    $element['data'][$j]['price_before_offer'] = number_format((float)$priceBefore, 3, '.', '');
 
                     if(auth()->user()){
                         $user_id = auth()->user()->id;
