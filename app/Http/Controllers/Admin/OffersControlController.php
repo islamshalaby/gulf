@@ -33,7 +33,7 @@ class OffersControlController extends AdminController{
 
     // add (get)
     public function AddGetAd() {
-        $data['products'] = AdProduct::where('status', 1)->orderBy('id', 'desc')->get();
+        $data['products'] = AdProduct::where('deleted', 0)->where('status', 1)->orderBy('id', 'desc')->get();
 
         return view('admin.offers_ad_sections_form', ['data' => $data]);
     }
@@ -131,7 +131,7 @@ class OffersControlController extends AdminController{
     public function EditGetAd(OffersSection $section) {
         $data['section'] = $section;
         $data['ids'] = $section->adOffers()->pluck('ad_products.id')->toArray();
-        $data['products'] = AdProduct::where('status', 1)->orderBy('id', 'desc')->get();
+        $data['products'] = AdProduct::where('deleted', 0)->where('status', 1)->orderBy('id', 'desc')->get();
         // dd($data['products']);
 
         return view('admin.offers_ad_sections_edit', ['data' => $data]);

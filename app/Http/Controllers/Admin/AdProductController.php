@@ -168,7 +168,8 @@ class AdProductController extends AdminController{
     // delete product
     public function delete(Request $request) {
         $product = AdProduct::find($request->id);
-        $product->update(['deleted', 1]);
+        $product->deleted = 0;
+        $product->save();
 
         return redirect()->back();
     }

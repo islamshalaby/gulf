@@ -51,7 +51,7 @@ class AdSliderController extends AdminController{
         $data['ad'] = AdSlider::find($request->id);
         $data['countries'] = Country::orderBy('id', 'desc')->get();
         if($data['ad']['type'] == 1){
-            $data['product'] = AdProduct::select('id' , 'title')->get();
+            $data['product'] = AdProduct::where('deleted', 0)->select('id' , 'title')->get();
         }else if($data['ad']['product_type'] == 2){
             $data['product'] = [];
         }
