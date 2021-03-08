@@ -514,7 +514,12 @@ class AdProductController extends Controller
 
         $products = AdProduct::where('deleted', 0)->where('status' , 1)->where('country_id', $request->country);
         
+        
         if (isset($request->category_id)) {
+            if (isset($request->options)) {
+                $adPOptions = AdProductOption::whereIn('option_id', $request->options)->whereIn('value', $request->values)->pluck('product_id');
+                $products = $products->whereIn('id', $adPOptions);
+            }
             $products = $products->where('category_id', $request->category_id);
         }
 
@@ -542,7 +547,6 @@ class AdProductController extends Controller
             }else {
                 $products = $products->whereBetween('price', [$request->price_from, $request->price_to]);
             }
-            
         }
 
         $products = $products->select('id' , 'title' , 'price'  , 'publication_date as date', 'selected as feature')->orderBy('publication_date' , 'DESC')->simplePaginate(12);
