@@ -39,6 +39,7 @@ Route::group([
     Route::put('resetforgettenpassword/{lang}/{v}' , 'UserController@resetforgettenpassword')->middleware('checkguest');
     Route::post('checkphoneexistance/{lang}/{v}' , 'UserController@checkphoneexistance')->middleware('checkguest');
     Route::get('notifications/{lang}/{v}' , 'UserController@notifications');
+    Route::get('unread-notifications/{lang}/{v}' , 'UserController@getUnreadNotificationsNumber');
     Route::post('add-comment/{lang}/{v}' , 'UserController@addComment');
 
 });

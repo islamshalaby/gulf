@@ -223,10 +223,12 @@ class UserController extends Controller
         }
 
         $user_id = $user->id;
-        $notifications_ids = UserNotification::where('user_id' , $user_id)->orderBy('id' , 'desc')->select('notification_id')->get();
+        $notifications_ids = UserNotification::where('user_id' , $user_id)->orderBy('id' , 'desc')->select('id', 'notification_id', 'seen')->get();
         $notifications = [];
         for($i = 0; $i < count($notifications_ids); $i++){
             $notifications[$i] = Notification::select('id','title' , 'body' ,'image' , 'created_at')->find($notifications_ids[$i]['notification_id']);
+            $notifications_ids[$i]['seen'] = 1;
+            $notifications_ids[$i]->save();
         }
         $data['notifications'] = $notifications;
         $response = APIHelpers::createApiResponse(false , 200 ,  '' , '' ,$data['notifications'] , $request->lang);
@@ -806,6 +808,14 @@ class UserController extends Controller
         $user->save();
 
         $response = APIHelpers::createApiResponse(false , 200 ,  '' , '' ,'' , $request->lang );
+        return response()->json($response , 200);
+    }
+
+    public function getUnreadNotificationsNumber(Request $request) {
+        $user = auth()->user();
+        $data['count'] = UserNotification::where('seen', 0)->where('user_id' , $user->id)->count('id');
+        
+        $response = APIHelpers::createApiResponse(false , 200 ,  '' , '' ,$data , $request->lang );
         return response()->json($response , 200);
     }
 
