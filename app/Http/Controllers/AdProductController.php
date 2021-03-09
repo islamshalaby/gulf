@@ -519,9 +519,13 @@ class AdProductController extends Controller
         $products = AdProduct::where('deleted', 0)->where('status' , 1)->where('country_id', $request->country);
         
         if (isset($request->category_id)) {
-            if (isset($request->options)) {
+            if (isset($request->values)) {
                 $adPOptions = AdProductOption::whereIn('val_en', $request->values)->orWhereIn('val_ar', $request->values)->pluck('product_id');
-                $products = $products->whereIn('id', $adPOptions);
+                for ($m = 0; $m < count($request->values); $m++) {
+                    $products = $products->whereHas('options', function ($q) use ($request, $m) {
+                        $q->where('val_en', $request->values[$m])->orWhere('val_ar', $request->values[$m])->orWhere('value', $request->values[$m]);
+                    });
+                }
             }
             $products = $products->where('category_id', $request->category_id);
         }

@@ -72,4 +72,6 @@ class AdProduct extends Model
     public function comments() {
         return $this->hasMany('App\Comment', 'product_id');
     }
+
+    
 }
