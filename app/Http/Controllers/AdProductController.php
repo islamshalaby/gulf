@@ -523,7 +523,11 @@ class AdProductController extends Controller
                 $adPOptions = AdProductOption::whereIn('val_en', $request->values)->orWhereIn('val_ar', $request->values)->pluck('product_id');
                 for ($m = 0; $m < count($request->values); $m++) {
                     $products = $products->whereHas('options', function ($q) use ($request, $m) {
-                        $q->where('val_en', $request->values[$m])->orWhere('val_ar', $request->values[$m])->orWhere('value', $request->values[$m]);
+                        $q->where(function($qu) use ($request, $m) {
+                            $qu->where('val_en', $request->values[$m])->orWhere('val_ar', $request->values[$m])->orWhere('value', $request->values[$m]);
+                        })->where(function($qu) use ($request, $m) {
+                            $qu->where('option_en', $request->options[$m])->orWhere('option_ar', $request->options[$m]);
+                        });
                     });
                 }
             }
