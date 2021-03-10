@@ -106,35 +106,28 @@ class OfferController extends Controller
             $ids = ControlOffer::where('offers_section_id' , $offers_sections[$i]['id'])->pluck('offer_id');
             // dd($request->country);
             $element['data'] = AdProduct::select('id' , 'title' , 'price'  , 'publication_date as date', 'selected as feature')->where('status' , 1)->where('country_id', $request->country)->whereIn('id' , $ids)->get();
-            // dd($element['data']);
+            
             if (count($element['data']) > 0) {
-                for ($k = 0; $k < count($element['data']); $k ++) {
-                    $proPrice = $element['data'][$k]['price'] * $currency['value'];
-                    $element['data'][$k]['price'] = number_format((float)$proPrice, 3, '.', '');
-                }
-            }
-            
-            
-            for($j = 0; $j < count($element['data']) ; $j++){
-                
-                if(auth()->user()){
-                    $user_id = auth()->user()->id;
+                for ($j = 0; $j < count($element['data']); $j ++) {
+                    $proPrice = $element['data'][$j]['price'] * $currency['value'];
+                    $element['data'][$j]['price'] = number_format((float)$proPrice, 3, '.', '');
 
-                    $prevfavorite = Favorite::where('product_id' , $element['data'][$j]['id'])->where('product_type' , 2)->where('user_id' , $user_id)->first();
-                    if($prevfavorite){
-                        $element['data'][$j]['favorite'] = true;
+                    if(auth()->user()){
+                        $user_id = auth()->user()->id;
+    
+                        $prevfavorite = Favorite::where('product_id' , $element['data'][$j]['id'])->where('product_type' , 2)->where('user_id' , $user_id)->first();
+                        if($prevfavorite){
+                            $element['data'][$j]['favorite'] = true;
+                        }else{
+                            $element['data'][$j]['favorite'] = false;
+                        }
+    
                     }else{
                         $element['data'][$j]['favorite'] = false;
                     }
-
-                }else{
-                    $element['data'][$j]['favorite'] = false;
+    
+                    $element['data'][$j]['image'] = AdProductImage::where('product_id' , $element['data'][$j]['id'])->pluck('image')->first();
                 }
-
-                
-                
-
-                $element['data'][$j]['image'] = AdProductImage::where('product_id' , $element['data'][$j]['id'])->pluck('image')->first();
             }
 
             array_push($data , $element);
