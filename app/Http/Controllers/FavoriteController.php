@@ -94,10 +94,8 @@ class FavoriteController extends Controller
         
  
         for($i =0 ; $i < count($products); $i++){
-            if($request->curr != 'kwd'){
-                $final = $products[$i]['price'] * $currency['value'];
-                $products[$i]['price'] = number_format((float)$final, 3, '.', '');
-            }
+            $final = $products[$i]['price'] * $currency['value'];
+            $products[$i]['price'] = number_format((float)$final, 3, '.', '');
             $products[$i]['favorite'] = true;
             $products[$i]['image'] = ProductImage::where('product_id' , $products[$i]['id'])->pluck('image')->first();
         }
@@ -167,6 +165,7 @@ class FavoriteController extends Controller
         $products = AdProduct::whereIn('id', $favorites)->where('country_id', $request->country)->select('id' , 'title' , 'price'  , 'publication_date as date', 'selected as feature')->orderBy('publication_date' , 'DESC')->get();
  
         for($i =0 ; $i < count($products); $i++){
+            $products[$i]['price'] = number_format((float)$products[$i]['price'], 3, '.', '');
             $products[$i]['favorite'] = true;
             $products[$i]['image'] = AdProductImage::where('product_id' , $products[$i]['id'])->pluck('image')->first();
         }
