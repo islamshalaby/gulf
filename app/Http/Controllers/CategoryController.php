@@ -623,7 +623,7 @@ class CategoryController extends Controller
     // get category options
     public function getCategoryOptions(Request $request, Category $category) {
         if ($request->lang == 'en') {
-            $data['options'] = CategoryOption::where('category_id', $category['id'])->where('deleted', 0)->select('id as option_id', 'title_en as title')->get();
+            $data['options'] = CategoryOption::where('category_id', $category['id'])->where('deleted', 0)->select('id as option_id', 'title_en as title', 'is_required')->get();
             if (count($data['options']) > 0) {
                 for ($i =0; $i < count($data['options']); $i ++) {
                     $data['options'][$i]['type'] = 'input';
@@ -635,7 +635,7 @@ class CategoryController extends Controller
                 }
             }
         }else {
-            $data['options'] = CategoryOption::where('category_id', $category['id'])->where('deleted', 0)->select('id as option_id', 'title_ar as title')->get();
+            $data['options'] = CategoryOption::where('category_id', $category['id'])->where('deleted', 0)->select('id as option_id', 'title_ar as title', 'is_required')->get();
             if (count($data['options']) > 0) {
                 for ($i =0; $i < count($data['options']); $i ++) {
                     $data['options'][$i]['type'] = 'input';

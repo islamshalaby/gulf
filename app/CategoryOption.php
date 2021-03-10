@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class CategoryOption extends Model
 {
-    protected $fillable = ['title_en', 'title_ar', 'deleted', 'category_id'];
+    protected $fillable = ['title_en', 'title_ar', 'deleted', 'category_id', 'is_required'];
 
     public function values() {
         return $this->hasMany('App\CategoryOptionValue', 'option_id');
