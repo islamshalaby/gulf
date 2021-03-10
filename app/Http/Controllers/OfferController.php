@@ -52,12 +52,11 @@ class OfferController extends Controller
             }
             
             for($j = 0; $j < count($element['data']) ; $j++){
-                if($request->curr != 'kwd'){
-                    $final = $element['data'][$j]['final_price'] * $currency['value'];
-                    $priceBefore = $element['data'][$j]['price_before_offer'] * $currency['value'];
-                    $element['data'][$j]['final_price'] = number_format((float)$final, 3, '.', '');
-                    $element['data'][$j]['price_before_offer'] = number_format((float)$priceBefore, 2, '.', '');
-                }
+                $final = $element['data'][$j]['final_price'] * $currency['value'];
+                $priceBefore = $element['data'][$j]['price_before_offer'] * $currency['value'];
+                $element['data'][$j]['final_price'] = number_format((float)$final, 3, '.', '');
+                $element['data'][$j]['price_before_offer'] = number_format((float)$priceBefore, 2, '.', '');
+                
                 if(auth()->user()){
                     $user_id = auth()->user()->id;
 
