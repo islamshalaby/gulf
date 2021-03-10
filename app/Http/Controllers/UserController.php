@@ -358,6 +358,7 @@ class UserController extends Controller
 
         $products = AdProduct::where('user_id' , $user->id)->where('status' , 2)->orderBy('publication_date' , 'DESC')->select('id' , 'title' , 'price' , 'publication_date as date', 'selected as feature' )->simplePaginate(12);
         for($i =0 ; $i < count($products); $i++){
+            $products[$i]['price'] = number_format((float)$products[$i]['price'], 3, '.', '');
             $products[$i]['image'] = AdProductImage::where('product_id' , $products[$i]['id'])->select('image')->first()['image'];
             $favorite = Favorite::where('user_id' , $user->id)->where('product_id' , $products[$i]['id'])->where('product_type' , 2)->first();
             if($favorite){
