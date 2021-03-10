@@ -49,15 +49,17 @@ class HomeController extends Controller
         
         if (isset($currency['id'])) {
             if (!$currency->updated_at->isToday()) {
-                $result = APIHelpers::converCurruncy2("4ab95df1bf98d41d1c3bfb0e", "kwd", $toCurr);
+                // dd("SSS");
+                $result = APIHelpers::converCurruncy2("c72164381a35b86e302370da", "kwd", $toCurr);
                 if(isset($result['value'])){
 					$currency->update(['value' => $result['value'], 'updated_at' => Carbon::now()]);
 					$currency = Currency::where('from', $fromCurr)->where('to', $toCurr)->first();
 				}
             }
         }else {
-            $result = APIHelpers::converCurruncy2("4ab95df1bf98d41d1c3bfb0e", "kwd", $toCurr);
+            // dd("SSSAAA");
             if(isset($result['value']) && !$currency){
+                $result = APIHelpers::converCurruncy2("c72164381a35b86e302370da", "kwd", $toCurr);
 				$currency = Currency::create(['value' => $result['value'], "from" => $fromCurr, "to" => $toCurr]);
 			}
         }
@@ -163,7 +165,7 @@ class HomeController extends Controller
         // dd($result->value);
         if (isset($currency['id'])) {
             if (!$currency->updated_at->isToday()) {
-                $result = APIHelpers::converCurruncy2("4ab95df1bf98d41d1c3bfb0e", "kwd", $toCurr);
+                $result = APIHelpers::converCurruncy2("c72164381a35b86e302370da", "kwd", $toCurr);
                 if(isset($result['value'])){
 					$currency->update(['value' => $result['value'], 'updated_at' => Carbon::now()]);
 					$currency = Currency::where('from', "kwd")->where('to', $toCurr)->first();
@@ -172,9 +174,9 @@ class HomeController extends Controller
             }
             
         }else {
-            $result = APIHelpers::converCurruncy2("4ab95df1bf98d41d1c3bfb0e", "kwd", $toCurr);
             // dd($currency);
             if(isset($result['value']) && !$currency){
+                $result = APIHelpers::converCurruncy2("c72164381a35b86e302370da", "kwd", $toCurr);
 				$currency = Currency::create(['value' => $result['value'], "from" => "kwd", "to" => $toCurr]);
 			}
             
