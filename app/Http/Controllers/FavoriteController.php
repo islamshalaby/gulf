@@ -162,7 +162,7 @@ class FavoriteController extends Controller
         $user_id = auth()->user()->id;
         $favorites = Favorite::where('user_id' , $user_id)->where('product_type' , 2)->pluck('product_id')->toArray();
         // dd($favorites);
-        $products = AdProduct::whereIn('id', $favorites)->where('country_id', $request->country)->select('id' , 'title' , 'price'  , 'publication_date as date', 'selected as feature')->orderBy('publication_date' , 'DESC')->get();
+        $products = AdProduct::whereIn('id', $favorites)->where('country_id', $request->country)->select('id' , 'title' , 'price'  , 'publication_date as date', 'selected as feature', 'year')->orderBy('publication_date' , 'DESC')->get();
  
         for($i =0 ; $i < count($products); $i++){
             $products[$i]['price'] = number_format((float)$products[$i]['price'], 3, '.', '');

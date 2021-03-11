@@ -26,6 +26,7 @@ class AdProduct extends Model
     'country_id',
     'governorate_id',
     'governorate_area_id',
+    'year',
     'deleted'
     ];
 

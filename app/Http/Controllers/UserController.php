@@ -274,7 +274,7 @@ class UserController extends Controller
 
         $user = auth()->user();
 
-        $products = AdProduct::where('country_id', $country['id'])->where('user_id' , $user->id)->where('status' , 1)->orderBy('publication_date' , 'DESC')->select('id' , 'title' , 'price' , 'publication_date as date', 'selected as feature' )->simplePaginate(12);
+        $products = AdProduct::where('country_id', $country['id'])->where('user_id' , $user->id)->where('status' , 1)->orderBy('publication_date' , 'DESC')->select('id' , 'title' , 'price' , 'publication_date as date', 'selected as feature', 'year' )->simplePaginate(12);
         for($i =0 ; $i < count($products); $i++){
             $prodImage = AdProductImage::where('product_id' , $products[$i]['id'])->select('image')->first();
             if ($prodImage) {
@@ -310,7 +310,7 @@ class UserController extends Controller
         $user = $request->id;
         $adUser = User::find($user);
 
-        $products = AdProduct::where('country_id', $country['id'])->where('user_id' , $user)->where('status' , 1)->orderBy('id' , 'DESC')->select('id' , 'title' , 'price' , 'publication_date as date', 'selected as feature' )->simplePaginate(12);
+        $products = AdProduct::where('country_id', $country['id'])->where('user_id' , $user)->where('status' , 1)->orderBy('id' , 'DESC')->select('id' , 'title' , 'price' , 'publication_date as date', 'selected as feature', 'year' )->simplePaginate(12);
         $data['username'] = $adUser['name'];
         $data['email'] = $adUser['email'];
         $data['image'] = $adUser['image'];
@@ -356,7 +356,7 @@ class UserController extends Controller
 
         $user = auth()->user();
 
-        $products = AdProduct::where('user_id' , $user->id)->where('status' , 2)->orderBy('publication_date' , 'DESC')->select('id' , 'title' , 'price' , 'publication_date as date', 'selected as feature' )->simplePaginate(12);
+        $products = AdProduct::where('user_id' , $user->id)->where('status' , 2)->orderBy('publication_date' , 'DESC')->select('id' , 'title' , 'price' , 'publication_date as date', 'selected as feature', 'year' )->simplePaginate(12);
         for($i =0 ; $i < count($products); $i++){
             $products[$i]['price'] = number_format((float)$products[$i]['price'], 3, '.', '');
             $products[$i]['image'] = AdProductImage::where('product_id' , $products[$i]['id'])->select('image')->first()['image'];
@@ -579,7 +579,8 @@ class UserController extends Controller
 
     public function getaddetails(Request $request){
         $ad_id = $request->id;
-        $ad = AdProduct::select('id' , 'title' , 'description' , 'price'  , 'category_id' , 'sub_category_id' , 'sub_category_two_id', 'country_id', 'governorate_id', 'user_id')->find($ad_id);
+        $ad = AdProduct::select('id' , 'title' , 'description' , 'price'  , 'category_id' , 'sub_category_id' , 'sub_category_two_id', 'country_id', 'governorate_id', 'user_id', 'year')->find($ad_id);
+        $ad['price'] = number_format((float)$ad['price'], 3, '.', '');
         $adOptions = AdProductOption::where('product_id', $ad['id'])->pluck('value')->toArray();
         if ($request->lang == 'en') {
             $country = Country::where('id', $ad->country_id)->select('id', 'name_en as name')->first();

@@ -105,7 +105,7 @@ class OfferController extends Controller
             }
             $ids = ControlOffer::where('offers_section_id' , $offers_sections[$i]['id'])->pluck('offer_id');
             // dd($request->country);
-            $element['data'] = AdProduct::select('id' , 'title' , 'price'  , 'publication_date as date', 'selected as feature')->where('status' , 1)->where('country_id', $request->country)->whereIn('id' , $ids)->get();
+            $element['data'] = AdProduct::select('id' , 'title' , 'price'  , 'publication_date as date', 'selected as feature', 'year')->where('status' , 1)->where('country_id', $request->country)->whereIn('id' , $ids)->get();
             
             if (count($element['data']) > 0) {
                 for ($j = 0; $j < count($element['data']); $j ++) {

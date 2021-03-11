@@ -95,7 +95,7 @@ class AdProductController extends Controller
             "description" => "required",
             "price" => "required",
             "images" => "required",
-            // "options" => "required",
+            "year" => "required",
             // "values" => "required",
             "type" => "required"    // 1 => normal ad
                                     // 2 => feature ad
@@ -142,7 +142,7 @@ class AdProductController extends Controller
         $post['user_id'] = $user->id;
         $post['publication_date'] = date("Y-m-d H:i:s");
         $post['expiry_date'] = Date('Y-m-d H:i:s', strtotime('+'.$ad_period.' days'));
-
+        
         $product = AdProduct::create($post);
 
         for ($i = 0; $i < count($request->images); $i ++) {
@@ -231,10 +231,11 @@ class AdProductController extends Controller
         }else {
             $currency = Currency::where('from', $fromCurr)->where('to', $toCurr)->first();
         }
-        $product = AdProduct::select('id' , 'title' , 'description' , 'price'  , 'views' , 'publication_date as date' , 'user_id' , 'category_id')->find($request->id);
+        $product = AdProduct::select('id' , 'title' , 'description' , 'price'  , 'views' , 'publication_date as date' , 'user_id' , 'category_id', 'year')->find($request->id);
         // dd($product);
 		$product->views = $product->views + 1;
         $product->save();
+        
         $product['category_name'] = Category::find($product['category_id'])['title_ar'];
         
         $user = auth()->user();
@@ -412,7 +413,7 @@ class AdProductController extends Controller
         if ($request->sub_category_level3_id != 0) {
             $products = $products->where('sub_category_three_id' , $request->sub_category_level3_id);
         }
-            $products = $products->where('sub_category_four_id' , $request->sub_category_id)->select('id' , 'title' , 'price'  , 'publication_date as date', 'selected as feature')->orderBy('id' , 'DESC')->simplePaginate(12);
+            $products = $products->where('sub_category_four_id' , $request->sub_category_id)->select('id' , 'title' , 'price'  , 'publication_date as date', 'selected as feature', 'year')->orderBy('id' , 'DESC')->simplePaginate(12);
 
         
        
@@ -479,7 +480,7 @@ class AdProductController extends Controller
         }
 
         
-        $products = AdProduct::select('id' , 'title' , 'price'  , 'publication_date as date', 'selected as feature')->where('status' , 1)->where('country_id', $request->country)->where('deleted', 0)->Where('title', 'like', '%' . $search . '%')->orderBy('publication_date' , 'DESC')->simplePaginate(12);
+        $products = AdProduct::select('id' , 'title' , 'price'  , 'publication_date as date', 'selected as feature', 'year')->where('status' , 1)->where('country_id', $request->country)->where('deleted', 0)->Where('title', 'like', '%' . $search . '%')->orderBy('publication_date' , 'DESC')->simplePaginate(12);
         // dd($products);
 
         for($i = 0; $i < count($products); $i++){
@@ -559,7 +560,7 @@ class AdProductController extends Controller
             }
         }
 
-        $products = $products->select('id' , 'title' , 'price'  , 'publication_date as date', 'selected as feature')->orderBy('publication_date' , 'DESC')->simplePaginate(12);
+        $products = $products->select('id' , 'title' , 'price'  , 'publication_date as date', 'selected as feature', 'year')->orderBy('publication_date' , 'DESC')->simplePaginate(12);
 
         
        

@@ -299,10 +299,10 @@ class CategoryController extends Controller
         array_unshift($data['sub_categories'], $all);
 
         if($request->sub_category_id == 0){
-            $products = AdProduct::where('status' , 1)->where('country_id', $request->country)->where('category_id', $request->category_id)->select('id' , 'title' , 'price'  , 'publication_date as date', 'selected as feature')->orderBy('id' , 'DESC')->simplePaginate(12);
+            $products = AdProduct::where('status' , 1)->where('country_id', $request->country)->where('category_id', $request->category_id)->select('id' , 'title' , 'price'  , 'publication_date as date', 'selected as feature', 'year')->orderBy('id' , 'DESC')->simplePaginate(12);
 
          }else{
-            $products = AdProduct::where('status' , 1)->where('country_id', $request->country)->where('sub_category_id' , $request->sub_category_id)->select('id' , 'title' , 'price'  , 'publication_date as date', 'selected as feature')->orderBy('id' , 'DESC')->simplePaginate(12);
+            $products = AdProduct::where('status' , 1)->where('country_id', $request->country)->where('category_id', $request->category_id)->where('sub_category_id' , $request->sub_category_id)->select('id' , 'title' , 'price'  , 'publication_date as date', 'selected as feature', 'year')->orderBy('id' , 'DESC')->simplePaginate(12);
 
          }  
 
@@ -438,7 +438,7 @@ class CategoryController extends Controller
         }
         
         array_unshift($data['sub_categories'], $all);
-        $products = AdProduct::where('status' , 1)->where('country_id', $request->country)->where('category_id', $request->category_id)->select('id' , 'title' , 'price'  , 'publication_date as date', 'selected as feature');
+        $products = AdProduct::where('status' , 1)->where('country_id', $request->country)->where('category_id', $request->category_id)->select('id' , 'title' , 'price'  , 'publication_date as date', 'selected as feature', 'year');
         if($request->sub_category_id != 0){
             $products = $products->where('sub_category_two_id' , $request->sub_category_id);
          }
@@ -592,7 +592,7 @@ class CategoryController extends Controller
             $products = $products->where('sub_category_id' , $request->sub_category_level1_id);
         }
 
-        $products = $products->select('id' , 'title' , 'price'  , 'publication_date as date', 'selected as feature')->orderBy('id' , 'DESC')->simplePaginate(12);
+        $products = $products->select('id' , 'title' , 'price'  , 'publication_date as date', 'selected as feature', 'year')->orderBy('id' , 'DESC')->simplePaginate(12);
 
          for($i = 0; $i < count($products); $i++){
             $date = date_create($products[$i]['date']);
