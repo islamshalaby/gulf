@@ -121,7 +121,13 @@ class CategoryController extends Controller
         if($request->lang == 'en'){
             
             if ($request->sub_car_type_id == 0) {
-                $data['sub_car_types'] = SubTwoCarType::where('deleted' , 0)->has('products', '>', 0)->select('id' , 'image' , 'title_en as title')->get()->toArray();
+                if ($request->car_type_id) {
+                    $carTypes = SubOneCarType::where('car_type_id', $request->car_type_id)->pluck('id');
+                    $data['sub_car_types'] = SubTwoCarType::whereIn('sub_one_car_type_id', $carTypes)->where('deleted' , 0)->has('products', '>', 0)->select('id' , 'image' , 'title_en as title')->get()->toArray();
+                }else {
+                    $data['sub_car_types'] = SubTwoCarType::where('deleted' , 0)->has('products', '>', 0)->select('id' , 'image' , 'title_en as title')->get()->toArray();
+                }
+                
                 $car_type = new \StdClass;
                 $car_type->id = 0;
                 $car_type->title = 'الكل';
@@ -139,7 +145,12 @@ class CategoryController extends Controller
             
 		}else{
             if ($request->sub_car_type_id == 0) {
-                $data['sub_car_types'] = SubTwoCarType::where('deleted' , 0)->has('products', '>', 0)->select('id' , 'image' , 'title_ar as title')->get()->toArray();
+                if ($request->car_type_id) {
+                    $carTypes = SubOneCarType::where('car_type_id', $request->car_type_id)->pluck('id');
+                    $data['sub_car_types'] = SubTwoCarType::whereIn('sub_one_car_type_id', $carTypes)->where('deleted' , 0)->has('products', '>', 0)->select('id' , 'image' , 'title_ar as title')->get()->toArray();
+                }else {
+                    $data['sub_car_types'] = SubTwoCarType::where('deleted' , 0)->has('products', '>', 0)->select('id' , 'image' , 'title_ar as title')->get()->toArray();
+                }
                 $car_type = new \StdClass;
                 $car_type->id = 0;
                 $car_type->title = 'الكل';
