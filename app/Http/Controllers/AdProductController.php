@@ -95,7 +95,7 @@ class AdProductController extends Controller
             "description" => "required",
             "price" => "required",
             "images" => "required",
-            "year" => "required",
+            // "year" => "required",
             // "values" => "required",
             "type" => "required"    // 1 => normal ad
                                     // 2 => feature ad
