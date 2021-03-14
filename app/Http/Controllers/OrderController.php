@@ -102,8 +102,8 @@ class OrderController extends Controller
             $root_url = $request->root();
             $user = auth()->user();
 
-            $path='https://apitest.myfatoorah.com/v2/SendPayment';
-            $token="bearer rLtt6JWvbUHDDhsZnfpAhpYk4dxYDQkbcPTyGaKp2TYqQgG7FGZ5Th_WD53Oq8Ebz6A53njUoo1w3pjU1D4vs_ZMqFiz_j0urb_BH9Oq9VZoKFoJEDAbRZepGcQanImyYrry7Kt6MnMdgfG5jn4HngWoRdKduNNyP4kzcp3mRv7x00ahkm9LAK7ZRieg7k1PDAnBIOG3EyVSJ5kK4WLMvYr7sCwHbHcu4A5WwelxYK0GMJy37bNAarSJDFQsJ2ZvJjvMDmfWwDVFEVe_5tOomfVNt6bOg9mexbGjMrnHBnKnZR1vQbBtQieDlQepzTZMuQrSuKn-t5XZM7V6fCW7oP-uXGX-sMOajeX65JOf6XVpk29DP6ro8WTAflCDANC193yof8-f5_EYY-3hXhJj7RBXmizDpneEQDSaSz5sFk0sV5qPcARJ9zGG73vuGFyenjPPmtDtXtpx35A-BVcOSBYVIWe9kndG3nclfefjKEuZ3m4jL9Gg1h2JBvmXSMYiZtp9MR5I6pvbvylU_PP5xJFSjVTIz7IQSjcVGO41npnwIxRXNRxFOdIUHn0tjQ-7LwvEcTXyPsHXcMD8WtgBh-wxR8aKX7WPSsT1O8d8reb2aR7K3rkV3K82K_0OgawImEpwSvp9MNKynEAJQS6ZHe_J_l77652xwPNxMRTMASk1ZsJL";
+            $path='https://api.myfatoorah.com/v2/SendPayment';
+            $token="bearer NzayASut0b87tNogaYyczrdiKSK-aJXUBwQ0k_8oW-xvzec_gnsQh3OZFNIm_5OhgpV_xNrw_55G8PL1XcIFOWerfWU_76Y-Sp3fUC0cFMmXWYnCmagkT7ee7h9A8qlvFANQpN94XgQ5L4jekSX6-d1XzrssifVlQoYwFAB6M12yy_m7FxveonieCnyUrFDRihWcJmyE1aNU4lnw7kOWEnoAg4ESu1FF42-MJ9AgmOv1VFFk-wTpp_3_ndzdgAFaG1BjMl4zmG3SExoUilYj48wtGQlrzDkkWw5s-XFlTb7s3w8wYT1TwaF0H7Jqs2ciP4HglqpPZUdxpbJJbWKG5vfkj1_DgDc9uo6KfZaKQYVvDkwg8yyMvXiMw9WZR-AdEpKnMK3ntRT31m3h6Zmuy0lH5IN2oRoQ1j4qSb9WjUNJeN0A0ViP_YSbdWPpn_JKKqVeGF7UQybE2qTaeqpjtTVk8aMXVQ9wZGgeqowAtuMBCmmg1Vny-9m13A3PkzP3GeAH78iEkwHjSDkLlIgAvzson1YOSFr5c1ZqLP9NLxSJQKzIsk-eTbrfyQsTpJg7EkaCri01e5ibPhTYd0eyZ1vSAMgBPjwTO2puf1Qw5p9bEsaJvUJ7HaR5OmKAAGgdEp9_h3bWf7SACNWJ8G-jtu5XOOkS9qkBXZxuUSJa-1OM959c";
 
             $headers = array(
                 'Authorization:' .$token,
@@ -134,6 +134,7 @@ class OrderController extends Controller
             $result=curl_exec($curl_session);
             curl_close($curl_session);
             $result = json_decode($result);
+            // dd($result);
             $data['url'] = $result->Data->InvoiceURL;
             
             $response = APIHelpers::createApiResponse(false , 200 ,  '' , '' , $data , $request->lang );
