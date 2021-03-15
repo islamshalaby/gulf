@@ -311,11 +311,11 @@ class ProductController extends Controller
         if($request->lang == 'en'){
             $products = Product::select('title_en as title', 'type', 'final_price'  , 'price_before_offer' , 'offer' , 'offer_percentage' , 'id', 'year')->where('deleted' , 0)->where('hidden' , 0)->where('remaining_quantity', '>', 0)->Where(function($query) use ($search) {
                 $query->Where('title_en', 'like', '%' . $search . '%')->orWhere('title_ar', 'like', '%' . $search . '%');
-            })->get(); 
+            })->simplePaginate(12);
         }else{
             $products = Product::select('title_ar as title' , 'type', 'final_price'  , 'price_before_offer' , 'offer' , 'offer_percentage' , 'id', 'year')->where('deleted' , 0)->where('hidden' , 0)->where('remaining_quantity', '>', 0)->Where(function($query) use ($search) {
                 $query->Where('title_en', 'like', '%' . $search . '%')->orWhere('title_ar', 'like', '%' . $search . '%');
-            })->get(); 
+            })->simplePaginate(12);
         }
 
         for($i =0; $i < count($products); $i++){
