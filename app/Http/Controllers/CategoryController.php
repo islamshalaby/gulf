@@ -262,6 +262,12 @@ class CategoryController extends Controller
                 $data['sub_category_array'] = SubCategory::where('category_id', $request->category_id)->has('adProducts', '>', 0)->select('id', 'title_en as title', 'category_id')->get()->makeHidden('category_id');
                 $data['category'] = Category::where('id', $request->category_id)->select('id', 'title_en as title')->first();
             }
+
+            $all = new \StdClass;
+            $all->id = 0;
+            $all->title = 'All';
+            $all->image = 'all_liwbsi.png';
+            $all->next_level = false;
         }else{
             if ($request->sub_category_id != 0) {
                 $data['sub_categories'] = SubTwoCategory::where('deleted' , 0)->where('sub_category_id' , $request->sub_category_id)->has('adProducts', '>', 0)->select('id' , 'image' , 'title_ar as title')->get()->toArray();
@@ -279,6 +285,12 @@ class CategoryController extends Controller
                 $data['sub_category_array'] = SubCategory::where('category_id', $request->category_id)->has('adProducts', '>', 0)->select('id', 'title_ar as title', 'category_id')->get()->makeHidden('category_id');
                 $data['category'] = Category::where('id', $request->category_id)->select('id', 'title_ar as title')->first();
             }
+
+            $all = new \StdClass;
+            $all->id = 0;
+            $all->title = 'الكل';
+            $all->image = 'all_liwbsi.png';
+            $all->next_level = false;
         }
 
 
@@ -290,11 +302,7 @@ class CategoryController extends Controller
                 $data['sub_category_array'][$n]['selected'] = false;
             }
         }
-        $all = new \StdClass;
-        $all->id = 0;
-        $all->title = 'All';
-        $all->image = 'all_liwbsi.png';
-        $all->next_level = false;
+        
 
         if (count($data['sub_categories']) > 0) {
             for ($i =0; $i < count($data['sub_categories']); $i ++) {
@@ -396,6 +404,12 @@ class CategoryController extends Controller
                 
                 $data['category'] = Category::where('id', $request->category_id)->select('id', 'title_en as title')->first();
             }
+
+            $all = new \StdClass;
+            $all->id = 0;
+            $all->title = 'All';
+            $all->image = 'all_liwbsi.png';
+            $all->next_level = false;
         }else{
             if ($request->sub_category_id != 0) {
                 $data['sub_categories'] = SubThreeCategory::where('deleted' , 0)->where('sub_category_id' , $request->sub_category_id)->has('adProducts', '>', 0)->select('id' , 'image' , 'title_ar as title')->get()->toArray();
@@ -423,6 +437,12 @@ class CategoryController extends Controller
                 
                 $data['category'] = Category::where('id', $request->category_id)->select('id', 'title_ar as title')->first();
             }
+
+            $all = new \StdClass;
+            $all->id = 0;
+            $all->title = 'الكل';
+            $all->image = 'all_liwbsi.png';
+            $all->next_level = false;
         }
 
         for ($n =0; $n < count($data['sub_category_array']); $n ++) {
@@ -432,11 +452,7 @@ class CategoryController extends Controller
                 $data['sub_category_array'][$n]['selected'] = false;
             }
         }
-        $all = new \StdClass;
-        $all->id = 0;
-        $all->title = 'All';
-        $all->image = 'all_liwbsi.png';
-        $all->next_level = false;
+        
 
         if (count($data['sub_categories']) > 0) {
             for ($i =0; $i < count($data['sub_categories']); $i ++) {
@@ -570,7 +586,7 @@ class CategoryController extends Controller
                 $data['sub_categories'] = SubFourCategory::where('deleted' , 0)->whereIn('sub_category_id' , $subCategoriesThree)->select('id' , 'image' , 'title_ar as title')->get()->toArray();
                 $data['sub_category_level3'] = (object)[
                     "id" => 0,
-                    "title" => "All",
+                    "title" => "الكل",
                     "sub_category_id" => $request->sub_category_level2_id
                 ];
                 if ($request->sub_category_level2_id == 0) {
