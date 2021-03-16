@@ -163,7 +163,7 @@ class CategoryController extends Controller
             }
             $all = new \StdClass;
             $all->id = 0;
-            $all->title = 'All';
+            $all->title = 'الكل';
             $all->image = 'all_liwbsi.png';
         }        
 
