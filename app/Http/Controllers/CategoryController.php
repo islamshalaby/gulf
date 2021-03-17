@@ -526,16 +526,16 @@ class CategoryController extends Controller
             $subCategories = SubCategory::where('deleted' , 0)->where('category_id', $request->category_id)->pluck('id')->toArray();
             $subCategoriesTwo = SubTwoCategory::where('deleted' , 0)->whereIn('sub_category_id', $subCategories)->pluck('id')->toArray();
             if ($request->lang == 'en') {
-                $data['sub_categories_level_before'] = SubTwoCategory::where('deleted' , 0)->whereIn('sub_category_id', $subCategories)->select('id', 'title_en as title', 'sub_category_id')->get();
+                $data['sub_categories_level_before'] = SubTwoCategory::where('deleted' , 0)->whereIn('sub_category_id', $subCategories)->select('id', 'title_en as title', 'sub_category_id', 'image')->get();
             }else {
-                $data['sub_categories_level_before'] = SubTwoCategory::where('deleted' , 0)->whereIn('sub_category_id', $subCategories)->select('id', 'title_ar as title', 'sub_category_id')->get();
+                $data['sub_categories_level_before'] = SubTwoCategory::where('deleted' , 0)->whereIn('sub_category_id', $subCategories)->select('id', 'title_ar as title', 'sub_category_id', 'image')->get();
             }
         }else {
             $subCategoriesTwo = SubTwoCategory::where('deleted' , 0)->where('sub_category_id', $request->sub_category_level1_id)->pluck('id')->toArray();
             if ($request->lang == 'en') {
-                $data['sub_categories_level_before'] = SubTwoCategory::where('deleted' , 0)->where('sub_category_id', $request->sub_category_level1_id)->select('id', 'title_en as title', 'sub_category_id')->get();
+                $data['sub_categories_level_before'] = SubTwoCategory::where('deleted' , 0)->where('sub_category_id', $request->sub_category_level1_id)->select('id', 'title_en as title', 'sub_category_id', 'image')->get();
             }else {
-                $data['sub_categories_level_before'] = SubTwoCategory::where('deleted' , 0)->where('sub_category_id', $request->sub_category_level1_id)->select('id', 'title_ar as title', 'sub_category_id')->get();
+                $data['sub_categories_level_before'] = SubTwoCategory::where('deleted' , 0)->where('sub_category_id', $request->sub_category_level1_id)->select('id', 'title_ar as title', 'sub_category_id', 'image')->get();
             }
         }
         
