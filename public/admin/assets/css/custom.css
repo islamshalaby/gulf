@@ -1,0 +1,54 @@
+.label-table{
+    font-weight: bold;
+}
+
+.blue-color a{
+    color : #02706D;
+}
+
+.unread{
+    background: rgba(24, 89, 134 ,.2);
+}
+
+.website-link{
+    color : #e7515a !important;
+}
+
+.widget-content-area{
+    box-shadow: none;
+}
+
+.unreadcount{
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background-color: #e7515a;
+    color: white !important;
+    display: inline-block;
+    text-align: center;
+    position: relative;
+}
+
+.insidecount{
+    position: absolute;
+    top: 50%;
+    transform: translate(-50% , -50%);
+    left: 50%;
+    font-size: 10px;
+}
+
+.english-direction .CodeMirror{
+    text-align: left;
+}
+
+.arabic-direction .CodeMirror{
+    text-align : right;
+}
+
+.english-direction .editor-preview{
+    direction: ltr;
+}
+
+.arabic-direction .editor-preview{
+    direction: rtl;
+}
